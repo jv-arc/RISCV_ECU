@@ -37,7 +37,6 @@ config:
 clean-all: clean-toolchain clean dist-clean 
 	rm -f $(BIN2HEX)
 
-
 .PHONY: all clean config dist-clean clean-all clean-toolchain install
 
 

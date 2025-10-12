@@ -30,3 +30,7 @@ tools/bin2hex
 # licenses are computer dependent
 quartus_project/licenses/*  
 !quartus_project/licenses/.gitkeep
+
+quartus_project/incremental_db/
+quartus_project/db/*
+!quartus_project/db/.gitkeep

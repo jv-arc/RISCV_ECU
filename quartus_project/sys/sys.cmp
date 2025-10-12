@@ -1,0 +1,9 @@
+	component sys is
+		port (
+			clk_clk                          : in  std_logic                    := 'X'; -- clk
+			master_0_master_reset_reset      : out std_logic;                           -- reset
+			pio_0_external_connection_export : out std_logic_vector(7 downto 0);        -- export
+			reset_reset_n                    : in  std_logic                    := 'X'  -- reset_n
+		);
+	end component sys;
+

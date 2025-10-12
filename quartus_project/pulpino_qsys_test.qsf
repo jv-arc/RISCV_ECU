@@ -41,13 +41,13 @@ set_global_assignment -name DEVICE EP4CE115F29C7
 set_global_assignment -name TOP_LEVEL_ENTITY pulpino_qsys_test
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:26:13  MAY 12, 2018"
-set_global_assignment -name LAST_QUARTUS_VERSION "17.1.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "24.1std.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 1
 set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
-set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
+set_global_assignment -name EDA_SIMULATION_TOOL "Questa Intel FPGA (Verilog)"
 set_global_assignment -name EDA_TIME_SCALE "1 ns" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
 
@@ -79,6 +79,7 @@ set_location_assignment PIN_M23 -to RESET_N
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to RESET_N
 set_global_assignment -name EDA_TEST_BENCH_FILE rtl/tb/tbench.sv -section_id tbench -hdl_version SystemVerilog_2005
 
+set_global_assignment -name QSYS_FILE sys.qsys
 set_global_assignment -name SDC_FILE pulpino_qsys_test.sdc
 set_global_assignment -name SIP_FILE sys/simulation/sys.sip
 set_global_assignment -name QIP_FILE sys/synthesis/sys.qip
