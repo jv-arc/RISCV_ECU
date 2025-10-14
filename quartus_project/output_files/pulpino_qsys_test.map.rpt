@@ -1,5 +1,5 @@
 Analysis & Synthesis report for pulpino_qsys_test
-Mon Oct 13 13:45:21 2025
+Tue Oct 14 19:33:14 2025
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -239,7 +239,7 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Mon Oct 13 13:45:21 2025           ;
+; Analysis & Synthesis Status     ; Successful - Tue Oct 14 19:33:14 2025           ;
 ; Quartus Prime Version           ; 24.1std.0 Build 1077 03/04/2025 SC Lite Edition ;
 ; Revision Name                   ; pulpino_qsys_test                               ;
 ; Top-level Entity Name           ; pulpino_qsys_test                               ;
@@ -360,7 +360,7 @@ on the Quartus Prime software download page.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.1%      ;
+;     Processor 2            ;   0.0%      ;
 ;     Processor 3            ;   0.0%      ;
 ;     Processor 4            ;   0.0%      ;
 +----------------------------+-------------+
@@ -504,33 +504,33 @@ on the Quartus Prime software download page.
 +-------------------------------------------------------------------------------------+-----------------+----------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------+-------------+
 
 
-+------------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary                ;
-+---------------------------------------------+--------------+
-; Resource                                    ; Usage        ;
-+---------------------------------------------+--------------+
-; Estimate of Logic utilization (ALMs needed) ; 3152         ;
-;                                             ;              ;
-; Combinational ALUT usage for logic          ; 4214         ;
-;     -- 7 input functions                    ; 83           ;
-;     -- 6 input functions                    ; 1694         ;
-;     -- 5 input functions                    ; 784          ;
-;     -- 4 input functions                    ; 573          ;
-;     -- <=3 input functions                  ; 1080         ;
-;                                             ;              ;
-; Dedicated logic registers                   ; 3459         ;
-;                                             ;              ;
-; I/O pins                                    ; 25           ;
-; Total MLAB memory bits                      ; 0            ;
-; Total block memory bits                     ; 262656       ;
-;                                             ;              ;
-; Total DSP Blocks                            ; 1            ;
-;                                             ;              ;
-; Maximum fan-out node                        ; CLK_50~input ;
-; Maximum fan-out                             ; 3156         ;
-; Total fan-out                               ; 34898        ;
-; Average fan-out                             ; 4.49         ;
-+---------------------------------------------+--------------+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimate of Logic utilization (ALMs needed) ; 3152           ;
+;                                             ;                ;
+; Combinational ALUT usage for logic          ; 4214           ;
+;     -- 7 input functions                    ; 83             ;
+;     -- 6 input functions                    ; 1694           ;
+;     -- 5 input functions                    ; 784            ;
+;     -- 4 input functions                    ; 573            ;
+;     -- <=3 input functions                  ; 1080           ;
+;                                             ;                ;
+; Dedicated logic registers                   ; 3459           ;
+;                                             ;                ;
+; I/O pins                                    ; 25             ;
+; Total MLAB memory bits                      ; 0              ;
+; Total block memory bits                     ; 262656         ;
+;                                             ;                ;
+; Total DSP Blocks                            ; 1              ;
+;                                             ;                ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 3156           ;
+; Total fan-out                               ; 34898          ;
+; Average fan-out                             ; 4.49           ;
++---------------------------------------------+----------------+
 
 
 +-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -4927,31 +4927,31 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
-    Info: Processing started: Mon Oct 13 13:44:42 2025
+    Info: Processing started: Tue Oct 14 19:32:34 2025
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off pulpino_qsys_test -c pulpino_qsys_test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12248): Elaborating Platform Designer system entity "sys.qsys"
-Info (12250): 2025.10.13.13:44:48 Progress: Loading quartus_project/sys.qsys
-Info (12250): 2025.10.13.13:44:48 Progress: Reading input file
-Info (12250): 2025.10.13.13:44:48 Progress: Adding clk_0 [clock_source 24.1]
-Info (12250): 2025.10.13.13:44:48 Progress: Parameterizing module clk_0
-Info (12250): 2025.10.13.13:44:48 Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 24.1]
-Info (12250): 2025.10.13.13:44:48 Progress: Parameterizing module jtag_uart_0
-Info (12250): 2025.10.13.13:44:48 Progress: Adding master_0 [altera_jtag_avalon_master 24.1]
-Info (12250): 2025.10.13.13:44:48 Progress: Parameterizing module master_0
-Info (12250): 2025.10.13.13:44:48 Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 24.1]
-Info (12250): 2025.10.13.13:44:48 Progress: Parameterizing module onchip_memory2_0
-Info (12250): 2025.10.13.13:44:48 Progress: Adding pin_out [altera_avalon_pio 24.1]
-Info (12250): 2025.10.13.13:44:48 Progress: Parameterizing module pin_out
-Info (12250): 2025.10.13.13:44:48 Progress: Adding pio_in [altera_avalon_pio 24.1]
-Info (12250): 2025.10.13.13:44:48 Progress: Parameterizing module pio_in
-Info (12250): 2025.10.13.13:44:48 Progress: Adding pulpino_0 [pulpino 1.0]
-Info (12250): 2025.10.13.13:44:49 Progress: Parameterizing module pulpino_0
-Info (12250): 2025.10.13.13:44:49 Progress: Building connections
-Info (12250): 2025.10.13.13:44:49 Progress: Parameterizing connections
-Info (12250): 2025.10.13.13:44:49 Progress: Validating
-Info (12250): 2025.10.13.13:44:49 Progress: Done reading input file
+Info (12250): 2025.10.14.19:32:40 Progress: Loading quartus_project/sys.qsys
+Info (12250): 2025.10.14.19:32:40 Progress: Reading input file
+Info (12250): 2025.10.14.19:32:40 Progress: Adding clk_0 [clock_source 24.1]
+Info (12250): 2025.10.14.19:32:41 Progress: Parameterizing module clk_0
+Info (12250): 2025.10.14.19:32:41 Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 24.1]
+Info (12250): 2025.10.14.19:32:41 Progress: Parameterizing module jtag_uart_0
+Info (12250): 2025.10.14.19:32:41 Progress: Adding master_0 [altera_jtag_avalon_master 24.1]
+Info (12250): 2025.10.14.19:32:41 Progress: Parameterizing module master_0
+Info (12250): 2025.10.14.19:32:41 Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 24.1]
+Info (12250): 2025.10.14.19:32:41 Progress: Parameterizing module onchip_memory2_0
+Info (12250): 2025.10.14.19:32:41 Progress: Adding pin_out [altera_avalon_pio 24.1]
+Info (12250): 2025.10.14.19:32:41 Progress: Parameterizing module pin_out
+Info (12250): 2025.10.14.19:32:41 Progress: Adding pio_in [altera_avalon_pio 24.1]
+Info (12250): 2025.10.14.19:32:41 Progress: Parameterizing module pio_in
+Info (12250): 2025.10.14.19:32:41 Progress: Adding pulpino_0 [pulpino 1.0]
+Info (12250): 2025.10.14.19:32:41 Progress: Parameterizing module pulpino_0
+Info (12250): 2025.10.14.19:32:41 Progress: Building connections
+Info (12250): 2025.10.14.19:32:41 Progress: Parameterizing connections
+Info (12250): 2025.10.14.19:32:41 Progress: Validating
+Info (12250): 2025.10.14.19:32:41 Progress: Done reading input file
 Info (12250): Sys.jtag_uart_0: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
 Info (12250): Sys.pio_in: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
 Info (12250): Sys: Generating "sys" for QUARTUS_SYNTH
@@ -4962,15 +4962,15 @@ Info (12250): Interconnect is inserted between master pulpino_0.avalon_master_in
 Info (12250): Jtag_uart_0: "sys" instantiated altera_avalon_jtag_uart "jtag_uart_0"
 Info (12250): Master_0: "sys" instantiated altera_jtag_avalon_master "master_0"
 Info (12250): Onchip_memory2_0: Starting RTL generation for module 'sys_onchip_memory2_0'
-Info (12250): Onchip_memory2_0:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=sys_onchip_memory2_0 --dir=/tmp/alt0374_1913892951917887482.dir/0003_onchip_memory2_0_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0374_1913892951917887482.dir/0003_onchip_memory2_0_gen//sys_onchip_memory2_0_component_configuration.pl  --do_build_sim=0  ]
+Info (12250): Onchip_memory2_0:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=sys_onchip_memory2_0 --dir=/tmp/alt0375_6798706829860348284.dir/0003_onchip_memory2_0_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0375_6798706829860348284.dir/0003_onchip_memory2_0_gen//sys_onchip_memory2_0_component_configuration.pl  --do_build_sim=0  ]
 Info (12250): Onchip_memory2_0: Done RTL generation for module 'sys_onchip_memory2_0'
 Info (12250): Onchip_memory2_0: "sys" instantiated altera_avalon_onchip_memory2 "onchip_memory2_0"
 Info (12250): Pin_out: Starting RTL generation for module 'sys_pin_out'
-Info (12250): Pin_out:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sys_pin_out --dir=/tmp/alt0374_1913892951917887482.dir/0004_pin_out_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0374_1913892951917887482.dir/0004_pin_out_gen//sys_pin_out_component_configuration.pl  --do_build_sim=0  ]
+Info (12250): Pin_out:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sys_pin_out --dir=/tmp/alt0375_6798706829860348284.dir/0004_pin_out_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0375_6798706829860348284.dir/0004_pin_out_gen//sys_pin_out_component_configuration.pl  --do_build_sim=0  ]
 Info (12250): Pin_out: Done RTL generation for module 'sys_pin_out'
 Info (12250): Pin_out: "sys" instantiated altera_avalon_pio "pin_out"
 Info (12250): Pio_in: Starting RTL generation for module 'sys_pio_in'
-Info (12250): Pio_in:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sys_pio_in --dir=/tmp/alt0374_1913892951917887482.dir/0005_pio_in_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0374_1913892951917887482.dir/0005_pio_in_gen//sys_pio_in_component_configuration.pl  --do_build_sim=0  ]
+Info (12250): Pio_in:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sys_pio_in --dir=/tmp/alt0375_6798706829860348284.dir/0005_pio_in_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0375_6798706829860348284.dir/0005_pio_in_gen//sys_pio_in_component_configuration.pl  --do_build_sim=0  ]
 Info (12250): Pio_in: Done RTL generation for module 'sys_pio_in'
 Info (12250): Pio_in: "sys" instantiated altera_avalon_pio "pio_in"
 Info (12250): Pulpino_0: "sys" instantiated pulpino "pulpino_0"
@@ -5505,7 +5505,7 @@ Info (12133): Instantiated megafunction "sys:u0|sys_onchip_memory2_0:onchip_memo
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_pra2.tdf
     Info (12023): Found entity 1: altsyncram_pra2 File: /home/jvctr/0/POLIno_qsys/quartus_project/db/altsyncram_pra2.tdf Line: 28
 Info (12128): Elaborating entity "altsyncram_pra2" for hierarchy "sys:u0|sys_onchip_memory2_0:onchip_memory2_0|altsyncram:the_altsyncram|altsyncram_pra2:auto_generated" File: /opt/intelFPGA/24.1/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Critical Warning (127005): Memory depth (8192) in the design file differs from memory depth (4102) in the Memory Initialization File "/home/jvctr/0/POLIno_qsys/quartus_project/sw/mem_init/sys_onchip_memory2_0.hex" -- setting initial value for remaining addresses to 0 File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/synthesis/submodules/sys_onchip_memory2_0.v Line: 97
+Critical Warning (127005): Memory depth (8192) in the design file differs from memory depth (4106) in the Memory Initialization File "/home/jvctr/0/POLIno_qsys/quartus_project/sw/mem_init/sys_onchip_memory2_0.hex" -- setting initial value for remaining addresses to 0 File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/synthesis/submodules/sys_onchip_memory2_0.v Line: 97
 Info (12128): Elaborating entity "sys_pin_out" for hierarchy "sys:u0|sys_pin_out:pin_out" File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v Line: 158
 Info (12128): Elaborating entity "sys_pio_in" for hierarchy "sys:u0|sys_pio_in:pio_in" File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v Line: 166
 Info (12128): Elaborating entity "core_top" for hierarchy "sys:u0|core_top:pulpino_0" File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v Line: 208
@@ -5581,7 +5581,7 @@ Info (12128): Elaborating entity "sys_mm_interconnect_1_avalon_st_adapter_error_
 Info (12128): Elaborating entity "sys_irq_mapper" for hierarchy "sys:u0|sys_irq_mapper:irq_mapper" File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v Line: 284
 Info (12128): Elaborating entity "altera_reset_controller" for hierarchy "sys:u0|altera_reset_controller:rst_controller" File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v Line: 347
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2025.10.13.13:44:58 Progress: Loading sld1d1a74eb/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2025.10.14.19:32:50 Progress: Loading sld1d1a74eb/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -5653,10 +5653,10 @@ Info (21057): Implemented 7042 device resources after synthesis - the final reso
     Info (21064): Implemented 40 RAM segments
     Info (21062): Implemented 1 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 19 warnings
-    Info: Peak virtual memory: 616 megabytes
-    Info: Processing ended: Mon Oct 13 13:45:21 2025
-    Info: Elapsed time: 00:00:39
-    Info: Total CPU time (on all processors): 00:01:08
+    Info: Peak virtual memory: 605 megabytes
+    Info: Processing ended: Tue Oct 14 19:33:14 2025
+    Info: Elapsed time: 00:00:40
+    Info: Total CPU time (on all processors): 00:01:09
 
 
 +------------------------------------------+

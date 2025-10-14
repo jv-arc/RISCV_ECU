@@ -24,11 +24,11 @@ tools/bin2hex
 # Ignore Unnecessary Quartus Files
 #---------------------------------
 
-*.bak
+*.bak*
 *.jdi
-*.smsg
-*.summary
-*.rpt 
+
+
+quartus_project/simulation/*
 
 # licenses are computer dependent
 quartus_project/licenses/*  

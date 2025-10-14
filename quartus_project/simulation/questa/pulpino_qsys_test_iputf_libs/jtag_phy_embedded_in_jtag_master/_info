@@ -11,22 +11,22 @@ cModel Technology
 Z0 d/home/jvctr/0/POLIno_qsys/quartus_project/simulation/questa
 valtera_avalon_st_clock_crosser
 2/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_clock_crosser.v
-Z1 !s110 1760374296
+Z1 !s110 1760481319
 !i10b 1
 !s100 QiYGZc<IaMMjd@be;a>]D2
 IknY@6aVNNmk3O8e?M6^^K2
 R0
-Z2 w1760371845
+Z2 w1760479713
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_clock_crosser.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_clock_crosser.v
-!i122 84
+!i122 104
 L0 22 120
 Z3 VDg1SIo80bB@j0V0VzS_@n1
 Z4 OL;L;2024.3;79
 r1
 !s85 0
 31
-Z5 !s108 1760374296.000000
+Z5 !s108 1760481319.000000
 !s107 /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_clock_crosser.v|
 !s90 -reportprogress|300|/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_clock_crosser.v|-work|jtag_phy_embedded_in_jtag_master|
 !i113 0
@@ -34,7 +34,7 @@ Z6 o-work jtag_phy_embedded_in_jtag_master -L mtiAvm -L mtiRnm -L mtiOvm -L mtiU
 Z7 tCvgOpt 0
 valtera_avalon_st_idle_inserter
 2/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_idle_inserter.v
-Z8 !s110 1760374297
+Z8 !s110 1760481320
 !i10b 1
 !s100 liL>@7U9D8;iB@5EW?6^m3
 ICeEzLBXEfAeUc2jQb`=OS3
@@ -42,14 +42,14 @@ R0
 R2
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_idle_inserter.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_idle_inserter.v
-!i122 88
+!i122 108
 L0 19 54
 R3
 R4
 r1
 !s85 0
 31
-Z9 !s108 1760374297.000000
+Z9 !s108 1760481320.000000
 !s107 /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_idle_inserter.v|
 !s90 -reportprogress|300|/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_idle_inserter.v|-work|jtag_phy_embedded_in_jtag_master|
 !i113 0
@@ -65,14 +65,14 @@ R0
 R2
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_idle_remover.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_idle_remover.v
-!i122 87
+!i122 107
 L0 19 52
 R3
 R4
 r1
 !s85 0
 31
-R5
+R9
 !s107 /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_idle_remover.v|
 !s90 -reportprogress|300|/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_idle_remover.v|-work|jtag_phy_embedded_in_jtag_master|
 !i113 0
@@ -88,7 +88,7 @@ R0
 R2
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_jtag_interface.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_jtag_interface.v
-!i122 80
+!i122 100
 L0 20 205
 R3
 R4
@@ -103,7 +103,7 @@ R6
 R7
 valtera_avalon_st_pipeline_base
 2/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_pipeline_base.v
-R1
+R8
 !i10b 1
 !s100 eQnak>4ELc:EAQ1nAgeSk2
 IKP[TP_^6lFM^VQbol=?Sj3
@@ -111,7 +111,7 @@ R0
 R2
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_pipeline_base.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_pipeline_base.v
-!i122 86
+!i122 106
 L0 22 118
 R3
 R4
@@ -136,7 +136,7 @@ R0
 R2
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_pipeline_stage.sv
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_pipeline_stage.sv
-!i122 89
+!i122 109
 L0 22 143
 R3
 R4
@@ -159,7 +159,7 @@ R0
 R2
 Z11 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_jtag_dc_streaming.v
 Z12 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_jtag_dc_streaming.v
-!i122 81
+!i122 101
 L0 30 40
 R3
 R4
@@ -182,7 +182,7 @@ R0
 R2
 R11
 R12
-!i122 81
+!i122 101
 L0 135 127
 R3
 R4
@@ -205,7 +205,7 @@ R0
 R2
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_jtag_sld_node.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_jtag_sld_node.v
-!i122 82
+!i122 102
 L0 17 245
 R3
 R4
@@ -228,7 +228,7 @@ R0
 R2
 R11
 R12
-!i122 81
+!i122 101
 L0 72 62
 R3
 R4
@@ -251,7 +251,7 @@ R0
 R2
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_jtag_streaming.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_jtag_streaming.v
-!i122 83
+!i122 103
 L0 18 617
 R3
 R4
@@ -274,7 +274,7 @@ R0
 R2
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_std_synchronizer_nocut.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_std_synchronizer_nocut.v
-!i122 85
+!i122 105
 L0 44 149
 R3
 R4

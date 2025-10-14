@@ -45,7 +45,7 @@ assign gpio_in [31:14] = unused_gpio_in [17:0];
 
 // Core Instantiation
 sys u0 (
-    .clk_clk                             (CLK_50),                             
+    .clk_clk                             (CLOCK_50),                             
     .master_0_master_reset_reset         (jtag_reset),         
     .pin_out_external_connection_export  (gpio_out),  
     .pio_in_external_connection_export   (gpio_in),  
