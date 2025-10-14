@@ -11,8 +11,8 @@ wire [9:0] sw;
 assign keys[0] = reset_n;
 
 pulpino_qsys_test dut(
-    .CLK_50(clk50),
-	.KEY(keys),
+    .CLOCK_50(clk50),
+	 .KEY(keys),
     .LEDR(led),
     .SW(sw)
 );

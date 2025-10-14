@@ -1,6 +1,6 @@
 
 module pulpino_qsys_test #(parameter BOOT_ADDR = 32'h00008000)(
-    input CLK_50,
+    input CLOCK_50,
     input [3:0] KEY,
     input [9:0] SW,
     output [9:0] LEDR
