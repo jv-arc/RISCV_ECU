@@ -58,7 +58,8 @@ reset_handler:
 
 _start:
   .global _start
-
+  li x26, 0x8
+  csrs mstatus, x26
   /* clear BSS */
   la x26, _bss_start
   la x27, _bss_end
@@ -87,7 +88,10 @@ main_entry:
   // external interrupts are handled by the same callback
   // until compiler supports IRQ routines
   .org 0x00
-  .rept 31
+  mret
+  .org 0x04
+  jal x0, interrupt_test_handler
+  .rept 29
   nop
   .endr
   jal x0, default_exc_handler

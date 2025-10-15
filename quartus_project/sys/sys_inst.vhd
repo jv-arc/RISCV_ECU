@@ -2,8 +2,8 @@
 		port (
 			clk_clk                            : in  std_logic                     := 'X';             -- clk
 			master_0_master_reset_reset        : out std_logic;                                        -- reset
-			pio_out_external_connection_export : out std_logic_vector(31 downto 0);                    -- export
 			pio_in_external_connection_export  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- export
+			pio_out_external_connection_export : out std_logic_vector(31 downto 0);                    -- export
 			pulpino_0_config_testmode_i        : in  std_logic                     := 'X';             -- testmode_i
 			pulpino_0_config_fetch_enable_i    : in  std_logic                     := 'X';             -- fetch_enable_i
 			pulpino_0_config_clock_gating_i    : in  std_logic                     := 'X';             -- clock_gating_i
@@ -16,8 +16,8 @@
 		port map (
 			clk_clk                            => CONNECTED_TO_clk_clk,                            --                         clk.clk
 			master_0_master_reset_reset        => CONNECTED_TO_master_0_master_reset_reset,        --       master_0_master_reset.reset
-			pio_out_external_connection_export => CONNECTED_TO_pio_out_external_connection_export, -- pio_out_external_connection.export
 			pio_in_external_connection_export  => CONNECTED_TO_pio_in_external_connection_export,  --  pio_in_external_connection.export
+			pio_out_external_connection_export => CONNECTED_TO_pio_out_external_connection_export, -- pio_out_external_connection.export
 			pulpino_0_config_testmode_i        => CONNECTED_TO_pulpino_0_config_testmode_i,        --            pulpino_0_config.testmode_i
 			pulpino_0_config_fetch_enable_i    => CONNECTED_TO_pulpino_0_config_fetch_enable_i,    --                            .fetch_enable_i
 			pulpino_0_config_clock_gating_i    => CONNECTED_TO_pulpino_0_config_clock_gating_i,    --                            .clock_gating_i

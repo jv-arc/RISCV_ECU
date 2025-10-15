@@ -6,7 +6,7 @@ reg clk50;
 reg reset_n;
 wire [3:0] keys;
 wire [9:0] led;
-wire [9:0] sw;
+reg [9:0] sw;
 
 assign keys[0] = reset_n;
 
@@ -21,6 +21,7 @@ initial begin
     // condicoes iniciais 
     clk50 = 0;
     reset_n = 1'b0;
+    sw = 10'b0000000000;
     
     
     #20ns 
@@ -28,9 +29,10 @@ initial begin
     // liga o core
     reset_n = 1'b1;
 
+    #2000ns
+    sw = 10'b1111111111;
     
-    #1800ns
-
+    #4000ns
 
     // Fim
     $stop;

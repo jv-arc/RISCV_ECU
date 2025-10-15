@@ -1,2 +1,0 @@
-#define PIO_OUT1 0x00020000
-#define PIO_IN1  0x00020010
