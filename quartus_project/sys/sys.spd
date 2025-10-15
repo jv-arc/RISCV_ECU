@@ -321,13 +321,13 @@
    type="SYSTEM_VERILOG"
    library="pulpino_0" />
  <file
+   path="simulation/submodules/sys_pio_out.v"
+   type="VERILOG"
+   library="pio_out" />
+ <file
    path="simulation/submodules/sys_pio_in.v"
    type="VERILOG"
    library="pio_in" />
- <file
-   path="simulation/submodules/sys_pin_out.v"
-   type="VERILOG"
-   library="pin_out" />
  <file
    path="simulation/submodules/sys_onchip_memory2_0.hex"
    type="HEX"

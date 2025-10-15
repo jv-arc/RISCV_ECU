@@ -136,14 +136,14 @@ module sys_mm_interconnect_1_router
     // -------------------------------------------------------
     localparam PAD0 = log2ceil(64'h10000 - 64'h8000); 
     localparam PAD1 = log2ceil(64'h100018 - 64'h100010); 
-    localparam PAD2 = log2ceil(64'h200010 - 64'h200000); 
-    localparam PAD3 = log2ceil(64'h200020 - 64'h200010); 
+    localparam PAD2 = log2ceil(64'h200020 - 64'h200000); 
+    localparam PAD3 = log2ceil(64'h200030 - 64'h200020); 
     // -------------------------------------------------------
     // Work out which address bits are significant based on the
     // address range of the slaves. If the required width is too
     // large or too small, we use the address field width instead.
     // -------------------------------------------------------
-    localparam ADDR_RANGE = 64'h200020;
+    localparam ADDR_RANGE = 64'h200030;
     localparam RANGE_ADDR_WIDTH = log2ceil(ADDR_RANGE);
     localparam OPTIMIZED_ADDR_H = (RANGE_ADDR_WIDTH > PKT_ADDR_W) ||
                                   (RANGE_ADDR_WIDTH == 0) ?
@@ -208,16 +208,16 @@ module sys_mm_interconnect_1_router
             src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 0;
     end
 
-    // ( 0x200000 .. 0x200010 )
+    // ( 0x200000 .. 0x200020 )
     if ( {address[RG:PAD2],{PAD2{1'b0}}} == 22'h200000   ) begin
             src_channel = 5'b0010;
-            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 2;
+            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 3;
     end
 
-    // ( 0x200010 .. 0x200020 )
-    if ( {address[RG:PAD3],{PAD3{1'b0}}} == 22'h200010  && read_transaction  ) begin
+    // ( 0x200020 .. 0x200030 )
+    if ( {address[RG:PAD3],{PAD3{1'b0}}} == 22'h200020  && read_transaction  ) begin
             src_channel = 5'b0100;
-            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 3;
+            src_data[PKT_DEST_ID_H:PKT_DEST_ID_L] = 2;
     end
 
 end

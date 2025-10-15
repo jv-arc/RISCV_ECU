@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 24.1 1077 linux 2025.10.13.13:10:45
+# ACDS 24.1 1077 linux 2025.10.14.21:06:37
 
 # ----------------------------------------
 # vcs - auto-generated simulation script
@@ -94,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 24.1 1077 linux 2025.10.13.13:10:45
+# ACDS 24.1 1077 linux 2025.10.14.21:06:37
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="sys"
@@ -219,8 +219,8 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $ELAB_OPT
   $QSYS_SIMDIR/submodules/zeroriscy_prefetch_buffer.sv \
   $QSYS_SIMDIR/submodules/zeroriscy_register_file_ff.sv \
   $QSYS_SIMDIR/submodules/core_top.sv \
+  $QSYS_SIMDIR/submodules/sys_pio_out.v \
   $QSYS_SIMDIR/submodules/sys_pio_in.v \
-  $QSYS_SIMDIR/submodules/sys_pin_out.v \
   $QSYS_SIMDIR/submodules/sys_onchip_memory2_0.v \
   $QSYS_SIMDIR/submodules/sys_master_0.v \
   $QSYS_SIMDIR/submodules/altera_avalon_jtag_uart.sv \

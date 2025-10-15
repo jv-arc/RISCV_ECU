@@ -3,7 +3,7 @@
 <name>sys</name>
 <peripherals>
 <peripheral>
-      <name>sys_pio_in_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
+      <name>sys_pio_out_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -121,7 +121,7 @@
     </registers>
    </peripheral>
   <peripheral>
-      <name>sys_pin_out_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
+      <name>sys_pio_in_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>

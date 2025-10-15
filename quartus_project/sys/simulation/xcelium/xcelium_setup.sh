@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 24.1 1077 linux 2025.10.13.13:10:45
+# ACDS 24.1 1077 linux 2025.10.14.21:06:37
 
 # ----------------------------------------
 # xcelium - auto-generated simulation script
@@ -107,7 +107,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 24.1 1077 linux 2025.10.13.13:10:45
+# ACDS 24.1 1077 linux 2025.10.14.21:06:37
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="sys"
@@ -180,8 +180,8 @@ mkdir -p ./libraries/irq_mapper/
 mkdir -p ./libraries/mm_interconnect_1/
 mkdir -p ./libraries/mm_interconnect_0/
 mkdir -p ./libraries/pulpino_0/
+mkdir -p ./libraries/pio_out/
 mkdir -p ./libraries/pio_in/
-mkdir -p ./libraries/pin_out/
 mkdir -p ./libraries/onchip_memory2_0/
 mkdir -p ./libraries/master_0/
 mkdir -p ./libraries/jtag_uart_0/
@@ -298,8 +298,8 @@ if [ $SKIP_COM -eq 0 ]; then
   xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_prefetch_buffer.sv"                               -work pulpino_0                                -cdslib ./cds_libs/pulpino_0.cds.lib                               
   xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_register_file_ff.sv"                              -work pulpino_0                                -cdslib ./cds_libs/pulpino_0.cds.lib                               
   xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/core_top.sv"                                                -work pulpino_0                                -cdslib ./cds_libs/pulpino_0.cds.lib                               
+  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_pio_out.v"                                              -work pio_out                                  -cdslib ./cds_libs/pio_out.cds.lib                                 
   xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_pio_in.v"                                               -work pio_in                                   -cdslib ./cds_libs/pio_in.cds.lib                                  
-  xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_pin_out.v"                                              -work pin_out                                  -cdslib ./cds_libs/pin_out.cds.lib                                 
   xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_onchip_memory2_0.v"                                     -work onchip_memory2_0                         -cdslib ./cds_libs/onchip_memory2_0.cds.lib                        
   xmvlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_master_0.v"                                             -work master_0                                 -cdslib ./cds_libs/master_0.cds.lib                                
   xmvlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart.sv"                                 -work jtag_uart_0                              -cdslib ./cds_libs/jtag_uart_0.cds.lib                             

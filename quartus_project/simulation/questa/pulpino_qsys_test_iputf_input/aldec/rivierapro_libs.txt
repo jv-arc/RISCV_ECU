@@ -31,8 +31,8 @@ irq_mapper
 mm_interconnect_1
 mm_interconnect_0
 pulpino_0
+pio_out
 pio_in
-pin_out
 onchip_memory2_0
 master_0
 jtag_uart_0

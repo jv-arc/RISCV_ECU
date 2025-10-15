@@ -80,8 +80,8 @@ vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/zeroriscy_prefetch_buffer.sv"                               -work pulpino_0                               
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/zeroriscy_register_file_ff.sv"                              -work pulpino_0                               
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/core_top.sv"                                                -work pulpino_0                               
+vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pio_out.v"                                              -work pio_out                                 
 vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pio_in.v"                                               -work pio_in                                  
-vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pin_out.v"                                              -work pin_out                                 
 vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_onchip_memory2_0.v"                                     -work onchip_memory2_0                        
 vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_master_0.v"                                             -work master_0                                
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart.sv"                                 -work jtag_uart_0                             

@@ -42,13 +42,13 @@ module sys_mm_interconnect_1 (
 		output wire [3:0]  onchip_memory2_0_s2_byteenable,                   //                                           .byteenable
 		output wire        onchip_memory2_0_s2_chipselect,                   //                                           .chipselect
 		output wire        onchip_memory2_0_s2_clken,                        //                                           .clken
-		output wire [1:0]  pin_out_s1_address,                               //                                 pin_out_s1.address
-		output wire        pin_out_s1_write,                                 //                                           .write
-		input  wire [31:0] pin_out_s1_readdata,                              //                                           .readdata
-		output wire [31:0] pin_out_s1_writedata,                             //                                           .writedata
-		output wire        pin_out_s1_chipselect,                            //                                           .chipselect
 		output wire [1:0]  pio_in_s1_address,                                //                                  pio_in_s1.address
 		input  wire [31:0] pio_in_s1_readdata,                               //                                           .readdata
+		output wire [2:0]  pio_out_s1_address,                               //                                 pio_out_s1.address
+		output wire        pio_out_s1_write,                                 //                                           .write
+		input  wire [31:0] pio_out_s1_readdata,                              //                                           .readdata
+		output wire [31:0] pio_out_s1_writedata,                             //                                           .writedata
+		output wire        pio_out_s1_chipselect,                            //                                           .chipselect
 		output wire [14:0] pulpino_0_avalon_slave_debug_address,             //               pulpino_0_avalon_slave_debug.address
 		output wire        pulpino_0_avalon_slave_debug_write,               //                                           .write
 		output wire        pulpino_0_avalon_slave_debug_read,                //                                           .read
@@ -109,33 +109,33 @@ module sys_mm_interconnect_1 (
 	wire    [4:0] cmd_mux_src_channel;                                                                 // cmd_mux:src_channel -> jtag_uart_0_avalon_jtag_slave_agent:cp_channel
 	wire          cmd_mux_src_startofpacket;                                                           // cmd_mux:src_startofpacket -> jtag_uart_0_avalon_jtag_slave_agent:cp_startofpacket
 	wire          cmd_mux_src_endofpacket;                                                             // cmd_mux:src_endofpacket -> jtag_uart_0_avalon_jtag_slave_agent:cp_endofpacket
-	wire   [31:0] pin_out_s1_agent_m0_readdata;                                                        // pin_out_s1_translator:uav_readdata -> pin_out_s1_agent:m0_readdata
-	wire          pin_out_s1_agent_m0_waitrequest;                                                     // pin_out_s1_translator:uav_waitrequest -> pin_out_s1_agent:m0_waitrequest
-	wire          pin_out_s1_agent_m0_debugaccess;                                                     // pin_out_s1_agent:m0_debugaccess -> pin_out_s1_translator:uav_debugaccess
-	wire   [31:0] pin_out_s1_agent_m0_address;                                                         // pin_out_s1_agent:m0_address -> pin_out_s1_translator:uav_address
-	wire    [3:0] pin_out_s1_agent_m0_byteenable;                                                      // pin_out_s1_agent:m0_byteenable -> pin_out_s1_translator:uav_byteenable
-	wire          pin_out_s1_agent_m0_read;                                                            // pin_out_s1_agent:m0_read -> pin_out_s1_translator:uav_read
-	wire          pin_out_s1_agent_m0_readdatavalid;                                                   // pin_out_s1_translator:uav_readdatavalid -> pin_out_s1_agent:m0_readdatavalid
-	wire          pin_out_s1_agent_m0_lock;                                                            // pin_out_s1_agent:m0_lock -> pin_out_s1_translator:uav_lock
-	wire   [31:0] pin_out_s1_agent_m0_writedata;                                                       // pin_out_s1_agent:m0_writedata -> pin_out_s1_translator:uav_writedata
-	wire          pin_out_s1_agent_m0_write;                                                           // pin_out_s1_agent:m0_write -> pin_out_s1_translator:uav_write
-	wire    [2:0] pin_out_s1_agent_m0_burstcount;                                                      // pin_out_s1_agent:m0_burstcount -> pin_out_s1_translator:uav_burstcount
-	wire          pin_out_s1_agent_rf_source_valid;                                                    // pin_out_s1_agent:rf_source_valid -> pin_out_s1_agent_rsp_fifo:in_valid
-	wire  [106:0] pin_out_s1_agent_rf_source_data;                                                     // pin_out_s1_agent:rf_source_data -> pin_out_s1_agent_rsp_fifo:in_data
-	wire          pin_out_s1_agent_rf_source_ready;                                                    // pin_out_s1_agent_rsp_fifo:in_ready -> pin_out_s1_agent:rf_source_ready
-	wire          pin_out_s1_agent_rf_source_startofpacket;                                            // pin_out_s1_agent:rf_source_startofpacket -> pin_out_s1_agent_rsp_fifo:in_startofpacket
-	wire          pin_out_s1_agent_rf_source_endofpacket;                                              // pin_out_s1_agent:rf_source_endofpacket -> pin_out_s1_agent_rsp_fifo:in_endofpacket
-	wire          pin_out_s1_agent_rsp_fifo_out_valid;                                                 // pin_out_s1_agent_rsp_fifo:out_valid -> pin_out_s1_agent:rf_sink_valid
-	wire  [106:0] pin_out_s1_agent_rsp_fifo_out_data;                                                  // pin_out_s1_agent_rsp_fifo:out_data -> pin_out_s1_agent:rf_sink_data
-	wire          pin_out_s1_agent_rsp_fifo_out_ready;                                                 // pin_out_s1_agent:rf_sink_ready -> pin_out_s1_agent_rsp_fifo:out_ready
-	wire          pin_out_s1_agent_rsp_fifo_out_startofpacket;                                         // pin_out_s1_agent_rsp_fifo:out_startofpacket -> pin_out_s1_agent:rf_sink_startofpacket
-	wire          pin_out_s1_agent_rsp_fifo_out_endofpacket;                                           // pin_out_s1_agent_rsp_fifo:out_endofpacket -> pin_out_s1_agent:rf_sink_endofpacket
-	wire          cmd_mux_001_src_valid;                                                               // cmd_mux_001:src_valid -> pin_out_s1_agent:cp_valid
-	wire  [105:0] cmd_mux_001_src_data;                                                                // cmd_mux_001:src_data -> pin_out_s1_agent:cp_data
-	wire          cmd_mux_001_src_ready;                                                               // pin_out_s1_agent:cp_ready -> cmd_mux_001:src_ready
-	wire    [4:0] cmd_mux_001_src_channel;                                                             // cmd_mux_001:src_channel -> pin_out_s1_agent:cp_channel
-	wire          cmd_mux_001_src_startofpacket;                                                       // cmd_mux_001:src_startofpacket -> pin_out_s1_agent:cp_startofpacket
-	wire          cmd_mux_001_src_endofpacket;                                                         // cmd_mux_001:src_endofpacket -> pin_out_s1_agent:cp_endofpacket
+	wire   [31:0] pio_out_s1_agent_m0_readdata;                                                        // pio_out_s1_translator:uav_readdata -> pio_out_s1_agent:m0_readdata
+	wire          pio_out_s1_agent_m0_waitrequest;                                                     // pio_out_s1_translator:uav_waitrequest -> pio_out_s1_agent:m0_waitrequest
+	wire          pio_out_s1_agent_m0_debugaccess;                                                     // pio_out_s1_agent:m0_debugaccess -> pio_out_s1_translator:uav_debugaccess
+	wire   [31:0] pio_out_s1_agent_m0_address;                                                         // pio_out_s1_agent:m0_address -> pio_out_s1_translator:uav_address
+	wire    [3:0] pio_out_s1_agent_m0_byteenable;                                                      // pio_out_s1_agent:m0_byteenable -> pio_out_s1_translator:uav_byteenable
+	wire          pio_out_s1_agent_m0_read;                                                            // pio_out_s1_agent:m0_read -> pio_out_s1_translator:uav_read
+	wire          pio_out_s1_agent_m0_readdatavalid;                                                   // pio_out_s1_translator:uav_readdatavalid -> pio_out_s1_agent:m0_readdatavalid
+	wire          pio_out_s1_agent_m0_lock;                                                            // pio_out_s1_agent:m0_lock -> pio_out_s1_translator:uav_lock
+	wire   [31:0] pio_out_s1_agent_m0_writedata;                                                       // pio_out_s1_agent:m0_writedata -> pio_out_s1_translator:uav_writedata
+	wire          pio_out_s1_agent_m0_write;                                                           // pio_out_s1_agent:m0_write -> pio_out_s1_translator:uav_write
+	wire    [2:0] pio_out_s1_agent_m0_burstcount;                                                      // pio_out_s1_agent:m0_burstcount -> pio_out_s1_translator:uav_burstcount
+	wire          pio_out_s1_agent_rf_source_valid;                                                    // pio_out_s1_agent:rf_source_valid -> pio_out_s1_agent_rsp_fifo:in_valid
+	wire  [106:0] pio_out_s1_agent_rf_source_data;                                                     // pio_out_s1_agent:rf_source_data -> pio_out_s1_agent_rsp_fifo:in_data
+	wire          pio_out_s1_agent_rf_source_ready;                                                    // pio_out_s1_agent_rsp_fifo:in_ready -> pio_out_s1_agent:rf_source_ready
+	wire          pio_out_s1_agent_rf_source_startofpacket;                                            // pio_out_s1_agent:rf_source_startofpacket -> pio_out_s1_agent_rsp_fifo:in_startofpacket
+	wire          pio_out_s1_agent_rf_source_endofpacket;                                              // pio_out_s1_agent:rf_source_endofpacket -> pio_out_s1_agent_rsp_fifo:in_endofpacket
+	wire          pio_out_s1_agent_rsp_fifo_out_valid;                                                 // pio_out_s1_agent_rsp_fifo:out_valid -> pio_out_s1_agent:rf_sink_valid
+	wire  [106:0] pio_out_s1_agent_rsp_fifo_out_data;                                                  // pio_out_s1_agent_rsp_fifo:out_data -> pio_out_s1_agent:rf_sink_data
+	wire          pio_out_s1_agent_rsp_fifo_out_ready;                                                 // pio_out_s1_agent:rf_sink_ready -> pio_out_s1_agent_rsp_fifo:out_ready
+	wire          pio_out_s1_agent_rsp_fifo_out_startofpacket;                                         // pio_out_s1_agent_rsp_fifo:out_startofpacket -> pio_out_s1_agent:rf_sink_startofpacket
+	wire          pio_out_s1_agent_rsp_fifo_out_endofpacket;                                           // pio_out_s1_agent_rsp_fifo:out_endofpacket -> pio_out_s1_agent:rf_sink_endofpacket
+	wire          cmd_mux_001_src_valid;                                                               // cmd_mux_001:src_valid -> pio_out_s1_agent:cp_valid
+	wire  [105:0] cmd_mux_001_src_data;                                                                // cmd_mux_001:src_data -> pio_out_s1_agent:cp_data
+	wire          cmd_mux_001_src_ready;                                                               // pio_out_s1_agent:cp_ready -> cmd_mux_001:src_ready
+	wire    [4:0] cmd_mux_001_src_channel;                                                             // cmd_mux_001:src_channel -> pio_out_s1_agent:cp_channel
+	wire          cmd_mux_001_src_startofpacket;                                                       // cmd_mux_001:src_startofpacket -> pio_out_s1_agent:cp_startofpacket
+	wire          cmd_mux_001_src_endofpacket;                                                         // cmd_mux_001:src_endofpacket -> pio_out_s1_agent:cp_endofpacket
 	wire   [31:0] pio_in_s1_agent_m0_readdata;                                                         // pio_in_s1_translator:uav_readdata -> pio_in_s1_agent:m0_readdata
 	wire          pio_in_s1_agent_m0_waitrequest;                                                      // pio_in_s1_translator:uav_waitrequest -> pio_in_s1_agent:m0_waitrequest
 	wire          pio_in_s1_agent_m0_debugaccess;                                                      // pio_in_s1_agent:m0_debugaccess -> pio_in_s1_translator:uav_debugaccess
@@ -238,11 +238,11 @@ module sys_mm_interconnect_1 (
 	wire    [4:0] router_002_src_channel;                                                              // router_002:src_channel -> rsp_demux:sink_channel
 	wire          router_002_src_startofpacket;                                                        // router_002:src_startofpacket -> rsp_demux:sink_startofpacket
 	wire          router_002_src_endofpacket;                                                          // router_002:src_endofpacket -> rsp_demux:sink_endofpacket
-	wire          pin_out_s1_agent_rp_valid;                                                           // pin_out_s1_agent:rp_valid -> router_003:sink_valid
-	wire  [105:0] pin_out_s1_agent_rp_data;                                                            // pin_out_s1_agent:rp_data -> router_003:sink_data
-	wire          pin_out_s1_agent_rp_ready;                                                           // router_003:sink_ready -> pin_out_s1_agent:rp_ready
-	wire          pin_out_s1_agent_rp_startofpacket;                                                   // pin_out_s1_agent:rp_startofpacket -> router_003:sink_startofpacket
-	wire          pin_out_s1_agent_rp_endofpacket;                                                     // pin_out_s1_agent:rp_endofpacket -> router_003:sink_endofpacket
+	wire          pio_out_s1_agent_rp_valid;                                                           // pio_out_s1_agent:rp_valid -> router_003:sink_valid
+	wire  [105:0] pio_out_s1_agent_rp_data;                                                            // pio_out_s1_agent:rp_data -> router_003:sink_data
+	wire          pio_out_s1_agent_rp_ready;                                                           // router_003:sink_ready -> pio_out_s1_agent:rp_ready
+	wire          pio_out_s1_agent_rp_startofpacket;                                                   // pio_out_s1_agent:rp_startofpacket -> router_003:sink_startofpacket
+	wire          pio_out_s1_agent_rp_endofpacket;                                                     // pio_out_s1_agent:rp_endofpacket -> router_003:sink_endofpacket
 	wire          router_003_src_valid;                                                                // router_003:src_valid -> rsp_demux_001:sink_valid
 	wire  [105:0] router_003_src_data;                                                                 // router_003:src_data -> rsp_demux_001:sink_data
 	wire          router_003_src_ready;                                                                // rsp_demux_001:sink_ready -> router_003:src_ready
@@ -409,13 +409,13 @@ module sys_mm_interconnect_1 (
 	wire   [33:0] avalon_st_adapter_out_0_data;                                                        // avalon_st_adapter:out_0_data -> jtag_uart_0_avalon_jtag_slave_agent:rdata_fifo_sink_data
 	wire          avalon_st_adapter_out_0_ready;                                                       // jtag_uart_0_avalon_jtag_slave_agent:rdata_fifo_sink_ready -> avalon_st_adapter:out_0_ready
 	wire    [0:0] avalon_st_adapter_out_0_error;                                                       // avalon_st_adapter:out_0_error -> jtag_uart_0_avalon_jtag_slave_agent:rdata_fifo_sink_error
-	wire          pin_out_s1_agent_rdata_fifo_src_valid;                                               // pin_out_s1_agent:rdata_fifo_src_valid -> avalon_st_adapter_001:in_0_valid
-	wire   [33:0] pin_out_s1_agent_rdata_fifo_src_data;                                                // pin_out_s1_agent:rdata_fifo_src_data -> avalon_st_adapter_001:in_0_data
-	wire          pin_out_s1_agent_rdata_fifo_src_ready;                                               // avalon_st_adapter_001:in_0_ready -> pin_out_s1_agent:rdata_fifo_src_ready
-	wire          avalon_st_adapter_001_out_0_valid;                                                   // avalon_st_adapter_001:out_0_valid -> pin_out_s1_agent:rdata_fifo_sink_valid
-	wire   [33:0] avalon_st_adapter_001_out_0_data;                                                    // avalon_st_adapter_001:out_0_data -> pin_out_s1_agent:rdata_fifo_sink_data
-	wire          avalon_st_adapter_001_out_0_ready;                                                   // pin_out_s1_agent:rdata_fifo_sink_ready -> avalon_st_adapter_001:out_0_ready
-	wire    [0:0] avalon_st_adapter_001_out_0_error;                                                   // avalon_st_adapter_001:out_0_error -> pin_out_s1_agent:rdata_fifo_sink_error
+	wire          pio_out_s1_agent_rdata_fifo_src_valid;                                               // pio_out_s1_agent:rdata_fifo_src_valid -> avalon_st_adapter_001:in_0_valid
+	wire   [33:0] pio_out_s1_agent_rdata_fifo_src_data;                                                // pio_out_s1_agent:rdata_fifo_src_data -> avalon_st_adapter_001:in_0_data
+	wire          pio_out_s1_agent_rdata_fifo_src_ready;                                               // avalon_st_adapter_001:in_0_ready -> pio_out_s1_agent:rdata_fifo_src_ready
+	wire          avalon_st_adapter_001_out_0_valid;                                                   // avalon_st_adapter_001:out_0_valid -> pio_out_s1_agent:rdata_fifo_sink_valid
+	wire   [33:0] avalon_st_adapter_001_out_0_data;                                                    // avalon_st_adapter_001:out_0_data -> pio_out_s1_agent:rdata_fifo_sink_data
+	wire          avalon_st_adapter_001_out_0_ready;                                                   // pio_out_s1_agent:rdata_fifo_sink_ready -> avalon_st_adapter_001:out_0_ready
+	wire    [0:0] avalon_st_adapter_001_out_0_error;                                                   // avalon_st_adapter_001:out_0_error -> pio_out_s1_agent:rdata_fifo_sink_error
 	wire          pio_in_s1_agent_rdata_fifo_src_valid;                                                // pio_in_s1_agent:rdata_fifo_src_valid -> avalon_st_adapter_002:in_0_valid
 	wire   [33:0] pio_in_s1_agent_rdata_fifo_src_data;                                                 // pio_in_s1_agent:rdata_fifo_src_data -> avalon_st_adapter_002:in_0_data
 	wire          pio_in_s1_agent_rdata_fifo_src_ready;                                                // avalon_st_adapter_002:in_0_ready -> pio_in_s1_agent:rdata_fifo_src_ready
@@ -623,7 +623,7 @@ module sys_mm_interconnect_1 (
 	);
 
 	altera_merlin_slave_translator #(
-		.AV_ADDRESS_W                   (2),
+		.AV_ADDRESS_W                   (3),
 		.AV_DATA_W                      (32),
 		.UAV_DATA_W                     (32),
 		.AV_BURSTCOUNT_W                (1),
@@ -648,25 +648,25 @@ module sys_mm_interconnect_1 (
 		.AV_WRITE_WAIT_CYCLES           (0),
 		.AV_SETUP_WAIT_CYCLES           (0),
 		.AV_DATA_HOLD_CYCLES            (0)
-	) pin_out_s1_translator (
+	) pio_out_s1_translator (
 		.clk                    (clk_0_clk_clk),                                    //                      clk.clk
 		.reset                  (pulpino_0_reset_sink_reset_bridge_in_reset_reset), //                    reset.reset
-		.uav_address            (pin_out_s1_agent_m0_address),                      // avalon_universal_slave_0.address
-		.uav_burstcount         (pin_out_s1_agent_m0_burstcount),                   //                         .burstcount
-		.uav_read               (pin_out_s1_agent_m0_read),                         //                         .read
-		.uav_write              (pin_out_s1_agent_m0_write),                        //                         .write
-		.uav_waitrequest        (pin_out_s1_agent_m0_waitrequest),                  //                         .waitrequest
-		.uav_readdatavalid      (pin_out_s1_agent_m0_readdatavalid),                //                         .readdatavalid
-		.uav_byteenable         (pin_out_s1_agent_m0_byteenable),                   //                         .byteenable
-		.uav_readdata           (pin_out_s1_agent_m0_readdata),                     //                         .readdata
-		.uav_writedata          (pin_out_s1_agent_m0_writedata),                    //                         .writedata
-		.uav_lock               (pin_out_s1_agent_m0_lock),                         //                         .lock
-		.uav_debugaccess        (pin_out_s1_agent_m0_debugaccess),                  //                         .debugaccess
-		.av_address             (pin_out_s1_address),                               //      avalon_anti_slave_0.address
-		.av_write               (pin_out_s1_write),                                 //                         .write
-		.av_readdata            (pin_out_s1_readdata),                              //                         .readdata
-		.av_writedata           (pin_out_s1_writedata),                             //                         .writedata
-		.av_chipselect          (pin_out_s1_chipselect),                            //                         .chipselect
+		.uav_address            (pio_out_s1_agent_m0_address),                      // avalon_universal_slave_0.address
+		.uav_burstcount         (pio_out_s1_agent_m0_burstcount),                   //                         .burstcount
+		.uav_read               (pio_out_s1_agent_m0_read),                         //                         .read
+		.uav_write              (pio_out_s1_agent_m0_write),                        //                         .write
+		.uav_waitrequest        (pio_out_s1_agent_m0_waitrequest),                  //                         .waitrequest
+		.uav_readdatavalid      (pio_out_s1_agent_m0_readdatavalid),                //                         .readdatavalid
+		.uav_byteenable         (pio_out_s1_agent_m0_byteenable),                   //                         .byteenable
+		.uav_readdata           (pio_out_s1_agent_m0_readdata),                     //                         .readdata
+		.uav_writedata          (pio_out_s1_agent_m0_writedata),                    //                         .writedata
+		.uav_lock               (pio_out_s1_agent_m0_lock),                         //                         .lock
+		.uav_debugaccess        (pio_out_s1_agent_m0_debugaccess),                  //                         .debugaccess
+		.av_address             (pio_out_s1_address),                               //      avalon_anti_slave_0.address
+		.av_write               (pio_out_s1_write),                                 //                         .write
+		.av_readdata            (pio_out_s1_readdata),                              //                         .readdata
+		.av_writedata           (pio_out_s1_writedata),                             //                         .writedata
+		.av_chipselect          (pio_out_s1_chipselect),                            //                         .chipselect
 		.av_read                (),                                                 //              (terminated)
 		.av_begintransfer       (),                                                 //              (terminated)
 		.av_beginbursttransfer  (),                                                 //              (terminated)
@@ -1203,48 +1203,48 @@ module sys_mm_interconnect_1 (
 		.USE_READRESPONSE          (0),
 		.USE_WRITERESPONSE         (0),
 		.ECC_ENABLE                (0)
-	) pin_out_s1_agent (
+	) pio_out_s1_agent (
 		.clk                     (clk_0_clk_clk),                                    //             clk.clk
 		.reset                   (pulpino_0_reset_sink_reset_bridge_in_reset_reset), //       clk_reset.reset
-		.m0_address              (pin_out_s1_agent_m0_address),                      //              m0.address
-		.m0_burstcount           (pin_out_s1_agent_m0_burstcount),                   //                .burstcount
-		.m0_byteenable           (pin_out_s1_agent_m0_byteenable),                   //                .byteenable
-		.m0_debugaccess          (pin_out_s1_agent_m0_debugaccess),                  //                .debugaccess
-		.m0_lock                 (pin_out_s1_agent_m0_lock),                         //                .lock
-		.m0_readdata             (pin_out_s1_agent_m0_readdata),                     //                .readdata
-		.m0_readdatavalid        (pin_out_s1_agent_m0_readdatavalid),                //                .readdatavalid
-		.m0_read                 (pin_out_s1_agent_m0_read),                         //                .read
-		.m0_waitrequest          (pin_out_s1_agent_m0_waitrequest),                  //                .waitrequest
-		.m0_writedata            (pin_out_s1_agent_m0_writedata),                    //                .writedata
-		.m0_write                (pin_out_s1_agent_m0_write),                        //                .write
-		.rp_endofpacket          (pin_out_s1_agent_rp_endofpacket),                  //              rp.endofpacket
-		.rp_ready                (pin_out_s1_agent_rp_ready),                        //                .ready
-		.rp_valid                (pin_out_s1_agent_rp_valid),                        //                .valid
-		.rp_data                 (pin_out_s1_agent_rp_data),                         //                .data
-		.rp_startofpacket        (pin_out_s1_agent_rp_startofpacket),                //                .startofpacket
+		.m0_address              (pio_out_s1_agent_m0_address),                      //              m0.address
+		.m0_burstcount           (pio_out_s1_agent_m0_burstcount),                   //                .burstcount
+		.m0_byteenable           (pio_out_s1_agent_m0_byteenable),                   //                .byteenable
+		.m0_debugaccess          (pio_out_s1_agent_m0_debugaccess),                  //                .debugaccess
+		.m0_lock                 (pio_out_s1_agent_m0_lock),                         //                .lock
+		.m0_readdata             (pio_out_s1_agent_m0_readdata),                     //                .readdata
+		.m0_readdatavalid        (pio_out_s1_agent_m0_readdatavalid),                //                .readdatavalid
+		.m0_read                 (pio_out_s1_agent_m0_read),                         //                .read
+		.m0_waitrequest          (pio_out_s1_agent_m0_waitrequest),                  //                .waitrequest
+		.m0_writedata            (pio_out_s1_agent_m0_writedata),                    //                .writedata
+		.m0_write                (pio_out_s1_agent_m0_write),                        //                .write
+		.rp_endofpacket          (pio_out_s1_agent_rp_endofpacket),                  //              rp.endofpacket
+		.rp_ready                (pio_out_s1_agent_rp_ready),                        //                .ready
+		.rp_valid                (pio_out_s1_agent_rp_valid),                        //                .valid
+		.rp_data                 (pio_out_s1_agent_rp_data),                         //                .data
+		.rp_startofpacket        (pio_out_s1_agent_rp_startofpacket),                //                .startofpacket
 		.cp_ready                (cmd_mux_001_src_ready),                            //              cp.ready
 		.cp_valid                (cmd_mux_001_src_valid),                            //                .valid
 		.cp_data                 (cmd_mux_001_src_data),                             //                .data
 		.cp_startofpacket        (cmd_mux_001_src_startofpacket),                    //                .startofpacket
 		.cp_endofpacket          (cmd_mux_001_src_endofpacket),                      //                .endofpacket
 		.cp_channel              (cmd_mux_001_src_channel),                          //                .channel
-		.rf_sink_ready           (pin_out_s1_agent_rsp_fifo_out_ready),              //         rf_sink.ready
-		.rf_sink_valid           (pin_out_s1_agent_rsp_fifo_out_valid),              //                .valid
-		.rf_sink_startofpacket   (pin_out_s1_agent_rsp_fifo_out_startofpacket),      //                .startofpacket
-		.rf_sink_endofpacket     (pin_out_s1_agent_rsp_fifo_out_endofpacket),        //                .endofpacket
-		.rf_sink_data            (pin_out_s1_agent_rsp_fifo_out_data),               //                .data
-		.rf_source_ready         (pin_out_s1_agent_rf_source_ready),                 //       rf_source.ready
-		.rf_source_valid         (pin_out_s1_agent_rf_source_valid),                 //                .valid
-		.rf_source_startofpacket (pin_out_s1_agent_rf_source_startofpacket),         //                .startofpacket
-		.rf_source_endofpacket   (pin_out_s1_agent_rf_source_endofpacket),           //                .endofpacket
-		.rf_source_data          (pin_out_s1_agent_rf_source_data),                  //                .data
+		.rf_sink_ready           (pio_out_s1_agent_rsp_fifo_out_ready),              //         rf_sink.ready
+		.rf_sink_valid           (pio_out_s1_agent_rsp_fifo_out_valid),              //                .valid
+		.rf_sink_startofpacket   (pio_out_s1_agent_rsp_fifo_out_startofpacket),      //                .startofpacket
+		.rf_sink_endofpacket     (pio_out_s1_agent_rsp_fifo_out_endofpacket),        //                .endofpacket
+		.rf_sink_data            (pio_out_s1_agent_rsp_fifo_out_data),               //                .data
+		.rf_source_ready         (pio_out_s1_agent_rf_source_ready),                 //       rf_source.ready
+		.rf_source_valid         (pio_out_s1_agent_rf_source_valid),                 //                .valid
+		.rf_source_startofpacket (pio_out_s1_agent_rf_source_startofpacket),         //                .startofpacket
+		.rf_source_endofpacket   (pio_out_s1_agent_rf_source_endofpacket),           //                .endofpacket
+		.rf_source_data          (pio_out_s1_agent_rf_source_data),                  //                .data
 		.rdata_fifo_sink_ready   (avalon_st_adapter_001_out_0_ready),                // rdata_fifo_sink.ready
 		.rdata_fifo_sink_valid   (avalon_st_adapter_001_out_0_valid),                //                .valid
 		.rdata_fifo_sink_data    (avalon_st_adapter_001_out_0_data),                 //                .data
 		.rdata_fifo_sink_error   (avalon_st_adapter_001_out_0_error),                //                .error
-		.rdata_fifo_src_ready    (pin_out_s1_agent_rdata_fifo_src_ready),            //  rdata_fifo_src.ready
-		.rdata_fifo_src_valid    (pin_out_s1_agent_rdata_fifo_src_valid),            //                .valid
-		.rdata_fifo_src_data     (pin_out_s1_agent_rdata_fifo_src_data),             //                .data
+		.rdata_fifo_src_ready    (pio_out_s1_agent_rdata_fifo_src_ready),            //  rdata_fifo_src.ready
+		.rdata_fifo_src_valid    (pio_out_s1_agent_rdata_fifo_src_valid),            //                .valid
+		.rdata_fifo_src_data     (pio_out_s1_agent_rdata_fifo_src_data),             //                .data
 		.m0_response             (2'b00),                                            //     (terminated)
 		.m0_writeresponsevalid   (1'b0)                                              //     (terminated)
 	);
@@ -1262,19 +1262,19 @@ module sys_mm_interconnect_1 (
 		.USE_STORE_FORWARD   (0),
 		.USE_ALMOST_FULL_IF  (0),
 		.USE_ALMOST_EMPTY_IF (0)
-	) pin_out_s1_agent_rsp_fifo (
+	) pio_out_s1_agent_rsp_fifo (
 		.clk               (clk_0_clk_clk),                                    //       clk.clk
 		.reset             (pulpino_0_reset_sink_reset_bridge_in_reset_reset), // clk_reset.reset
-		.in_data           (pin_out_s1_agent_rf_source_data),                  //        in.data
-		.in_valid          (pin_out_s1_agent_rf_source_valid),                 //          .valid
-		.in_ready          (pin_out_s1_agent_rf_source_ready),                 //          .ready
-		.in_startofpacket  (pin_out_s1_agent_rf_source_startofpacket),         //          .startofpacket
-		.in_endofpacket    (pin_out_s1_agent_rf_source_endofpacket),           //          .endofpacket
-		.out_data          (pin_out_s1_agent_rsp_fifo_out_data),               //       out.data
-		.out_valid         (pin_out_s1_agent_rsp_fifo_out_valid),              //          .valid
-		.out_ready         (pin_out_s1_agent_rsp_fifo_out_ready),              //          .ready
-		.out_startofpacket (pin_out_s1_agent_rsp_fifo_out_startofpacket),      //          .startofpacket
-		.out_endofpacket   (pin_out_s1_agent_rsp_fifo_out_endofpacket),        //          .endofpacket
+		.in_data           (pio_out_s1_agent_rf_source_data),                  //        in.data
+		.in_valid          (pio_out_s1_agent_rf_source_valid),                 //          .valid
+		.in_ready          (pio_out_s1_agent_rf_source_ready),                 //          .ready
+		.in_startofpacket  (pio_out_s1_agent_rf_source_startofpacket),         //          .startofpacket
+		.in_endofpacket    (pio_out_s1_agent_rf_source_endofpacket),           //          .endofpacket
+		.out_data          (pio_out_s1_agent_rsp_fifo_out_data),               //       out.data
+		.out_valid         (pio_out_s1_agent_rsp_fifo_out_valid),              //          .valid
+		.out_ready         (pio_out_s1_agent_rsp_fifo_out_ready),              //          .ready
+		.out_startofpacket (pio_out_s1_agent_rsp_fifo_out_startofpacket),      //          .startofpacket
+		.out_endofpacket   (pio_out_s1_agent_rsp_fifo_out_endofpacket),        //          .endofpacket
 		.csr_address       (2'b00),                                            // (terminated)
 		.csr_read          (1'b0),                                             // (terminated)
 		.csr_write         (1'b0),                                             // (terminated)
@@ -1714,11 +1714,11 @@ module sys_mm_interconnect_1 (
 	);
 
 	sys_mm_interconnect_1_router_002 router_003 (
-		.sink_ready         (pin_out_s1_agent_rp_ready),                        //      sink.ready
-		.sink_valid         (pin_out_s1_agent_rp_valid),                        //          .valid
-		.sink_data          (pin_out_s1_agent_rp_data),                         //          .data
-		.sink_startofpacket (pin_out_s1_agent_rp_startofpacket),                //          .startofpacket
-		.sink_endofpacket   (pin_out_s1_agent_rp_endofpacket),                  //          .endofpacket
+		.sink_ready         (pio_out_s1_agent_rp_ready),                        //      sink.ready
+		.sink_valid         (pio_out_s1_agent_rp_valid),                        //          .valid
+		.sink_data          (pio_out_s1_agent_rp_data),                         //          .data
+		.sink_startofpacket (pio_out_s1_agent_rp_startofpacket),                //          .startofpacket
+		.sink_endofpacket   (pio_out_s1_agent_rp_endofpacket),                  //          .endofpacket
 		.clk                (clk_0_clk_clk),                                    //       clk.clk
 		.reset              (pulpino_0_reset_sink_reset_bridge_in_reset_reset), // clk_reset.reset
 		.src_ready          (router_003_src_ready),                             //       src.ready
@@ -2224,9 +2224,9 @@ module sys_mm_interconnect_1 (
 	) avalon_st_adapter_001 (
 		.in_clk_0_clk   (clk_0_clk_clk),                                    // in_clk_0.clk
 		.in_rst_0_reset (pulpino_0_reset_sink_reset_bridge_in_reset_reset), // in_rst_0.reset
-		.in_0_data      (pin_out_s1_agent_rdata_fifo_src_data),             //     in_0.data
-		.in_0_valid     (pin_out_s1_agent_rdata_fifo_src_valid),            //         .valid
-		.in_0_ready     (pin_out_s1_agent_rdata_fifo_src_ready),            //         .ready
+		.in_0_data      (pio_out_s1_agent_rdata_fifo_src_data),             //     in_0.data
+		.in_0_valid     (pio_out_s1_agent_rdata_fifo_src_valid),            //         .valid
+		.in_0_ready     (pio_out_s1_agent_rdata_fifo_src_ready),            //         .ready
 		.out_0_data     (avalon_st_adapter_001_out_0_data),                 //    out_0.data
 		.out_0_valid    (avalon_st_adapter_001_out_0_valid),                //         .valid
 		.out_0_ready    (avalon_st_adapter_001_out_0_ready),                //         .ready

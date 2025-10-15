@@ -47,7 +47,7 @@ assign gpio_in [31:14] = unused_gpio_in [17:0];
 sys u0 (
     .clk_clk                             (CLOCK_50),                             
     .master_0_master_reset_reset         (jtag_reset),         
-    .pin_out_external_connection_export  (gpio_out),  
+    .pio_out_external_connection_export  (gpio_out),  
     .pio_in_external_connection_export   (gpio_in),  
     .pulpino_0_config_testmode_i         (test_mode),         
     .pulpino_0_config_fetch_enable_i     (fetch_enable),

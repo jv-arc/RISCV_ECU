@@ -80,8 +80,8 @@ vlog       "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/
 vlog       "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/zeroriscy_prefetch_buffer.sv"                               -work pulpino_0                               
 vlog       "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/zeroriscy_register_file_ff.sv"                              -work pulpino_0                               
 vlog       "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/core_top.sv"                                                -work pulpino_0                               
+vlog -v2k5 "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pio_out.v"                                              -work pio_out                                 
 vlog -v2k5 "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pio_in.v"                                               -work pio_in                                  
-vlog -v2k5 "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pin_out.v"                                              -work pin_out                                 
 vlog -v2k5 "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_onchip_memory2_0.v"                                     -work onchip_memory2_0                        
 vlog -v2k5 "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_master_0.v"                                             -work master_0                                
 vlog       "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart.sv"                                 -work jtag_uart_0                             

@@ -5,9 +5,13 @@
   <columns>
    <connections preferredWidth="143" />
    <irq preferredWidth="34" />
+   <name preferredWidth="96" />
+   <description preferredWidth="30" />
+   <export preferredWidth="30" />
+   <inputclock preferredWidth="30" />
   </columns>
  </systemtable>
- <library expandedCategories="Library,Project" />
+ <library expandedCategories="Project,Library" />
  <window width="1100" height="800" x="237" y="94" />
  <hdlexample language="VERILOG" />
  <generation simulation="VERILOG" />

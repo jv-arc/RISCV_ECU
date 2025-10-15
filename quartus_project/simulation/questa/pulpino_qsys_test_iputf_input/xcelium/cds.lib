@@ -42,8 +42,8 @@ DEFINE irq_mapper                               ./libraries/irq_mapper/
 DEFINE mm_interconnect_1                        ./libraries/mm_interconnect_1/                       
 DEFINE mm_interconnect_0                        ./libraries/mm_interconnect_0/                       
 DEFINE pulpino_0                                ./libraries/pulpino_0/                               
+DEFINE pio_out                                  ./libraries/pio_out/                                 
 DEFINE pio_in                                   ./libraries/pio_in/                                  
-DEFINE pin_out                                  ./libraries/pin_out/                                 
 DEFINE onchip_memory2_0                         ./libraries/onchip_memory2_0/                        
 DEFINE master_0                                 ./libraries/master_0/                                
 DEFINE jtag_uart_0                              ./libraries/jtag_uart_0/                             

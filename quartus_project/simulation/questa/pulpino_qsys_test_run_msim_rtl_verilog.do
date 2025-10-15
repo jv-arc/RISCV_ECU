@@ -76,10 +76,10 @@ vlib pulpino_qsys_test_iputf_libs/mm_interconnect_0
 vmap mm_interconnect_0 ./pulpino_qsys_test_iputf_libs/mm_interconnect_0
 vlib pulpino_qsys_test_iputf_libs/pulpino_0
 vmap pulpino_0 ./pulpino_qsys_test_iputf_libs/pulpino_0
+vlib pulpino_qsys_test_iputf_libs/pio_out
+vmap pio_out ./pulpino_qsys_test_iputf_libs/pio_out
 vlib pulpino_qsys_test_iputf_libs/pio_in
 vmap pio_in ./pulpino_qsys_test_iputf_libs/pio_in
-vlib pulpino_qsys_test_iputf_libs/pin_out
-vmap pin_out ./pulpino_qsys_test_iputf_libs/pin_out
 vlib pulpino_qsys_test_iputf_libs/onchip_memory2_0
 vmap onchip_memory2_0 ./pulpino_qsys_test_iputf_libs/onchip_memory2_0
 vlib pulpino_qsys_test_iputf_libs/master_0
@@ -170,8 +170,8 @@ vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/ze
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/zeroriscy_prefetch_buffer.sv"                               -work pulpino_0                               
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/zeroriscy_register_file_ff.sv"                              -work pulpino_0                               
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/core_top.sv"                                                -work pulpino_0                               
+vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pio_out.v"                                              -work pio_out                                 
 vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pio_in.v"                                               -work pio_in                                  
-vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pin_out.v"                                              -work pin_out                                 
 vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_onchip_memory2_0.v"                                     -work onchip_memory2_0                        
 vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_master_0.v"                                             -work master_0                                
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart.sv"                                 -work jtag_uart_0                             
@@ -190,7 +190,7 @@ vmap sys sys
 
 vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb {/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb/tbench.sv}
 
-vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -L sys -L error_adapter_0 -L avalon_st_adapter -L rsp_mux_001 -L rsp_mux -L rsp_demux_003 -L rsp_demux -L cmd_mux_003 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L pulpino_0_avalon_master_lsu_limiter -L router_006 -L router_005 -L router_002 -L router_001 -L router -L jtag_uart_0_avalon_jtag_slave_agent -L pulpino_0_avalon_master_lsu_agent -L onchip_memory2_0_s1_translator -L pulpino_0_avalon_master_instr_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_1 -L mm_interconnect_0 -L pulpino_0 -L pio_in -L pin_out -L onchip_memory2_0 -L master_0 -L jtag_uart_0 -voptargs="+acc"  tbench
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -L sys -L error_adapter_0 -L avalon_st_adapter -L rsp_mux_001 -L rsp_mux -L rsp_demux_003 -L rsp_demux -L cmd_mux_003 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L pulpino_0_avalon_master_lsu_limiter -L router_006 -L router_005 -L router_002 -L router_001 -L router -L jtag_uart_0_avalon_jtag_slave_agent -L pulpino_0_avalon_master_lsu_agent -L onchip_memory2_0_s1_translator -L pulpino_0_avalon_master_instr_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_1 -L mm_interconnect_0 -L pulpino_0 -L pio_out -L pio_in -L onchip_memory2_0 -L master_0 -L jtag_uart_0 -voptargs="+acc"  tbench
 
 add wave *
 view structure

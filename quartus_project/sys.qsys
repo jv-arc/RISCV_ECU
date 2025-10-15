@@ -80,7 +80,23 @@
          type = "String";
       }
    }
-   element pin_out
+   element pio_in
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element pio_in.s1
+   {
+      datum baseAddress
+      {
+         value = "2097184";
+         type = "String";
+      }
+   }
+   element pio_out
    {
       datum _sortIndex
       {
@@ -88,7 +104,7 @@
          type = "int";
       }
    }
-   element pin_out.s1
+   element pio_out.s1
    {
       datum _lockedAddress
       {
@@ -99,14 +115,6 @@
       {
          value = "1048576";
          type = "String";
-      }
-   }
-   element pio_in
-   {
-      datum _sortIndex
-      {
-         value = "6";
-         type = "int";
       }
    }
    element pulpino_0
@@ -153,13 +161,13 @@
    type="reset"
    dir="start" />
  <interface
-   name="pin_out_external_connection"
-   internal="pin_out.external_connection"
+   name="pio_in_external_connection"
+   internal="pio_in.external_connection"
    type="conduit"
    dir="end" />
  <interface
-   name="pio_in_external_connection"
-   internal="pio_in.external_connection"
+   name="pio_out_external_connection"
+   internal="pio_out.external_connection"
    type="conduit"
    dir="end" />
  <interface
@@ -241,12 +249,12 @@
   <parameter name="useShallowMemBlocks" value="false" />
   <parameter name="writable" value="true" />
  </module>
- <module name="pin_out" kind="altera_avalon_pio" version="24.1" enabled="1">
+ <module name="pio_in" kind="altera_avalon_pio" version="24.1" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
   <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Output" />
+  <parameter name="direction" value="Input" />
   <parameter name="edgeType" value="RISING" />
   <parameter name="generateIRQ" value="false" />
   <parameter name="irqType" value="LEVEL" />
@@ -255,12 +263,12 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="32" />
  </module>
- <module name="pio_in" kind="altera_avalon_pio" version="24.1" enabled="1">
+ <module name="pio_out" kind="altera_avalon_pio" version="24.1" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="true" />
   <parameter name="captureEdge" value="false" />
   <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Input" />
+  <parameter name="direction" value="Output" />
   <parameter name="edgeType" value="RISING" />
   <parameter name="generateIRQ" value="false" />
   <parameter name="irqType" value="LEVEL" />
@@ -303,7 +311,7 @@
    kind="avalon"
    version="24.1"
    start="pulpino_0.avalon_master_lsu"
-   end="pin_out.s1">
+   end="pio_out.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x00200000" />
   <parameter name="defaultConnection" value="false" />
@@ -314,7 +322,7 @@
    start="pulpino_0.avalon_master_lsu"
    end="pio_in.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00200010" />
+  <parameter name="baseAddress" value="0x00200020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -345,7 +353,7 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection kind="clock" version="24.1" start="clk_0.clk" end="master_0.clk" />
- <connection kind="clock" version="24.1" start="clk_0.clk" end="pin_out.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="pio_out.clk" />
  <connection kind="clock" version="24.1" start="clk_0.clk" end="jtag_uart_0.clk" />
  <connection kind="clock" version="24.1" start="clk_0.clk" end="pio_in.clk" />
  <connection
@@ -374,7 +382,7 @@
    kind="reset"
    version="24.1"
    start="clk_0.clk_reset"
-   end="pin_out.reset" />
+   end="pio_out.reset" />
  <connection
    kind="reset"
    version="24.1"

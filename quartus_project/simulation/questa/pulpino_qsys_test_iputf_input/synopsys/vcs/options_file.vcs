@@ -71,8 +71,8 @@
   /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/zeroriscy_prefetch_buffer.sv \
   /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/zeroriscy_register_file_ff.sv \
   /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/core_top.sv \
+  /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pio_out.v \
   /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pio_in.v \
-  /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_pin_out.v \
   /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_onchip_memory2_0.v \
   /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_master_0.v \
   /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart.sv \

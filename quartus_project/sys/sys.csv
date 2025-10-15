@@ -1,12 +1,12 @@
-# system info sys on 2025.10.13.13:10:45
+# system info sys on 2025.10.14.21:06:37
 system_info:
 name,value
 DEVICE,5CSEMA5F31C6
 DEVICE_FAMILY,Cyclone V
-GENERATION_ID,1760371843
+GENERATION_ID,1760486794
 #
 #
-# Files generated for sys on 2025.10.13.13:10:45
+# Files generated for sys on 2025.10.14.21:06:37
 files:
 filepath,kind,attributes,module,is_top
 simulation/sys.v,VERILOG,,sys,true
@@ -19,8 +19,8 @@ simulation/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv,SYSTEM_VERILOG,,al
 simulation/submodules/sys_master_0.v,VERILOG,,sys_master_0,false
 simulation/submodules/sys_onchip_memory2_0.hex,HEX,,sys_onchip_memory2_0,false
 simulation/submodules/sys_onchip_memory2_0.v,VERILOG,,sys_onchip_memory2_0,false
-simulation/submodules/sys_pin_out.v,VERILOG,,sys_pin_out,false
 simulation/submodules/sys_pio_in.v,VERILOG,,sys_pio_in,false
+simulation/submodules/sys_pio_out.v,VERILOG,,sys_pio_out,false
 simulation/submodules/adbg_config.sv,SYSTEM_VERILOG,,core_top,false
 simulation/submodules/config.sv,SYSTEM_VERILOG,,core_top,false
 simulation/submodules/zeroriscy_config.sv,SYSTEM_VERILOG,,core_top,false
@@ -117,8 +117,8 @@ sys.master_0.b2p_adapter,sys_master_0_b2p_adapter
 sys.master_0.p2b_adapter,sys_master_0_p2b_adapter
 sys.master_0.rst_controller,altera_reset_controller
 sys.onchip_memory2_0,sys_onchip_memory2_0
-sys.pin_out,sys_pin_out
 sys.pio_in,sys_pio_in
+sys.pio_out,sys_pio_out
 sys.pulpino_0,core_top
 sys.mm_interconnect_0,sys_mm_interconnect_0
 sys.mm_interconnect_0.pulpino_0_avalon_master_instr_translator,altera_merlin_master_translator
@@ -127,19 +127,19 @@ sys.mm_interconnect_1,sys_mm_interconnect_1
 sys.mm_interconnect_1.pulpino_0_avalon_master_lsu_translator,altera_merlin_master_translator
 sys.mm_interconnect_1.master_0_master_translator,altera_merlin_master_translator
 sys.mm_interconnect_1.jtag_uart_0_avalon_jtag_slave_translator,altera_merlin_slave_translator
-sys.mm_interconnect_1.pin_out_s1_translator,altera_merlin_slave_translator
+sys.mm_interconnect_1.pio_out_s1_translator,altera_merlin_slave_translator
 sys.mm_interconnect_1.pio_in_s1_translator,altera_merlin_slave_translator
 sys.mm_interconnect_1.onchip_memory2_0_s2_translator,altera_merlin_slave_translator
 sys.mm_interconnect_1.pulpino_0_avalon_slave_debug_translator,altera_merlin_slave_translator
 sys.mm_interconnect_1.pulpino_0_avalon_master_lsu_agent,altera_merlin_master_agent
 sys.mm_interconnect_1.master_0_master_agent,altera_merlin_master_agent
 sys.mm_interconnect_1.jtag_uart_0_avalon_jtag_slave_agent,altera_merlin_slave_agent
-sys.mm_interconnect_1.pin_out_s1_agent,altera_merlin_slave_agent
+sys.mm_interconnect_1.pio_out_s1_agent,altera_merlin_slave_agent
 sys.mm_interconnect_1.pio_in_s1_agent,altera_merlin_slave_agent
 sys.mm_interconnect_1.onchip_memory2_0_s2_agent,altera_merlin_slave_agent
 sys.mm_interconnect_1.pulpino_0_avalon_slave_debug_agent,altera_merlin_slave_agent
 sys.mm_interconnect_1.jtag_uart_0_avalon_jtag_slave_agent_rsp_fifo,altera_avalon_sc_fifo
-sys.mm_interconnect_1.pin_out_s1_agent_rsp_fifo,altera_avalon_sc_fifo
+sys.mm_interconnect_1.pio_out_s1_agent_rsp_fifo,altera_avalon_sc_fifo
 sys.mm_interconnect_1.pio_in_s1_agent_rsp_fifo,altera_avalon_sc_fifo
 sys.mm_interconnect_1.onchip_memory2_0_s2_agent_rsp_fifo,altera_avalon_sc_fifo
 sys.mm_interconnect_1.pulpino_0_avalon_slave_debug_agent_rsp_fifo,altera_avalon_sc_fifo

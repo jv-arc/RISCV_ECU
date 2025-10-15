@@ -18,16 +18,27 @@ pulpino_qsys_test dut(
 );
 
 initial begin
+    // condicoes iniciais 
+    clk50 = 0;
     reset_n = 1'b0;
-    #10ns reset_n = 1'b1;
+    
+    
+    #20ns 
+
+    // liga o core
+    reset_n = 1'b1;
+
+    
+    #1800ns
+
+
+    // Fim
+    $stop;
+
 end
 
-initial begin
-    clk50 = 0;
-
-    forever begin
+always begin
         #10ns clk50 = ~clk50;
-    end
 end
 
 endmodule
