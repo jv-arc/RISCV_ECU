@@ -1,12 +1,12 @@
 
-module pulpino_qsys_test #(parameter BOOT_ADDR = 32'h00008000)(
+module pulpino_qsys_test (
     input CLOCK_50,
     input [3:0] KEY,
     input [9:0] SW,
     output [9:0] LEDR
 );
 
-
+parameter BOOT_ADDR = 32'h00008000;
 
 // Pulpino Config
 wire test_mode;

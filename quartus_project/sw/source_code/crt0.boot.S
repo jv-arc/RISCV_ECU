@@ -22,7 +22,7 @@ default_exc_handler:
 reset_handler:
   /* set all registers to zero */
   mv  x1, x0
-  mv  x2, x1
+  mv  x2, x0
   mv  x3, x1
   mv  x4, x1
   mv  x5, x1

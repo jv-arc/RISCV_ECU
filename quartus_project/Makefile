@@ -1,20 +1,63 @@
-# ========================================
-# Makefile to facilitate quartus workflow
-# ========================================
 
-PROJECT_NAME=pulpino_qsys_test
+# ============================================
+# ----------------QUARTUS STUB---------------
+# ============================================
+#  Stub Makefile that just point to the root
+#  one for consistency
+# ============================================
+
+root=$(shell pwd)/..
+
+compile-quartus:
+	$(MAKE) -C $(root) $@
+
+reload-memory:
+	$(MAKE) -C $(root) $@
+
+auto-testbench:
+	$(MAKE) -C $(root) $@
+
+open-quartus:
+	$(MAKE) -C $(root) $@
+
+open-qsys:
+	$(MAKE) -C $(root) $@
+
+compile-testbench:
+	$(MAKE) -C $(root) $@
+
+program-sof:
+	$(MAKE) -C $(root) $@
+
+synthesis:
+	$(MAKE) -C $(root) $@
+
+fitting:
+	$(MAKE) -C $(root) $@
+
+assembly:
+	$(MAKE) -C $(root) $@
+
+archive:
+	$(MAKE) -C $(root) $@
+
+clean-all-project:
+	$(MAKE) -C $(root) $@
+
+clean-project:
+	$(MAKE) -C $(root) $@
+
+list-devices:
+	$(MAKE) -C $(root) $@
+
+clean-synthesis:
+	$(MAKE) -C $(root) $@
+
+clean-simulation:
+	$(MAKE) -C $(root) $@
 
 
-all: compile run_tb
-
-compile: 
-	quartus_sh --flow compile $(PROJECT_NAME)
-
-reload_memory: 
-	quartus_cdb $(PROJECT_NAME) -c $(PROJECT_NAME) --update_mif  
-
-run_tb:
-	vsim -do simulation/questa/pulpino_qsys_test_run_msim_rtl_verilog.do   
-
-
-.PHONY: run_tb reload_memory compile
+.PHONY: auto-testbench reload_memory compile-quartus open-qsys \
+        timing-analysis check-timing reports power-analysis \
+        verify-device quick-check help check-project-exists \
+        smart-compile synthesis fitting assembly

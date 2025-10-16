@@ -8,8 +8,8 @@ toolchain/*
 !toolchain/.gitkeep
 
 # stamps used by makefile
-.stamps/*
-!.stamps/.gitkeep
+.make_utils/stamps/*
+!.make_utils/stamps/.gitkeep
 
 # files from the original risc-gnu-toolchain
 riscv-gnu-toolchain/
