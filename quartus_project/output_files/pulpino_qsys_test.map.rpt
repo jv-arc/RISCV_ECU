@@ -1,5 +1,5 @@
 Analysis & Synthesis report for pulpino_qsys_test
-Fri Oct 17 08:57:35 2025
+Mon Oct 20 10:48:20 2025
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -240,7 +240,7 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Fri Oct 17 08:57:35 2025           ;
+; Analysis & Synthesis Status     ; Successful - Mon Oct 20 10:48:20 2025           ;
 ; Quartus Prime Version           ; 24.1std.0 Build 1077 03/04/2025 SC Lite Edition ;
 ; Revision Name                   ; pulpino_qsys_test                               ;
 ; Top-level Entity Name           ; pulpino_qsys_test                               ;
@@ -361,7 +361,7 @@ on the Quartus Prime software download page.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.0%      ;
+;     Processor 2            ;   0.1%      ;
 ;     Processor 3            ;   0.0%      ;
 ;     Processor 4            ;   0.0%      ;
 +----------------------------+-------------+
@@ -4916,7 +4916,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +------------------+--------------+
 ; Partition Name   ; Elapsed Time ;
 +------------------+--------------+
-; Top              ; 00:00:18     ;
+; Top              ; 00:00:19     ;
 ; sld_hub:auto_hub ; 00:00:00     ;
 +------------------+--------------+
 
@@ -4927,31 +4927,31 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
-    Info: Processing started: Fri Oct 17 08:56:55 2025
+    Info: Processing started: Mon Oct 20 10:47:38 2025
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off pulpino_qsys_test -c pulpino_qsys_test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12248): Elaborating Platform Designer system entity "sys.qsys"
-Info (12250): 2025.10.17.08:57:01 Progress: Loading quartus_project/sys.qsys
-Info (12250): 2025.10.17.08:57:01 Progress: Reading input file
-Info (12250): 2025.10.17.08:57:01 Progress: Adding clk_0 [clock_source 24.1]
-Info (12250): 2025.10.17.08:57:02 Progress: Parameterizing module clk_0
-Info (12250): 2025.10.17.08:57:02 Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 24.1]
-Info (12250): 2025.10.17.08:57:02 Progress: Parameterizing module jtag_uart_0
-Info (12250): 2025.10.17.08:57:02 Progress: Adding master_0 [altera_jtag_avalon_master 24.1]
-Info (12250): 2025.10.17.08:57:02 Progress: Parameterizing module master_0
-Info (12250): 2025.10.17.08:57:02 Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 24.1]
-Info (12250): 2025.10.17.08:57:02 Progress: Parameterizing module onchip_memory2_0
-Info (12250): 2025.10.17.08:57:02 Progress: Adding pio_in [altera_avalon_pio 24.1]
-Info (12250): 2025.10.17.08:57:02 Progress: Parameterizing module pio_in
-Info (12250): 2025.10.17.08:57:02 Progress: Adding pio_out [altera_avalon_pio 24.1]
-Info (12250): 2025.10.17.08:57:02 Progress: Parameterizing module pio_out
-Info (12250): 2025.10.17.08:57:02 Progress: Adding pulpino_0 [pulpino 1.0]
-Info (12250): 2025.10.17.08:57:02 Progress: Parameterizing module pulpino_0
-Info (12250): 2025.10.17.08:57:02 Progress: Building connections
-Info (12250): 2025.10.17.08:57:02 Progress: Parameterizing connections
-Info (12250): 2025.10.17.08:57:02 Progress: Validating
-Info (12250): 2025.10.17.08:57:02 Progress: Done reading input file
+Info (12250): 2025.10.20.10:47:45 Progress: Loading quartus_project/sys.qsys
+Info (12250): 2025.10.20.10:47:45 Progress: Reading input file
+Info (12250): 2025.10.20.10:47:45 Progress: Adding clk_0 [clock_source 24.1]
+Info (12250): 2025.10.20.10:47:45 Progress: Parameterizing module clk_0
+Info (12250): 2025.10.20.10:47:45 Progress: Adding jtag_uart_0 [altera_avalon_jtag_uart 24.1]
+Info (12250): 2025.10.20.10:47:45 Progress: Parameterizing module jtag_uart_0
+Info (12250): 2025.10.20.10:47:45 Progress: Adding master_0 [altera_jtag_avalon_master 24.1]
+Info (12250): 2025.10.20.10:47:45 Progress: Parameterizing module master_0
+Info (12250): 2025.10.20.10:47:45 Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 24.1]
+Info (12250): 2025.10.20.10:47:45 Progress: Parameterizing module onchip_memory2_0
+Info (12250): 2025.10.20.10:47:45 Progress: Adding pio_in [altera_avalon_pio 24.1]
+Info (12250): 2025.10.20.10:47:45 Progress: Parameterizing module pio_in
+Info (12250): 2025.10.20.10:47:45 Progress: Adding pio_out [altera_avalon_pio 24.1]
+Info (12250): 2025.10.20.10:47:45 Progress: Parameterizing module pio_out
+Info (12250): 2025.10.20.10:47:45 Progress: Adding pulpino_0 [pulpino 1.0]
+Info (12250): 2025.10.20.10:47:45 Progress: Parameterizing module pulpino_0
+Info (12250): 2025.10.20.10:47:45 Progress: Building connections
+Info (12250): 2025.10.20.10:47:45 Progress: Parameterizing connections
+Info (12250): 2025.10.20.10:47:45 Progress: Validating
+Info (12250): 2025.10.20.10:47:46 Progress: Done reading input file
 Info (12250): Sys.jtag_uart_0: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
 Info (12250): Sys.pio_in: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
 Info (12250): Sys: Generating "sys" for QUARTUS_SYNTH
@@ -4962,15 +4962,15 @@ Info (12250): Interconnect is inserted between master pulpino_0.avalon_master_in
 Info (12250): Jtag_uart_0: "sys" instantiated altera_avalon_jtag_uart "jtag_uart_0"
 Info (12250): Master_0: "sys" instantiated altera_jtag_avalon_master "master_0"
 Info (12250): Onchip_memory2_0: Starting RTL generation for module 'sys_onchip_memory2_0'
-Info (12250): Onchip_memory2_0:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=sys_onchip_memory2_0 --dir=/tmp/alt0378_4735229894139844067.dir/0003_onchip_memory2_0_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0378_4735229894139844067.dir/0003_onchip_memory2_0_gen//sys_onchip_memory2_0_component_configuration.pl  --do_build_sim=0  ]
+Info (12250): Onchip_memory2_0:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=sys_onchip_memory2_0 --dir=/tmp/alt0381_3852249512726929799.dir/0003_onchip_memory2_0_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0381_3852249512726929799.dir/0003_onchip_memory2_0_gen//sys_onchip_memory2_0_component_configuration.pl  --do_build_sim=0  ]
 Info (12250): Onchip_memory2_0: Done RTL generation for module 'sys_onchip_memory2_0'
 Info (12250): Onchip_memory2_0: "sys" instantiated altera_avalon_onchip_memory2 "onchip_memory2_0"
 Info (12250): Pio_in: Starting RTL generation for module 'sys_pio_in'
-Info (12250): Pio_in:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sys_pio_in --dir=/tmp/alt0378_4735229894139844067.dir/0004_pio_in_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0378_4735229894139844067.dir/0004_pio_in_gen//sys_pio_in_component_configuration.pl  --do_build_sim=0  ]
+Info (12250): Pio_in:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sys_pio_in --dir=/tmp/alt0381_3852249512726929799.dir/0004_pio_in_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0381_3852249512726929799.dir/0004_pio_in_gen//sys_pio_in_component_configuration.pl  --do_build_sim=0  ]
 Info (12250): Pio_in: Done RTL generation for module 'sys_pio_in'
 Info (12250): Pio_in: "sys" instantiated altera_avalon_pio "pio_in"
 Info (12250): Pio_out: Starting RTL generation for module 'sys_pio_out'
-Info (12250): Pio_out:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sys_pio_out --dir=/tmp/alt0378_4735229894139844067.dir/0005_pio_out_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0378_4735229894139844067.dir/0005_pio_out_gen//sys_pio_out_component_configuration.pl  --do_build_sim=0  ]
+Info (12250): Pio_out:   Generation command is [exec /opt/intelFPGA/24.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA/24.1/quartus/linux64/perl/lib -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA/24.1/quartus/sopc_builder/bin -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA/24.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=sys_pio_out --dir=/tmp/alt0381_3852249512726929799.dir/0005_pio_out_gen/ --quartus_dir=/opt/intelFPGA/24.1/quartus --verilog --config=/tmp/alt0381_3852249512726929799.dir/0005_pio_out_gen//sys_pio_out_component_configuration.pl  --do_build_sim=0  ]
 Info (12250): Pio_out: Done RTL generation for module 'sys_pio_out'
 Info (12250): Pio_out: "sys" instantiated altera_avalon_pio "pio_out"
 Info (12250): Pulpino_0: "sys" instantiated pulpino "pulpino_0"
@@ -5375,9 +5375,6 @@ Info (12021): Found 0 design units, including 0 entities, in source file db/ip/s
 Info (15248): File "/home/jvctr/0/POLIno_qsys/quartus_project/db/ip/sys/sys.v" is a duplicate of already analyzed file "/home/jvctr/0/POLIno_qsys/quartus_project/sys/synthesis/sys.v" (same filename, same library name and same md5 digest). Skipping analysis of this file.
 Info (12021): Found 0 design units, including 0 entities, in source file db/ip/sys/sys.v
 Info (12127): Elaborating entity "pulpino_qsys_test" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at pulpino_qsys_test.v(29): object "unused_gpio_out" assigned a value but never read File: /home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v Line: 29
-Warning (10858): Verilog HDL warning at pulpino_qsys_test.v(37): object unused_gpio_in used but never assigned File: /home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v Line: 37
-Warning (10030): Net "unused_gpio_in[17..0]" at pulpino_qsys_test.v(37) has no driver or initial value, using a default initial value '0' File: /home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v Line: 37
 Info (12128): Elaborating entity "sys" for hierarchy "sys:u0" File: /home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v Line: 57
 Info (12128): Elaborating entity "altera_avalon_jtag_uart" for hierarchy "sys:u0|altera_avalon_jtag_uart:jtag_uart_0" File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v Line: 112
 Info (12128): Elaborating entity "altera_avalon_jtag_uart_scfifo_w" for hierarchy "sys:u0|altera_avalon_jtag_uart:jtag_uart_0|altera_avalon_jtag_uart_scfifo_w:altera_avalon_jtag_uart_scfifo_w" File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/synthesis/submodules/altera_avalon_jtag_uart.sv Line: 133
@@ -5581,7 +5578,7 @@ Info (12128): Elaborating entity "sys_mm_interconnect_1_avalon_st_adapter_error_
 Info (12128): Elaborating entity "sys_irq_mapper" for hierarchy "sys:u0|sys_irq_mapper:irq_mapper" File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v Line: 296
 Info (12128): Elaborating entity "altera_reset_controller" for hierarchy "sys:u0|altera_reset_controller:rst_controller" File: /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v Line: 359
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2025.10.17.08:57:12 Progress: Loading sld1d1a74eb/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2025.10.20.10:47:55 Progress: Loading sld1d1a74eb/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -5653,11 +5650,11 @@ Info (21057): Implemented 7154 device resources after synthesis - the final reso
     Info (21061): Implemented 7083 logic cells
     Info (21064): Implemented 40 RAM segments
     Info (21062): Implemented 1 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 19 warnings
-    Info: Peak virtual memory: 614 megabytes
-    Info: Processing ended: Fri Oct 17 08:57:35 2025
-    Info: Elapsed time: 00:00:40
-    Info: Total CPU time (on all processors): 00:01:09
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 16 warnings
+    Info: Peak virtual memory: 605 megabytes
+    Info: Processing ended: Mon Oct 20 10:48:20 2025
+    Info: Elapsed time: 00:00:42
+    Info: Total CPU time (on all processors): 00:01:13
 
 
 +------------------------------------------+
