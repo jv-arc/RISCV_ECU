@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="sys" kind="sys" version="1.0" fabric="QSYS">
  <!-- Format version 24.1 1077 (Future versions may contain additional information.) -->
- <!-- 2025.10.17.08:57:03 -->
+ <!-- 2025.10.20.11:05:21 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1760702222</value>
+  <value>1760969121</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -3082,7 +3082,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.CAPTURE</name>
-   <value>0</value>
+   <value>1</value>
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.DATA_WIDTH</name>
@@ -3098,7 +3098,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.EDGE_TYPE</name>
-   <value>NONE</value>
+   <value>RISING</value>
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.FREQ</name>
@@ -3118,7 +3118,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.IRQ_TYPE</name>
-   <value>LEVEL</value>
+   <value>EDGE</value>
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.RESET_VALUE</name>
@@ -3142,15 +3142,19 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.altr,interrupt-type</name>
-   <value>4</value>
+   <value>1</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.altr,interrupt_type</name>
-   <value>4</value>
+   <value>1</value>
+  </assignment>
+  <assignment>
+   <name>embeddedsw.dts.params.edge_type</name>
+   <value>0</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.level_trigger</name>
-   <value>1</value>
+   <value>0</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.resetvalue</name>
@@ -3164,7 +3168,7 @@ the requested settings for a module instance. -->
    <type>boolean</type>
    <value>false</value>
    <derived>false</derived>
-   <enabled>false</enabled>
+   <enabled>true</enabled>
    <visible>true</visible>
    <valid>true</valid>
   </parameter>
@@ -3178,7 +3182,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="captureEdge">
    <type>boolean</type>
-   <value>false</value>
+   <value>true</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -3196,7 +3200,7 @@ the requested settings for a module instance. -->
    <type>java.lang.String</type>
    <value>RISING</value>
    <derived>false</derived>
-   <enabled>false</enabled>
+   <enabled>true</enabled>
    <visible>true</visible>
    <valid>true</valid>
   </parameter>
@@ -3210,7 +3214,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="irqType">
    <type>java.lang.String</type>
-   <value>LEVEL</value>
+   <value>EDGE</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -3292,7 +3296,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_capture">
    <type>boolean</type>
-   <value>false</value>
+   <value>true</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -3300,7 +3304,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_edge_type">
    <type>java.lang.String</type>
-   <value>NONE</value>
+   <value>RISING</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -3308,7 +3312,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_irq_type">
    <type>java.lang.String</type>
-   <value>LEVEL</value>
+   <value>EDGE</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -3860,7 +3864,7 @@ particular module parameters. Connection points and their
 parameters are a RESULT of the module parameters. -->
    <assignment>
     <name>embeddedsw.dts.irq.tx_type</name>
-    <value>ACTIVE_HIGH</value>
+    <value>RISING_EDGE</value>
    </assignment>
    <parameter name="associatedAddressablePoint">
     <type>com.altera.entityinterfaces.IConnectionPoint</type>

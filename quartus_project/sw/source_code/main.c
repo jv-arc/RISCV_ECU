@@ -18,42 +18,27 @@
 
 // 0x0EX
 void enable_irq(void){    
-    //Status LED: enable irq
-    REG(PIO_OUT) = 0x000000E0;
-
     // Clear enabled interruptions
     REG(ICP)     = 0xFFFFFFFF;
 
     // Set IRP mask for interrupt 1 (bit 2)
     REG(IRP)     = 0x00000002;
-    REG(PIO_OUT) = 0x000000E1;
 
     // Set mstatus to 8
     __asm__(
         "li x6, 0x00000008\n"
         "csrs mstatus, x6"
     );
-    REG(PIO_OUT) = 0x000000E2;
-    REG(PIO_OUT) = 0x00000000;
-
 }
 
-// IRQ_INT 0  0x0FX
 void __attribute__((interrupt)) jtag_interrupt_handler(void){
-    
-    REG(PIO_OUT) = 0x0000000F0;
     REG(ICP) = (1 << 0);
-    REG(PIO_OUT) = 0x0000000F1;
-    REG(PIO_OUT) = 0x000000000;
 }
 
-// IRQ_INT 1  0x1FX
 void __attribute__((interrupt)) interrupt_test_handler(void){
-    REG(PIO_OUT)    = 0x000001F0;
     REG(PIO_IN+12)  = 0xFFFFFFFF;
     REG(ICP) = (1 << 1);
-    REG(PIO_OUT)    = 0x000001F1;
-    REG(PIO_OUT)    = 0x00000000;
+    REG(PIO_OUT)    = 0x00000000F;
 
 }
 
@@ -61,22 +46,15 @@ void __attribute__((interrupt)) interrupt_test_handler(void){
 // main()   0x0AX
 int main(int argc, char **argv){
     
-    REG(PIO_OUT)    = 0x000000A0;
-    
     // Set INT mask
     REG(PIO_IN+8)   = 0x00003FF0;
-    REG(PIO_OUT)    = 0x000000A1;
-
 
     // Clear Edge detect
     REG(PIO_IN+12)  = 0x00003FF0;
-    REG(PIO_OUT)    = 0x000000A2;
-    
+
 
     // Call enable_rq
     enable_irq();
-    REG(PIO_OUT)    = 0x000000A3;
-    REG(PIO_OUT)    = 0x00000000;
 
     while (1);
     return 0;
