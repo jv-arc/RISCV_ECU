@@ -8,10 +8,10 @@ vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux_001                             
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_mux.sv"                           -work rsp_mux                                 
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux                                 
-vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_demux_003.sv"                     -work rsp_demux_003                           
+vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_demux_004.sv"                     -work rsp_demux_004                           
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_demux.sv"                         -work rsp_demux                               
-vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_mux_003.sv"                       -work cmd_mux_003                             
-vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux_003                             
+vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_mux_004.sv"                       -work cmd_mux_004                             
+vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux_004                             
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_mux.sv"                           -work cmd_mux                                 
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux                                 
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_demux_001.sv"                     -work cmd_demux_001                           
@@ -20,8 +20,8 @@ vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_reorder_memory.sv"                            -work pulpino_0_avalon_master_lsu_limiter     
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_sc_fifo.v"                                    -work pulpino_0_avalon_master_lsu_limiter     
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_pipeline_base.v"                           -work pulpino_0_avalon_master_lsu_limiter     
+vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_007.sv"                        -work router_007                              
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_006.sv"                        -work router_006                              
-vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_005.sv"                        -work router_005                              
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_002.sv"                        -work router_002                              
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_001.sv"                        -work router_001                              
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router.sv"                            -work router                                  
@@ -52,6 +52,7 @@ vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_irq_mapper.sv"                                          -work irq_mapper                              
 vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1.v"                                    -work mm_interconnect_1                       
 vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_0.v"                                    -work mm_interconnect_0                       
+vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_timer_0.v"                                              -work timer_0                                 
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/adbg_config.sv"                                             -work pulpino_0                               
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/config.sv"                                                  -work pulpino_0                               
 vlogan +v2k -sverilog "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/zeroriscy_config.sv"                                        -work pulpino_0                               

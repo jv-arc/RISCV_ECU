@@ -93,9 +93,12 @@ main_entry:
 
   // Aditional INT1
   .org 0x04
-  jal x0, interrupt_test_handler
+  jal x0, null_handler
 
-  .rept 29
+  .org 0x08
+  jal x0, interrupt_test_handler
+  
+  .rept 25
   nop
   .endr
   jal x0, default_exc_handler

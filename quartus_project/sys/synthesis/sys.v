@@ -62,6 +62,11 @@ module sys (
 	wire   [1:0] mm_interconnect_1_pio_in_s1_address;                          // mm_interconnect_1:pio_in_s1_address -> pio_in:address
 	wire         mm_interconnect_1_pio_in_s1_write;                            // mm_interconnect_1:pio_in_s1_write -> pio_in:write_n
 	wire  [31:0] mm_interconnect_1_pio_in_s1_writedata;                        // mm_interconnect_1:pio_in_s1_writedata -> pio_in:writedata
+	wire         mm_interconnect_1_timer_0_s1_chipselect;                      // mm_interconnect_1:timer_0_s1_chipselect -> timer_0:chipselect
+	wire  [15:0] mm_interconnect_1_timer_0_s1_readdata;                        // timer_0:readdata -> mm_interconnect_1:timer_0_s1_readdata
+	wire   [2:0] mm_interconnect_1_timer_0_s1_address;                         // mm_interconnect_1:timer_0_s1_address -> timer_0:address
+	wire         mm_interconnect_1_timer_0_s1_write;                           // mm_interconnect_1:timer_0_s1_write -> timer_0:write_n
+	wire  [15:0] mm_interconnect_1_timer_0_s1_writedata;                       // mm_interconnect_1:timer_0_s1_writedata -> timer_0:writedata
 	wire         mm_interconnect_1_onchip_memory2_0_s2_chipselect;             // mm_interconnect_1:onchip_memory2_0_s2_chipselect -> onchip_memory2_0:chipselect2
 	wire  [31:0] mm_interconnect_1_onchip_memory2_0_s2_readdata;               // onchip_memory2_0:readdata2 -> mm_interconnect_1:onchip_memory2_0_s2_readdata
 	wire  [12:0] mm_interconnect_1_onchip_memory2_0_s2_address;                // mm_interconnect_1:onchip_memory2_0_s2_address -> onchip_memory2_0:address2
@@ -78,8 +83,9 @@ module sys (
 	wire  [31:0] mm_interconnect_1_pulpino_0_avalon_slave_debug_writedata;     // mm_interconnect_1:pulpino_0_avalon_slave_debug_writedata -> pulpino_0:debug_wdata
 	wire         irq_mapper_receiver0_irq;                                     // jtag_uart_0:av_irq -> irq_mapper:receiver0_irq
 	wire         irq_mapper_receiver1_irq;                                     // pio_in:irq -> irq_mapper:receiver1_irq
+	wire         irq_mapper_receiver2_irq;                                     // timer_0:irq -> irq_mapper:receiver2_irq
 	wire  [31:0] pulpino_0_interrupt_receiver_irq;                             // irq_mapper:sender_irq -> pulpino_0:irq_i
-	wire         rst_controller_reset_out_reset;                               // rst_controller:reset_out -> [irq_mapper:reset, jtag_uart_0:rst_n, mm_interconnect_0:pulpino_0_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_1:master_0_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_1:pulpino_0_reset_sink_reset_bridge_in_reset_reset, onchip_memory2_0:reset, pio_in:reset_n, pio_out:reset_n, pulpino_0:rst_n, rst_translator:in_reset]
+	wire         rst_controller_reset_out_reset;                               // rst_controller:reset_out -> [irq_mapper:reset, jtag_uart_0:rst_n, mm_interconnect_0:pulpino_0_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_1:master_0_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_1:pulpino_0_reset_sink_reset_bridge_in_reset_reset, onchip_memory2_0:reset, pio_in:reset_n, pio_out:reset_n, pulpino_0:rst_n, rst_translator:in_reset, timer_0:reset_n]
 	wire         rst_controller_reset_out_reset_req;                           // rst_controller:reset_req -> [onchip_memory2_0:reset_req, rst_translator:reset_req_in]
 
 	altera_avalon_jtag_uart #(
@@ -215,6 +221,17 @@ module sys (
 		.debug_wdata    (mm_interconnect_1_pulpino_0_avalon_slave_debug_writedata)      //                    .writedata
 	);
 
+	sys_timer_0 timer_0 (
+		.clk        (clk_clk),                                 //   clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),         // reset.reset_n
+		.address    (mm_interconnect_1_timer_0_s1_address),    //    s1.address
+		.writedata  (mm_interconnect_1_timer_0_s1_writedata),  //      .writedata
+		.readdata   (mm_interconnect_1_timer_0_s1_readdata),   //      .readdata
+		.chipselect (mm_interconnect_1_timer_0_s1_chipselect), //      .chipselect
+		.write_n    (~mm_interconnect_1_timer_0_s1_write),     //      .write_n
+		.irq        (irq_mapper_receiver2_irq)                 //   irq.irq
+	);
+
 	sys_mm_interconnect_0 mm_interconnect_0 (
 		.clk_0_clk_clk                                    (clk_clk),                                          //                                  clk_0_clk.clk
 		.pulpino_0_reset_sink_reset_bridge_in_reset_reset (rst_controller_reset_out_reset),                   // pulpino_0_reset_sink_reset_bridge_in_reset.reset
@@ -284,7 +301,12 @@ module sys (
 		.pulpino_0_avalon_slave_debug_readdata            (mm_interconnect_1_pulpino_0_avalon_slave_debug_readdata),      //                                           .readdata
 		.pulpino_0_avalon_slave_debug_writedata           (mm_interconnect_1_pulpino_0_avalon_slave_debug_writedata),     //                                           .writedata
 		.pulpino_0_avalon_slave_debug_readdatavalid       (mm_interconnect_1_pulpino_0_avalon_slave_debug_readdatavalid), //                                           .readdatavalid
-		.pulpino_0_avalon_slave_debug_waitrequest         (mm_interconnect_1_pulpino_0_avalon_slave_debug_waitrequest)    //                                           .waitrequest
+		.pulpino_0_avalon_slave_debug_waitrequest         (mm_interconnect_1_pulpino_0_avalon_slave_debug_waitrequest),   //                                           .waitrequest
+		.timer_0_s1_address                               (mm_interconnect_1_timer_0_s1_address),                         //                                 timer_0_s1.address
+		.timer_0_s1_write                                 (mm_interconnect_1_timer_0_s1_write),                           //                                           .write
+		.timer_0_s1_readdata                              (mm_interconnect_1_timer_0_s1_readdata),                        //                                           .readdata
+		.timer_0_s1_writedata                             (mm_interconnect_1_timer_0_s1_writedata),                       //                                           .writedata
+		.timer_0_s1_chipselect                            (mm_interconnect_1_timer_0_s1_chipselect)                       //                                           .chipselect
 	);
 
 	sys_irq_mapper irq_mapper (
@@ -292,6 +314,7 @@ module sys (
 		.reset         (rst_controller_reset_out_reset),   // clk_reset.reset
 		.receiver0_irq (irq_mapper_receiver0_irq),         // receiver0.irq
 		.receiver1_irq (irq_mapper_receiver1_irq),         // receiver1.irq
+		.receiver2_irq (irq_mapper_receiver2_irq),         // receiver2.irq
 		.sender_irq    (pulpino_0_interrupt_receiver_irq)  //    sender.irq
 	);
 

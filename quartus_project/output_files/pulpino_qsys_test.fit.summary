@@ -1,17 +1,17 @@
-Fitter Status : Successful - Mon Oct 20 11:06:50 2025
+Fitter Status : Successful - Mon Oct 20 13:09:01 2025
 Quartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 Revision Name : pulpino_qsys_test
-Top-level Entity Name : pulpino_qsys_test
+Top-level Entity Name : tbench
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 3,171 / 32,070 ( 10 % )
-Total registers : 3748
-Total pins : 25 / 457 ( 5 % )
+Logic utilization (in ALMs) : 215 / 32,070 ( < 1 % )
+Total registers : 286
+Total pins : 0 / 457 ( 0 % )
 Total virtual pins : 0
-Total block memory bits : 262,656 / 4,065,280 ( 6 % )
-Total RAM Blocks : 33 / 397 ( 8 % )
-Total DSP Blocks : 1 / 87 ( 1 % )
+Total block memory bits : 0 / 4,065,280 ( 0 % )
+Total RAM Blocks : 0 / 397 ( 0 % )
+Total DSP Blocks : 0 / 87 ( 0 % )
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
 Total HSSI TX PCSs : 0

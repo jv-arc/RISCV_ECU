@@ -7,28 +7,81 @@
 #define PIO_OUT                             0x00200000
 #define PIO_IN                              0x00200020
 
+#define TIMER                               0x00200040
+
 #define PULPINO_BASE                        0x10000000
 #define SOC_PERIPHERALS_BASE              ( 0x0A100000 + PULPINO_BASE )
 #define EVENT_UNIT_BASE                   ( 0X00004000 + SOC_PERIPHERALS_BASE )
-#define IRP                               ( 0x00000000 + EVENT_UNIT_BASE)
-#define ICP                               ( 0x0000000C + EVENT_UNIT_BASE)
+#define IRP                               ( 0x00000000 + EVENT_UNIT_BASE )
+#define ICP                               ( 0x0000000C + EVENT_UNIT_BASE )
+
+/*
+    Timer interrupt is configured for the interrupt number 2
+
+*/
 
 
 
+//0x0A_
+void enable_timer_interruption(void){
+    REG(PIO_OUT) = 0x0A0;
 
-// 0x0EX
-void enable_irq(void){    
+
+    // Stop counter
+    REG(TIMER+0x4) |= (1<<3);
+
+
+    REG(PIO_OUT) = 0x0A1;
+
+    // set time period
+    uint32_t period_full = 50 -1;
+    REG(TIMER+0x8) |=  (  period_full & 0xFFFF );
+    REG(TIMER+0xC) |=  (( period_full >> 16 ) & 0xFFFF );
+
+    REG(PIO_OUT) = 0x0A2;
+
+    // Clear old timer interrupts
+    REG(TIMER) &= ~(1);
+
+    REG(PIO_OUT) = 0x0A3;
+
+    // Activate counting in single shot mode
+    // START = 1 ; CONT = 0 ; ITO =1
+    uint32_t cleaned_value = REG(TIMER+0x4) & (~ 3);
+    REG(TIMER+0x4) = cleaned_value | 5;
+
+    REG(PIO_OUT) = 0x0A4;
+}
+
+//0x0B_
+void enable_irq(void){
+    REG(PIO_OUT) = 0x0B0;
+
     // Clear enabled interruptions
     REG(ICP)     = 0xFFFFFFFF;
 
-    // Set IRP mask for interrupt 1 (bit 2)
-    REG(IRP)     = 0x00000002;
+    REG(PIO_OUT) = 0x0B1;
+
+    // Set IRP mask for interrupt 2
+    REG(IRP)     = (1<< 2);
+
+    REG(PIO_OUT) = 0x0B2;
 
     // Set mstatus to 8
     __asm__(
         "li x6, 0x00000008\n"
         "csrs mstatus, x6"
     );
+
+    REG(PIO_OUT) = 0x0B3;
+}
+
+void __attribute__((interrupt)) null_handler(void){
+    // clean all interrupts 
+    REG(ICP) = 0xFFFFFFFF;
+
+    // set all leds ON
+    REG(PIO_OUT) = 0x3FF;
 }
 
 void __attribute__((interrupt)) jtag_interrupt_handler(void){
@@ -36,26 +89,29 @@ void __attribute__((interrupt)) jtag_interrupt_handler(void){
 }
 
 void __attribute__((interrupt)) interrupt_test_handler(void){
-    REG(PIO_IN+12)  = 0xFFFFFFFF;
-    REG(ICP) = (1 << 1);
-    REG(PIO_OUT)    = 0x00000000F;
-
+    REG(PIO_OUT) = 0x0C0;
+    
+    // clears interrupt on the interrupt constroler
+    REG(ICP) = (1 << 2);
+    REG(PIO_OUT) = 0x0C1;
+    
+    //clears timeout bit in the timer
+    REG(TIMER) |= ~1;
+    REG(PIO_OUT) = 0x0C2;
 }
 
 
-// main()   0x0AX
 int main(int argc, char **argv){
     
-    // Set INT mask
-    REG(PIO_IN+8)   = 0x00003FF0;
-
-    // Clear Edge detect
-    REG(PIO_IN+12)  = 0x00003FF0;
-
-
-    // Call enable_rq
+    REG(PIO_OUT) = 0x0D0;
     enable_irq();
+    REG(PIO_OUT) = 0x0D1;
+    enable_timer_interruption();
+    REG(PIO_OUT) = 0x0D2;
 
-    while (1);
+
+    while (1){
+        REG(PIO_OUT) = 0x000;
+    }
     return 0;
 }
