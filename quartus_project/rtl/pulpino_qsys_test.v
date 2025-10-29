@@ -45,6 +45,9 @@ assign gpio_in [3:0] = KEY [3:0];
 assign gpio_in [13:4] = SW [9:0];
 assign gpio_in [31:14] = 18'b0;
 
+//============ Synthesis Dependend Code ============
+
+// Helping signals
 
 
 // PLL Instantiation

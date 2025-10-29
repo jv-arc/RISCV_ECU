@@ -34,16 +34,11 @@ module tbench(
 
 
 // Instatiating core (no PLL)
-sys u0 (
-    .clk_clk                             (tb_clk),
-    .master_0_master_reset_reset         (jtag_reset),         
-    .pio_out_external_connection_export  (gpio_out),  
-    .pio_in_external_connection_export   (gpio_in),  
-    .pulpino_0_config_testmode_i         (test_mode),         
-    .pulpino_0_config_fetch_enable_i     (fetch_enable),
-    .pulpino_0_config_clock_gating_i     (clock_gating),     
-    .pulpino_0_config_boot_addr_i        (BOOT_ADDR),        
-    .reset_reset_n                       (reset_n)                        
+pulpino_qsys_test dut (
+    .CLOCK_50                            (tb_clk),
+    .KEY                                 ({3'b0, ~reset_n}),
+    .SW                                  (gpio_in[9:0]),
+    .LEDR                                (gpio_out[9:0])
 );
 
 

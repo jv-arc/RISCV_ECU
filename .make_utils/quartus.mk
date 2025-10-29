@@ -9,11 +9,13 @@
 compile-quartus: $(DESIGN_COMPILE_STAMP)
 
 
-auto-testbench: $(MEM_STAMP) $(TB_COMPILE_STAMP)
-	vsim -do $(test_bench_script)
+auto-rtl-simulation: $(MEM_STAMP) $(TB_COMPILE_STAMP)
+	vsim -c -do "source $(rtl_sim_file); run -all; quit"
 
+auto-gate-simulation: $(MEM_STAMP) $(TB_COMPILE_STAMP)
+	vsim -c -do "source $(gate_sim_file); run -all; quit"
 
-open-quartus: $(MEM_STAMP)
+open-quartus: 
 	quartus --64bit $(Q_DIR)/$(PROJECT_NAME).qpf
 
 
@@ -37,7 +39,7 @@ compile-quartus: $(END_SOF)
 
 $(END_SOF): $(DESIGN_COMPILE_STAMP)
 
-$(DESIGN_COMPILE_STAMP): $(VERILOG_SOURCES) $(QSYS_FILE) $(END_QSF)
+$(DESIGN_COMPILE_STAMP): $(VERILOG_SOURCES) $(QSYS_FILE) $(END_QSF) $(SDC_FILES)
 	cd $(Q_DIR) && quartus_sh --flow compile $(PROJECT_NAME)
 	touch $(DESIGN_COMPILE_STAMP)
 
@@ -91,15 +93,13 @@ archive:
 
 
 
-clean-all-project: clean-project
+clean-all-project: clean-project clean-synthesis clean-qsys clean-simulation clean-hardware-stamps
 	rm -rf $(Q_DIR)/incremental_db $(Q_DIR)/output_files
 	rm -f $(Q_DIR)/*.rpt $(Q_DIR)/*.summary $(Q_DIR)/*.done
-
-
+ 
 
 clean-project:
 	cd $(Q_DIR) && quartus_sh --clean $(PROJECT_NAME)
-
 
 
 list-devices:
@@ -107,19 +107,21 @@ list-devices:
 	quartus_pgm --auto
 
 
-
 clean-synthesis:
 	rm -rf $(Q_DIR)/db
 
-
+clean-qsys:
+	rm -rf $(Q_DIR)/sys/synthesis/
+	rm -f $(Q_DIR)/sys.sopcinfo
 
 clean-simulation:
 	rm -rf $(QUESTA_DIR)/work $(QUESTA_DIR)/*.wlf $(QUESTA_DIR)/transcript
 
-
-
+clean-hardware-stamps:
+	rm -f $(DESIGN_COMPILE_STAMP) $(MEM_STAMP) $(TB_COMPILE_STAMP) $(SYNTHESIS_STAMP) $(FITTING_STAMP) $(ASSEMBLY_STAMP)
 
 .PHONY: auto-testbench reload_memory compile-quartus open-qsys \
         timing-analysis check-timing reports power-analysis \
         verify-device quick-check help check-project-exists \
-        smart-compile synthesis fitting assembly compile-qsys
+        smart-compile synthesis fitting assembly compile-qsys \
+				clean-qsys clean-hardware-stamps
