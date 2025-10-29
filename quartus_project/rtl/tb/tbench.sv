@@ -11,7 +11,7 @@ module tbench(
 
 	// fixed during simulation
 	parameter BOOT_ADDR = 32'h00008000;
-	parameter clk_period = 10; // 25MHz
+	parameter clk_period = 20; // 50MHz
 	
 	wire test_mode;
 	wire fetch_enable;
@@ -22,23 +22,23 @@ module tbench(
 	assign clock_gating = 1'b0;
 	
 	
-	
 	// changing during the simulation
 	reg tb_clk;
 	reg jtag_reset;
-	reg reset_n;
-	reg [31:0] gpio_in;
-	wire [31:0] gpio_out;
+	reg key_reset;
+	reg [2:0] keys;
+	reg [9:0] sw_in;
+	wire [9:0] ledr_out;
 	
 	
 
 
-// Instatiating core (no PLL)
+// Instatiating core
 pulpino_qsys_test dut (
     .CLOCK_50                            (tb_clk),
-    .KEY                                 ({3'b0, ~reset_n}),
-    .SW                                  (gpio_in[9:0]),
-    .LEDR                                (gpio_out[9:0])
+    .KEY                                 ({keys[2:0], key_reset}),
+    .SW                                  (sw_in),
+    .LEDR                                (ledr_out)
 );
 
 
@@ -51,8 +51,10 @@ initial begin
 
    // Initial Conditions
    tb_clk = 0;
-   reset_n = 1'b0;
-   gpio_in = 32'b0000000000000000000000000001111; // [3:0] active low
+   key_reset = 1'b1;
+   keys = 3'b1;
+   sw_in = 10'b0;
+
    
 	 
 	 
@@ -61,7 +63,7 @@ initial begin
 	
 	
 	// Turning on the core
-   reset_n = 1'b1;
+   key_reset = 1'b0;
 
 	
 	

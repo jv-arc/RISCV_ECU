@@ -26,10 +26,10 @@ assign clock_gating = 1'b0;
 wire clk25;
 wire jtag_reset;
 wire reset_n;
-wire reset_p;
+wire reset;
 
-assign reset_n = KEY[0] & ~jtag_reset ;
-assign reset_p = ~reset_n;
+assign reset = KEY[0] & ~jtag_reset ;
+assign reset_n = ~reset;
 
 
 
@@ -45,15 +45,15 @@ assign gpio_in [3:0] = KEY [3:0];
 assign gpio_in [13:4] = SW [9:0];
 assign gpio_in [31:14] = 18'b0;
 
-//============ Synthesis Dependend Code ============
 
-// Helping signals
 
+
+//============ Component Instantiation ============
 
 // PLL Instantiation
 pll clock_conversion(
 	.refclk(CLOCK_50),
-	.rst(reset_p),
+	.rst(reset),
 	.outclk_0(clk25)
 );
 

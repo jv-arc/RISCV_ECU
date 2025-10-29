@@ -12,94 +12,114 @@ Z0 !s99 nomlopt
 cModel Technology
 Z1 d/home/jvctr/0/POLIno_qsys/quartus_project
 T_opt
-Z2 !s110 1760550682
-V8=?LfzYT0fH]AAQ8zJJRg3
+!s110 1761753051
+VO9@Ldi6L`fTn4Xgh:hO^80
 04 6 4 work tbench fast 0
-=1-e02e0b7e2f6b-68efdf1a-9a351-4bf98
+=1-e02e0b7e2f6b-690237da-ee7ea-29d8f
 R0
 !s12f OEM100
 !s12b OEM100
-!s124 OEM10U132 
+!s124 OEM10U144 
 !s135 nogc
-o-quiet -auto_acc_if_foreign -work work -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -L sys -L error_adapter_0 -L avalon_st_adapter -L rsp_mux_001 -L rsp_mux -L rsp_demux_003 -L rsp_demux -L cmd_mux_003 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L pulpino_0_avalon_master_lsu_limiter -L router_006 -L router_005 -L router_002 -L router_001 -L router -L jtag_uart_0_avalon_jtag_slave_agent -L pulpino_0_avalon_master_lsu_agent -L onchip_memory2_0_s1_translator -L pulpino_0_avalon_master_instr_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_1 -L mm_interconnect_0 -L pulpino_0 -L pio_out -L pio_in -L onchip_memory2_0 -L master_0 -L jtag_uart_0 +acc
-Z3 tCvgOpt 0
+o-quiet -auto_acc_if_foreign -work work -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -L pll -L sys -L error_adapter_0 -L avalon_st_adapter -L rsp_mux_001 -L rsp_mux -L rsp_demux_004 -L rsp_demux -L cmd_mux_004 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L pulpino_0_avalon_master_lsu_limiter -L router_007 -L router_006 -L router_002 -L router_001 -L router -L jtag_uart_0_avalon_jtag_slave_agent -L pulpino_0_avalon_master_lsu_agent -L onchip_memory2_0_s1_translator -L pulpino_0_avalon_master_instr_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_1 -L mm_interconnect_0 -L timer_0 -L pulpino_0 -L pio_out -L pio_in -L onchip_memory2_0 -L master_0 -L jtag_uart_0 +acc
+Z2 tCvgOpt 0
 n@_opt
 OL;O;2024.3;79
+vpll
+2/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo
+Z3 !s110 1761753050
+!i10b 1
+!s100 h4ig=K7<>JOkMd?S;WWYg1
+I6ZkBV2ae:eGgVHoS=CmS23
+R1
+w1761163529
+8/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo
+F/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo
+!i122 1
+L0 32 264
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+Z5 OL;L;2024.3;79
+r1
+!s85 0
+31
+Z6 !s108 1761753050.000000
+!s107 /home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo|
+!s90 -reportprogress|300|/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo|
+!i113 0
+Z7 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R2
 vpulpino_qsys_test
 2/home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v
-Z4 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
-R2
+Z8 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+R3
 !i10b 1
-!s100 FDfR7NCc`hz9CZQD4[aNk0
-ILNPU^]S>>;nW8B6OjPV@Y0
+!s100 Me27bBOi:kJX:NT<U=nXV3
+IbPE4[0jAZ9^YfUHEN]bb[3
 S1
 R1
-w1760486953
+w1761752807
 8/home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v
 !i122 2
-L0 2 58
-Z5 VDg1SIo80bB@j0V0VzS_@n1
-Z6 OL;L;2024.3;79
+L0 2 72
+R4
+R5
 r1
 !s85 0
 31
-Z7 !s108 1760550682.000000
+R6
 !s107 /home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl|/home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v|
 !i113 0
-Z8 o-sv -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z9 o-sv -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 !s92 -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-R3
+R2
 vsys
 2/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v
-R4
-R2
+R3
 !i10b 1
-!s100 5k1d4GP?e5i1M8GW0]lU42
-IKbiX7h@L1H;gGW9PnEg;Z3
-S1
+!s100 jB6ohRzAn?EkJi@1Y^H?10
+I5dniYHcbZ]^jggfmW[0972
 R1
-w1760547766
+w1761679186
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v
-!i122 1
-L0 6 356
+!i122 0
+L0 6 379
+R4
 R5
-R6
 r1
 !s85 0
 31
-R7
+R6
 !s107 /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v|
-!s90 -reportprogress|300|-sv|-work|work|+incdir+/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation|/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v|
+!s90 -reportprogress|300|/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v|
 !i113 0
-R8
-!s92 -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-R3
+R7
+R2
 vtbench
 2/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb/tbench.sv
-R4
-R2
+R8
+R3
 !i10b 1
-!s100 MQiEYHo4Jfco36z64fEO>2
-ICATF2VlkWa;^CLWL2zE0g3
+!s100 fm0@?8gG@3;Z@:]6A31`P0
+IMMXA0]0`4ekKzaR>Z3E:]0
 S1
 R1
-w1760547173
+w1761752124
 8/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb/tbench.sv
 F/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb/tbench.sv
 !i122 4
-L0 3 44
+L0 3 83
+R4
 R5
-R6
 r1
 !s85 0
 31
-R7
+R6
 !s107 /home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb/tbench.sv|
 !s90 -reportprogress|300|-sv|-work|work|+incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb|/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb/tbench.sv|
 !i113 0
-R8
+R9
 !s92 -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-R3
+R2

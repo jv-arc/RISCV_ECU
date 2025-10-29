@@ -9,13 +9,23 @@
 compile-quartus: $(DESIGN_COMPILE_STAMP)
 
 
-auto-rtl-simulation: $(MEM_STAMP) $(TB_COMPILE_STAMP)
-	vsim -c -do "source $(rtl_sim_file); run -all; quit"
+rtl-sim-gui: $(MEM_STAMP) $(TB_COMPILE_STAMP)
+	cd $(Q_DIR) && \
+	vsim -do $(rtl_sim_file)
 
-auto-gate-simulation: $(MEM_STAMP) $(TB_COMPILE_STAMP)
-	vsim -c -do "source $(gate_sim_file); run -all; quit"
+gate-sim-gui: $(MEM_STAMP) $(TB_COMPILE_STAMP)
+	cd $(Q_DIR) && \
+	vsim -do $(gate_sim_file)
 
-open-quartus: 
+rtl-sim: $(MEM_STAMP) $(TB_COMPILE_STAMP)
+	cd $(Q_DIR) && \
+	vsim -c -do "source $(rtl_sim_file); quit"
+
+gate-sim: $(MEM_STAMP) $(TB_COMPILE_STAMP)
+	cd $(Q_DIR) && \
+	vsim -c -do "source $(gate_sim_file); quit"
+
+quartus-gui: 
 	quartus --64bit $(Q_DIR)/$(PROJECT_NAME).qpf
 
 
@@ -25,10 +35,8 @@ $(TB_COMPILE_STAMP): $(DESIGN_COMPILE_STAMP) $(TESTBENCH)
 	vlog $(TESTBENCH)
 	touch $@
 
-
-open-qsys:
+qsys-gui:
 	qsys-edit $(QSYS_SRC)
-
 
 compile-qsys:
 $(QSYS_FILE): $(QSYS_SRC)
@@ -42,8 +50,6 @@ $(END_SOF): $(DESIGN_COMPILE_STAMP)
 $(DESIGN_COMPILE_STAMP): $(VERILOG_SOURCES) $(QSYS_FILE) $(END_QSF) $(SDC_FILES)
 	cd $(Q_DIR) && quartus_sh --flow compile $(PROJECT_NAME)
 	touch $(DESIGN_COMPILE_STAMP)
-
-
 
 
 reload-memory: $(MEM_STAMP)
@@ -120,8 +126,8 @@ clean-simulation:
 clean-hardware-stamps:
 	rm -f $(DESIGN_COMPILE_STAMP) $(MEM_STAMP) $(TB_COMPILE_STAMP) $(SYNTHESIS_STAMP) $(FITTING_STAMP) $(ASSEMBLY_STAMP)
 
-.PHONY: auto-testbench reload_memory compile-quartus open-qsys \
-        timing-analysis check-timing reports power-analysis \
-        verify-device quick-check help check-project-exists \
-        smart-compile synthesis fitting assembly compile-qsys \
-				clean-qsys clean-hardware-stamps
+.PHONY: rtl-sim gate-sim rtl-sim-gui gate-sim-gui quartus-gui \
+        timing-analysis compile-qsys reload-memory \
+		qsys-gui clean-qsys clean-hardware-stamps archive \
+		clean-simulation clean-qsys clean-synthesis \
+		list-devices clean-all-project clean-project

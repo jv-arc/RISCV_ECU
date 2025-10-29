@@ -8,6 +8,18 @@
 
 root=$(shell pwd)/..
 
+rtl-sim:
+	$(MAKE) -C $(root) $@
+
+gate-sim:
+	$(MAKE) -C $(root) $@
+
+rtl-sim-gui:
+	$(MAKE) -C $(root) $@
+
+gate-sim-gui:
+	$(MAKE) -C $(root) $@
+
 compile-quartus:
 	$(MAKE) -C $(root) $@
 
@@ -17,10 +29,10 @@ reload-memory:
 auto-testbench:
 	$(MAKE) -C $(root) $@
 
-open-quartus:
+quartus-gui:
 	$(MAKE) -C $(root) $@
 
-open-qsys:
+qsys-gui:
 	$(MAKE) -C $(root) $@
 
 compile-testbench:
@@ -47,6 +59,9 @@ clean-all-project:
 clean-project:
 	$(MAKE) -C $(root) $@
 
+clean-hardware-stamps:
+	$(MAKE) -C $(root) $@
+
 list-devices:
 	$(MAKE) -C $(root) $@
 
@@ -57,7 +72,8 @@ clean-simulation:
 	$(MAKE) -C $(root) $@
 
 
-.PHONY: auto-testbench reload_memory compile-quartus open-qsys \
-        timing-analysis check-timing reports power-analysis \
-        verify-device quick-check help check-project-exists \
-        smart-compile synthesis fitting assembly
+.PHONY: rtl-sim gate-sim rtl-sim-gui gate-sim-gui quartus-gui \
+        timing-analysis compile-qsys reload-memory \
+		qsys-gui clean-qsys clean-hardware-stamps archive \
+		clean-simulation clean-qsys clean-synthesis \
+		list-devices clean-all-project clean-project

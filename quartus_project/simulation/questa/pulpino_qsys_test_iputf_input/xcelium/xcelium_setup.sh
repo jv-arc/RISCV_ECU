@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 24.1 1077 linux 2025.10.22.19:05:03
+# ACDS 24.1 1077 linux 2025.10.29.07:56:43
 
 # ----------------------------------------
 # xcelium - auto-generated simulation script
@@ -97,7 +97,7 @@
 # 
 # IP SIMULATION SCRIPT
 # ----------------------------------------
-# ACDS 24.1 1077 linux 2025.10.22.19:05:03
+# ACDS 24.1 1077 linux 2025.10.29.07:56:43
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="pll"
