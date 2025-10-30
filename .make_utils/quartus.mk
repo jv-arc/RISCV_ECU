@@ -57,9 +57,11 @@ $(RELOAD_STAMP): $(MEM_STAMP) $(DESIGN_COMPILE_STAMP)
 		echo "Using alternative method for reloading memory" ; \
 		QUARTUS_PROJECT_FILE=$$(find ./sys/synthesis/submodules/ -name "$(MEM_NAME)*.hex" | head -n 1) ; \
 		CACHED_FILE=$$(find ./db -name "$(MEM_NAME)*.hex" | head -n 1) ; \
+		SIM_FILE=$$(find ./sys/simulation/submodules/ -name "$(MEM_NAME)*.hex" | head -n 1) ; \
 		echo "Overwriting $$CACHED_FILE with $(MEM).hex" ; \
 		cat $(MEM).hex > $$CACHED_FILE ; \
 		cat $(MEM).hex > $$QUARTUS_PROJECT_FILE ; \
+		cat $(MEM).hex > $$SIM_FILE ; \
 else \
 		quartus_cdb $(PROJECT_NAME) -c $(PROJECT_NAME) --update_mif ; \
 	fi && \
