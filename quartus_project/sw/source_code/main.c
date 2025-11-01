@@ -5,6 +5,9 @@
 // Cast address to uint_32 register
 #define REG(addr) (*((volatile uint32_t*) (addr)))
 
+// Contagem de timer interrupts
+#define COUNT	(*((volatile uint32_t*) 0x002000F0))
+
 // Base peripheral addresses
 #define JTAG_BASE                           0x00100010
 #define PIO_OUT                             0x00200000
@@ -137,17 +140,29 @@ void __attribute__((interrupt)) interrupt_test_handler(void){
 	// clears timeout bit in the timer
 	REG(TIMER) |= ~1;
 	DEBUG(0x202);
-	REG(PIO_OUT) = 0x2FF;
-}
+	
+	REG(PIO_OUT) = COUNT;
+	COUNT++;
+
+	DEBUG(0x203);
+
+	if(COUNT == 11){
+		COUNT = 0;
+		DEBUG(0x204);
+	}
+	setup_timer_interruption();
+	DEBUG(0x205);
+}	
 
 
 int main(int argc, char **argv){
 	// Setup process 
+	COUNT = 0;
 	DEBUG(0x0D0);
 	enable_irq();
 	DEBUG(0x0D1);
 	setup_timer_interruption();
-	DEBUG(0x0FF);
+	DEBUG(0x0D2);
 	
 	// infinite loop
 	while (1){}
