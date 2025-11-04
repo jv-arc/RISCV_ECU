@@ -1,4 +1,4 @@
-//#define DEBUG_FLAG
+#define DEBUG_FLAG
 
 // No-reloading guard
 #ifndef DEBUG_H

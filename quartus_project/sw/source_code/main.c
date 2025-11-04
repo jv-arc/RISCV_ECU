@@ -1,20 +1,17 @@
 #include "acess_structs.h"
 #include "debbuging.h"
+#include "mem_map.h"
 #include <stdint.h>
 
 // Cast address to uint_32 register
-#define REG(addr) (*((volatile uint32_t*) (addr)))
+#define REG(addr) \
+	(*((volatile uint32_t*) (addr)))
 
-// Base peripheral addresses
-#define JTAG_BASE                           0x00100010
-#define PIO_OUT                             0x00200000
-#define PIO_IN                              0x00200020
-#define TIMER                               0x00200040
-#define PULPINO_BASE                        0x10000000
-#define SOC_PERIPHERALS_BASE              ( 0x0A100000 + PULPINO_BASE )
-#define EVENT_UNIT_BASE                   ( 0X00004000 + SOC_PERIPHERALS_BASE )
-#define IRP                               ( 0x00000000 + EVENT_UNIT_BASE )
-#define ICP                               ( 0x0000000C + EVENT_UNIT_BASE )
+
+// memory region for counting "variable"
+#define COUNT \
+	(*((volatile uint32_t*) (0x02000000)))
+
 
 /* 
   ======= Comments about Debbuging with LEDs =======
@@ -58,8 +55,8 @@ void setup_timer_interruption(void){
 
 
 	// Activate counting in repeating mode
-	// (START = 1 ; CONT = 0 ; ITO =1) => 3
-	uint32_t cleaned_value = REG(TIMER+0x4) & (~ 3);
+	// (START = 1 ; CONT = 1 ; ITO =1) => 5
+	uint32_t cleaned_value = REG(TIMER+0x4) & (~ 5);
 	REG(TIMER+0x4) = cleaned_value | 5;
 	DEBUG(0x0A4);
 }
@@ -90,8 +87,8 @@ void enable_irq(void){
 
 	// Set mstatus to 8
 	__asm__(
-			"li x6, 0x00000008\n"
-			"csrs mstatus, x6"
+		"li x6, 0x00000008\n"
+		"csrs mstatus, x6"
 	);
 	DEBUG(0x0B3);
 }
@@ -132,17 +129,27 @@ void __attribute__((interrupt)) interrupt_test_handler(void){
 	
 	// clears interrupt on the interrupt constroler
 	REG(ICP) = (1 << 2);
+	REG(TIMER+4) |= ~1;
 	DEBUG(0x201);
 	
 	// clears timeout bit in the timer
 	REG(TIMER) |= ~1;
 	DEBUG(0x202);
-	REG(PIO_OUT) = 0x2FF;
+
+	REG(PIO_OUT) = COUNT;
+	
+	if(COUNT==10){
+		COUNT = 0;
+	} else {
+		COUNT ++;
+	}
 }
 
 
 int main(int argc, char **argv){
-	// Setup process 
+	// Setup process
+	COUNT = 0;
+
 	DEBUG(0x0D0);
 	enable_irq();
 	DEBUG(0x0D1);
@@ -150,6 +157,8 @@ int main(int argc, char **argv){
 	DEBUG(0x0FF);
 	
 	// infinite loop
-	while (1){}
+	while (1){
+		DEBUG(0x3FF);
+	}
 	return 0;
 }

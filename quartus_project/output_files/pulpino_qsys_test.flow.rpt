@@ -1,5 +1,5 @@
 Flow report for pulpino_qsys_test
-Tue Nov  4 13:15:34 2025
+Tue Nov  4 14:52:45 2025
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -41,7 +41,7 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Tue Nov  4 13:15:34 2025           ;
+; Flow Status                     ; Successful - Tue Nov  4 14:52:45 2025           ;
 ; Quartus Prime Version           ; 24.1std.0 Build 1077 03/04/2025 SC Lite Edition ;
 ; Revision Name                   ; pulpino_qsys_test                               ;
 ; Top-level Entity Name           ; pulpino_qsys_test                               ;
@@ -68,7 +68,7 @@ on the Quartus Prime software download page.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/04/2025 13:13:28 ;
+; Start date & time ; 11/04/2025 14:48:28 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; pulpino_qsys_test   ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ on the Quartus Prime software download page.
 +--------------------------------------+--------------------------------------------------------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                      ; Value                                                                                ; Default Value ; Entity Name ; Section Id     ;
 +--------------------------------------+--------------------------------------------------------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID                ; 246488365936491.176227280850892                                                      ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID                ; 246488365936491.176227850813052                                                      ; --            ; --          ; --             ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                                                   ; --            ; --          ; tbench         ;
 ; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; tbench                                                                               ; --            ; --          ; eda_simulation ;
 ; EDA_OUTPUT_DATA_FORMAT               ; Verilog Hdl                                                                          ; --            ; --          ; eda_simulation ;
@@ -209,13 +209,14 @@ on the Quartus Prime software download page.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:37     ; 1.0                     ; 626 MB              ; 00:01:04                           ;
-; Fitter               ; 00:01:01     ; 1.3                     ; 2003 MB             ; 00:02:26                           ;
-; Assembler            ; 00:00:04     ; 1.0                     ; 551 MB              ; 00:00:05                           ;
-; Timing Analyzer      ; 00:00:10     ; 2.5                     ; 1004 MB             ; 00:00:23                           ;
-; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 836 MB              ; 00:00:02                           ;
-; Assembler            ; 00:00:05     ; 1.0                     ; 564 MB              ; 00:00:05                           ;
-; Total                ; 00:01:59     ; --                      ; --                  ; 00:04:05                           ;
+; Analysis & Synthesis ; 00:00:38     ; 1.0                     ; 632 MB              ; 00:01:08                           ;
+; Fitter               ; 00:01:02     ; 1.3                     ; 2014 MB             ; 00:02:28                           ;
+; Assembler            ; 00:00:05     ; 1.0                     ; 547 MB              ; 00:00:05                           ;
+; Timing Analyzer      ; 00:00:10     ; 2.5                     ; 1024 MB             ; 00:00:24                           ;
+; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 830 MB              ; 00:00:02                           ;
+; Assembler            ; 00:00:05     ; 1.0                     ; 567 MB              ; 00:00:05                           ;
+; Assembler            ; 00:00:05     ; 1.0                     ; 567 MB              ; 00:00:05                           ;
+; Total                ; 00:02:07     ; --                      ; --                  ; 00:04:17                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -230,6 +231,7 @@ on the Quartus Prime software download page.
 ; Timing Analyzer      ; manjaro          ; Manjaro Linux ; Manjaro Linux ; x86_64         ;
 ; EDA Netlist Writer   ; manjaro          ; Manjaro Linux ; Manjaro Linux ; x86_64         ;
 ; Assembler            ; manjaro          ; Manjaro Linux ; Manjaro Linux ; x86_64         ;
+; Assembler            ; manjaro          ; Manjaro Linux ; Manjaro Linux ; x86_64         ;
 +----------------------+------------------+---------------+---------------+----------------+
 
 
@@ -241,6 +243,7 @@ quartus_fit --read_settings_files=off --write_settings_files=off pulpino_qsys_te
 quartus_asm --read_settings_files=off --write_settings_files=off pulpino_qsys_test -c pulpino_qsys_test
 quartus_sta pulpino_qsys_test -c pulpino_qsys_test
 quartus_eda --read_settings_files=off --write_settings_files=off pulpino_qsys_test -c pulpino_qsys_test
+quartus_asm pulpino_qsys_test -c pulpino_qsys_test
 quartus_asm pulpino_qsys_test -c pulpino_qsys_test
 
 
