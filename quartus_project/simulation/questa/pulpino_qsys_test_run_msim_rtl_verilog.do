@@ -18,12 +18,12 @@ vlib pulpino_qsys_test_iputf_libs/rsp_mux_001
 vmap rsp_mux_001 ./pulpino_qsys_test_iputf_libs/rsp_mux_001
 vlib pulpino_qsys_test_iputf_libs/rsp_mux
 vmap rsp_mux ./pulpino_qsys_test_iputf_libs/rsp_mux
-vlib pulpino_qsys_test_iputf_libs/rsp_demux_004
-vmap rsp_demux_004 ./pulpino_qsys_test_iputf_libs/rsp_demux_004
+vlib pulpino_qsys_test_iputf_libs/rsp_demux_007
+vmap rsp_demux_007 ./pulpino_qsys_test_iputf_libs/rsp_demux_007
 vlib pulpino_qsys_test_iputf_libs/rsp_demux
 vmap rsp_demux ./pulpino_qsys_test_iputf_libs/rsp_demux
-vlib pulpino_qsys_test_iputf_libs/cmd_mux_004
-vmap cmd_mux_004 ./pulpino_qsys_test_iputf_libs/cmd_mux_004
+vlib pulpino_qsys_test_iputf_libs/cmd_mux_007
+vmap cmd_mux_007 ./pulpino_qsys_test_iputf_libs/cmd_mux_007
 vlib pulpino_qsys_test_iputf_libs/cmd_mux
 vmap cmd_mux ./pulpino_qsys_test_iputf_libs/cmd_mux
 vlib pulpino_qsys_test_iputf_libs/cmd_demux_001
@@ -32,10 +32,10 @@ vlib pulpino_qsys_test_iputf_libs/cmd_demux
 vmap cmd_demux ./pulpino_qsys_test_iputf_libs/cmd_demux
 vlib pulpino_qsys_test_iputf_libs/pulpino_0_avalon_master_lsu_limiter
 vmap pulpino_0_avalon_master_lsu_limiter ./pulpino_qsys_test_iputf_libs/pulpino_0_avalon_master_lsu_limiter
-vlib pulpino_qsys_test_iputf_libs/router_007
-vmap router_007 ./pulpino_qsys_test_iputf_libs/router_007
-vlib pulpino_qsys_test_iputf_libs/router_006
-vmap router_006 ./pulpino_qsys_test_iputf_libs/router_006
+vlib pulpino_qsys_test_iputf_libs/router_010
+vmap router_010 ./pulpino_qsys_test_iputf_libs/router_010
+vlib pulpino_qsys_test_iputf_libs/router_009
+vmap router_009 ./pulpino_qsys_test_iputf_libs/router_009
 vlib pulpino_qsys_test_iputf_libs/router_002
 vmap router_002 ./pulpino_qsys_test_iputf_libs/router_002
 vlib pulpino_qsys_test_iputf_libs/router_001
@@ -88,6 +88,10 @@ vlib pulpino_qsys_test_iputf_libs/master_0
 vmap master_0 ./pulpino_qsys_test_iputf_libs/master_0
 vlib pulpino_qsys_test_iputf_libs/jtag_uart_0
 vmap jtag_uart_0 ./pulpino_qsys_test_iputf_libs/jtag_uart_0
+vlib pulpino_qsys_test_iputf_libs/GPIO_EXTRA
+vmap GPIO_EXTRA ./pulpino_qsys_test_iputf_libs/GPIO_EXTRA
+vlib pulpino_qsys_test_iputf_libs/GPIO_0
+vmap GPIO_0 ./pulpino_qsys_test_iputf_libs/GPIO_0
 ###### End libraries for IPUTF cores 
 ###### MIF file copy and HDL compilation commands for IPUTF cores 
 
@@ -100,10 +104,10 @@ vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sy
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux_001                             
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_mux.sv"                           -work rsp_mux                                 
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux                                 
-vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_demux_004.sv"                     -work rsp_demux_004                           
+vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_demux_007.sv"                     -work rsp_demux_007                           
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_demux.sv"                         -work rsp_demux                               
-vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_mux_004.sv"                       -work cmd_mux_004                             
-vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux_004                             
+vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_mux_007.sv"                       -work cmd_mux_007                             
+vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux_007                             
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_mux.sv"                           -work cmd_mux                                 
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux                                 
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_demux_001.sv"                     -work cmd_demux_001                           
@@ -112,8 +116,8 @@ vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/al
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_reorder_memory.sv"                            -work pulpino_0_avalon_master_lsu_limiter     
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_sc_fifo.v"                                    -work pulpino_0_avalon_master_lsu_limiter     
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_pipeline_base.v"                           -work pulpino_0_avalon_master_lsu_limiter     
-vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_007.sv"                        -work router_007                              
-vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_006.sv"                        -work router_006                              
+vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_010.sv"                        -work router_010                              
+vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_009.sv"                        -work router_009                              
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_002.sv"                        -work router_002                              
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_001.sv"                        -work router_001                              
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router.sv"                            -work router                                  
@@ -183,21 +187,22 @@ vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/al
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart_scfifo_w.sv"                        -work jtag_uart_0                             
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart_sim_scfifo_r.sv"                    -work jtag_uart_0                             
 vlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv"                    -work jtag_uart_0                             
+vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_GPIO_EXTRA.v"                                           -work GPIO_EXTRA                              
+vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_GPIO_0.v"                                               -work GPIO_0                                  
 vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v"                                                                                                               
+vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo"                                                                                                                     
 
-vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project {/home/jvctr/0/POLIno_qsys/quartus_project/ppl_sim/ppl.vo}
-vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation {/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v}
+vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project {/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo}
 vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl {/home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v}
-vlib ppl
-vmap ppl ppl
-vlog -sv -work ppl +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/ppl {/home/jvctr/0/POLIno_qsys/quartus_project/ppl/ppl_0002.v}
-vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb {/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb/tbench.sv}
+vlib pll
+vmap pll pll
+vlog -sv -work pll +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/pll {/home/jvctr/0/POLIno_qsys/quartus_project/pll/pll_0002.v}
 vlib sys
 vmap sys sys
 
 vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb {/home/jvctr/0/POLIno_qsys/quartus_project/rtl/tb/tbench.sv}
 
-vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -L ppl -L sys -L error_adapter_0 -L avalon_st_adapter -L rsp_mux_001 -L rsp_mux -L rsp_demux_004 -L rsp_demux -L cmd_mux_004 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L pulpino_0_avalon_master_lsu_limiter -L router_007 -L router_006 -L router_002 -L router_001 -L router -L jtag_uart_0_avalon_jtag_slave_agent -L pulpino_0_avalon_master_lsu_agent -L onchip_memory2_0_s1_translator -L pulpino_0_avalon_master_instr_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_1 -L mm_interconnect_0 -L timer_0 -L pulpino_0 -L pio_out -L pio_in -L onchip_memory2_0 -L master_0 -L jtag_uart_0 -voptargs="+acc"  tbench
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -L pll -L sys -L error_adapter_0 -L avalon_st_adapter -L rsp_mux_001 -L rsp_mux -L rsp_demux_007 -L rsp_demux -L cmd_mux_007 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L pulpino_0_avalon_master_lsu_limiter -L router_010 -L router_009 -L router_002 -L router_001 -L router -L jtag_uart_0_avalon_jtag_slave_agent -L pulpino_0_avalon_master_lsu_agent -L onchip_memory2_0_s1_translator -L pulpino_0_avalon_master_instr_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_1 -L mm_interconnect_0 -L timer_0 -L pulpino_0 -L pio_out -L pio_in -L onchip_memory2_0 -L master_0 -L jtag_uart_0 -L GPIO_EXTRA -L GPIO_0 -voptargs="+acc"  tbench
 
 add wave *
 view structure

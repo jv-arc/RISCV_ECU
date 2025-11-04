@@ -6,11 +6,20 @@
 # ============================================
 
 
-quartus-gui: 
+# WARNING!!!!
+# Do not remove cd $(Q_DIR) && \ from targets or hte files will be all 
+# generated in the parent directory of the project!!!
+#
+# It might be a bad makefile practice, but having a mangled repo is worse
+
+
+quartus-gui:
+	cd $(Q_DIR) && \
 	quartus --64bit $(Q_DIR)/$(PROJECT_NAME).qpf
 
 
 rtl-sim-gui: $(RELOAD_STAMP) $(TB_COMPILE_STAMP)
+	cd $(Q_DIR) && \
 	vsim -do "source $(rtl_sim_file); run -all"
 
 
@@ -21,6 +30,7 @@ gate-sim-gui: $(RELOAD_STAMP) $(TB_COMPILE_STAMP)
 
 
 rtl-sim: $(RELOAD_STAMP) $(TB_COMPILE_STAMP)
+	cd $(Q_DIR) && \
 	vsim -c -do "source $(rtl_sim_file); run -all"
 
 
@@ -43,7 +53,8 @@ qsys-gui:
 	qsys-edit $(QSYS_SRC)
 
 
-compile-qsys:
+compile-qsys: $(QSYS_FILE)
+
 $(QSYS_FILE): $(QSYS_SRC)
 	qsys-generate $(QSYS_SRC) --synthesis=VERILOG --simulation=VERILOG
 
@@ -116,10 +127,8 @@ archive:
 
 
 
-clean-all-project: clean-project clean-synthesis clean-qsys clean-simulation clean-hardware-stamps
-	rm -rf $(Q_DIR)/incremental_db $(Q_DIR)/output_files
-	rm -f $(Q_DIR)/*.rpt $(Q_DIR)/*.summary $(Q_DIR)/*.done
- 
+clean-altera-full: clean-project clean-synthesis clean-qsys clean-simulation clean-hardware-stamps
+
 
 clean-project:
 	cd $(Q_DIR) && quartus_sh --clean $(PROJECT_NAME)
@@ -133,26 +142,31 @@ list-devices:
 $(MEM_STAMP): $(MEM).hex
 	touch $@
 
-
-clean-synthesis:
+# Intel/Altera tools are a pain in the ass
+clean-altera: clean-hardware-stamps
 	rm -rf $(Q_DIR)/db
-
-
-clean-qsys:
+	rm -rf $(Q_DIR)/incremental_db
+	rm -rf $(Q_DIR)/*.rpt
+	rm -rf $(Q_DIR)/*.qws
+	rm -rf $(Q_DIR)/output_files
 	rm -rf $(Q_DIR)/sys/synthesis/
-	rm -f $(Q_DIR)/sys.sopcinfo
-
-
-clean-simulation:
-	rm -rf $(QUESTA_DIR)/work $(QUESTA_DIR)/*.wlf $(QUESTA_DIR)/transcript
+	rm -rf $(Q_DIR)/sys/simulation/
+	rm -rf $(Q_DIR)/sys.sopcinfo
+	rm -rf $(QUESTA_DIR)/work
+	rm -rf $(QUESTA_DIR)/*.wlf
+	rm -rf $(QUESTA_DIR)/transcript
+	rm -rf $(Q_DIR)/*.summary
+	rm -rf $(Q_DIR)/*.done
+	rm -rf $(Q_DIR)/sys/
 
 
 clean-hardware-stamps:
 	rm -f $(DESIGN_COMPILE_STAMP) $(MEM_STAMP) $(RELOAD_STAMP) $(TB_COMPILE_STAMP) $(SYNTHESIS_STAMP) $(FITTING_STAMP) $(ASSEMBLY_STAMP)
 
 
-.PHONY: rtl-sim gate-sim rtl-sim-gui gate-sim-gui quartus-gui \
-        timing-analysis compile-qsys reload-memory \
-		qsys-gui clean-qsys clean-hardware-stamps archive \
-		clean-simulation clean-qsys clean-synthesis \
-		list-devices clean-all-project clean-project
+.PHONY: 
+	rtl-sim gate-sim rtl-sim-gui gate-sim-gui quartus-gui \
+	timing-analysis compile-qsys reload-memory \
+	qsys-gui clean-qsys clean-hardware-stamps archive \
+	clean-simulation clean-qsys clean-synthesis \
+	list-devices clean-all-project clean-project

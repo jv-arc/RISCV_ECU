@@ -3,10 +3,9 @@
 module tbench(
 	//so empty :3
 );
-	
 
 //==================================================
-//                     SETUP
+//                 BASIC SETUP
 //==================================================
 
 	// fixed during simulation
@@ -29,17 +28,52 @@ module tbench(
 	reg [2:0] KEY_r; //remaining KEY[*]
 	reg [9:0] sw_in;
 	wire [9:0] ledr_out;
-	
-	
 
 
-// Instatiating core
-pulpino_qsys_test dut (
-	.CLOCK_50		(tb_clk),
-	.KEY				({KEY_r[2:0], key_reset}),
-	.SW					(sw_in),
-	.LEDR				(ledr_out)
-);
+//==================================================
+//                TRI-STATE SETUP
+//==================================================
+
+	//first bank delcarations
+	wire [35:0] gpio_0;
+	reg [35:0] gpio_0_drive;
+	reg [35:0] gpio_0_en;
+
+	//second bank delcarations
+	wire [35:0] gpio_1;
+	reg [35:0] gpio_1_drive;
+	reg [35:0] gpio_1_en;
+
+
+	// Tristate logic
+	assign gpio_0 = gpio_0_en ? gpio_0_drive : 36'hz;
+	assign gpio_1 = gpio_1_en ? gpio_1_drive : 36'hz;
+
+
+
+//==================================================
+//                   Instantiation
+//==================================================
+
+	pulpino_qsys_test dut (
+		.CLOCK_50
+			(tb_clk),
+
+		.KEY
+			({KEY_r[2:0], key_reset}),
+		
+		.SW
+			(sw_in),
+	
+		.LEDR
+			(ledr_out),
+		
+		.GPIO_0
+			(gpio_0),
+		
+		.GPIO_1
+			(gpio_1)
+	);
 
 
 
@@ -47,42 +81,43 @@ pulpino_qsys_test dut (
 //                   SIMULATION
 //==================================================
 
-initial begin
+	initial begin
 
-	// Initial Conditions
-	tb_clk = 0;
-	key_reset = 1'b0;
-	KEY_r = 3'b1;
-  sw_in = 10'b0;
+		// Initial Conditions
+		tb_clk = 0;
+		key_reset = 1'b0;
+		KEY_r = 3'b1;
+		sw_in = 10'b0;
+		gpio_0_en = 36'b0;
+		gpio_1_en = 36'b0;
 
-   
+
 	 
 	 
-  #100 //---------------------
+		#100 //---------------------
 
 	
 	
-	// Turning on the core
-  key_reset = 1'b1;
+		// Turning on the core
+		key_reset = 1'b1;
 
 	
-	// Waiting for end of setup
-	#7000 //----------------
+		// Waiting for end of setup
+		#7000 //----------------
 
 
-	// Waiting for interrupt
-	#1ms//----------------------- 
+		// Waiting for interrupt
+		#1ms//----------------------- 
  
 
-	// End simulation
-	$stop;
+		// End simulation
+		$stop;
+	end
 
-end
 
-
-// Clock Generation
-always begin
-	#(clk_period/2) tb_clk = ~tb_clk;
-end
+	// Clock Generation
+	always begin
+		#(clk_period/2) tb_clk = ~tb_clk;
+	end
 
 endmodule

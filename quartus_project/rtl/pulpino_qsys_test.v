@@ -1,9 +1,10 @@
-
 module pulpino_qsys_test (
-    input CLOCK_50,
-    input [3:0] KEY,
-    input [9:0] SW,
-    output [9:0] LEDR
+	input CLOCK_50,
+	input [3:0] KEY,
+	input [9:0] SW,
+	output [9:0] LEDR,
+	inout [35:0] GPIO_0,
+	inout [35:0] GPIO_1
 );
 
 
@@ -49,7 +50,7 @@ assign gpio_in [31:14] = 18'b0;
 //============ Component Instantiation ============
 
 // PLL Instantiation
-ppl clock_conversion(
+pll clock_conversion(
 	.refclk(CLOCK_50),
 	.rst(~reset_n),
 	.outclk_0(clk25)
@@ -57,15 +58,18 @@ ppl clock_conversion(
 
 // Core Instantiation
 sys u0 (
-    .clk_clk                             (clk25),                             
-    .master_0_master_reset_reset         (jtag_reset),         
-    .pio_out_external_connection_export  (gpio_out),  
-    .pio_in_external_connection_export   (gpio_in),  
-    .pulpino_0_config_testmode_i         (test_mode),         
-    .pulpino_0_config_fetch_enable_i     (fetch_enable),
-    .pulpino_0_config_clock_gating_i     (clock_gating),     
-    .pulpino_0_config_boot_addr_i        (BOOT_ADDR),        
-    .reset_reset_n                       (reset_n)                        
+		.clk_clk                             (clk25),
+	.master_0_master_reset_reset           (jtag_reset),
+	.pio_out_external_connection_export    (gpio_out),
+	.pio_in_external_connection_export     (gpio_in),
+	.pulpino_0_config_testmode_i           (test_mode),
+	.pulpino_0_config_fetch_enable_i       (fetch_enable),
+	.pulpino_0_config_clock_gating_i       (clock_gating),
+	.pulpino_0_config_boot_addr_i          (BOOT_ADDR),
+	.reset_reset_n                         (reset_n),
+	.gpio_0_external_connection_export     (GPIO_0[31:0]),
+	.gpio_1_external_connection_export     (GPIO_1[31:0]),
+	.gpio_extra_external_connection_export ({GPIO_1[35:32], GPIO_0[35:32]})
 );
 
 endmodule

@@ -25,21 +25,21 @@
    type="SYSTEM_VERILOG"
    library="rsp_mux" />
  <file
-   path="simulation/submodules/sys_mm_interconnect_1_rsp_demux_004.sv"
+   path="simulation/submodules/sys_mm_interconnect_1_rsp_demux_007.sv"
    type="SYSTEM_VERILOG"
-   library="rsp_demux_004" />
+   library="rsp_demux_007" />
  <file
    path="simulation/submodules/sys_mm_interconnect_1_rsp_demux.sv"
    type="SYSTEM_VERILOG"
    library="rsp_demux" />
  <file
-   path="simulation/submodules/sys_mm_interconnect_1_cmd_mux_004.sv"
+   path="simulation/submodules/sys_mm_interconnect_1_cmd_mux_007.sv"
    type="SYSTEM_VERILOG"
-   library="cmd_mux_004" />
+   library="cmd_mux_007" />
  <file
    path="simulation/submodules/altera_merlin_arbitrator.sv"
    type="SYSTEM_VERILOG"
-   library="cmd_mux_004" />
+   library="cmd_mux_007" />
  <file
    path="simulation/submodules/sys_mm_interconnect_1_cmd_mux.sv"
    type="SYSTEM_VERILOG"
@@ -73,13 +73,13 @@
    type="SYSTEM_VERILOG"
    library="pulpino_0_avalon_master_lsu_limiter" />
  <file
-   path="simulation/submodules/sys_mm_interconnect_1_router_007.sv"
+   path="simulation/submodules/sys_mm_interconnect_1_router_010.sv"
    type="SYSTEM_VERILOG"
-   library="router_007" />
+   library="router_010" />
  <file
-   path="simulation/submodules/sys_mm_interconnect_1_router_006.sv"
+   path="simulation/submodules/sys_mm_interconnect_1_router_009.sv"
    type="SYSTEM_VERILOG"
-   library="router_006" />
+   library="router_009" />
  <file
    path="simulation/submodules/sys_mm_interconnect_1_router_002.sv"
    type="SYSTEM_VERILOG"
@@ -368,6 +368,14 @@
    path="simulation/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv"
    type="SYSTEM_VERILOG"
    library="jtag_uart_0" />
+ <file
+   path="simulation/submodules/sys_GPIO_EXTRA.v"
+   type="VERILOG"
+   library="GPIO_EXTRA" />
+ <file
+   path="simulation/submodules/sys_GPIO_0.v"
+   type="VERILOG"
+   library="GPIO_0" />
  <file path="simulation/sys.v" type="VERILOG" />
  <topLevel name="sys" />
  <deviceFamily name="cyclonev" />

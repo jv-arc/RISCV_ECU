@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 24.1 1077 linux 2025.11.04.13:25:01
+# ACDS 24.1 1077 linux 2025.11.04.17:24:36
 
 # ----------------------------------------
 # xcelium - auto-generated simulation script
@@ -21,6 +21,7 @@
 # This script provides commands to simulate the following IP detected in
 # your Quartus project:
 #     sys
+#     pll
 # 
 # Altera recommends that you source this Quartus-generated IP simulation
 # script from your own customized top-level script, and avoid editing this
@@ -96,21 +97,10 @@
 # 
 # IP SIMULATION SCRIPT
 # ----------------------------------------
-# If sys is one of several IP cores in your
-# Quartus project, you can generate a simulation script
-# suitable for inclusion in your top-level simulation
-# script by running the following command line:
-# 
-# ip-setup-simulation --quartus-project=<quartus project>
-# 
-# ip-setup-simulation will discover the Altera IP
-# within the Quartus project, and generate a unified
-# script which supports all the Altera IP within the design.
-# ----------------------------------------
-# ACDS 24.1 1077 linux 2025.11.04.13:25:01
+# ACDS 24.1 1077 linux 2025.11.04.17:24:36
 # ----------------------------------------
 # initialize variables
-TOP_LEVEL_NAME="sys"
+TOP_LEVEL_NAME="pll"
 QSYS_SIMDIR="./../"
 QUARTUS_INSTALL_DIR="/opt/intelFPGA/24.1/quartus/"
 SKIP_FILE_COPY=0
@@ -151,15 +141,15 @@ mkdir -p ./libraries/error_adapter_0/
 mkdir -p ./libraries/avalon_st_adapter/
 mkdir -p ./libraries/rsp_mux_001/
 mkdir -p ./libraries/rsp_mux/
-mkdir -p ./libraries/rsp_demux_004/
+mkdir -p ./libraries/rsp_demux_007/
 mkdir -p ./libraries/rsp_demux/
-mkdir -p ./libraries/cmd_mux_004/
+mkdir -p ./libraries/cmd_mux_007/
 mkdir -p ./libraries/cmd_mux/
 mkdir -p ./libraries/cmd_demux_001/
 mkdir -p ./libraries/cmd_demux/
 mkdir -p ./libraries/pulpino_0_avalon_master_lsu_limiter/
-mkdir -p ./libraries/router_007/
-mkdir -p ./libraries/router_006/
+mkdir -p ./libraries/router_010/
+mkdir -p ./libraries/router_009/
 mkdir -p ./libraries/router_002/
 mkdir -p ./libraries/router_001/
 mkdir -p ./libraries/router/
@@ -186,6 +176,8 @@ mkdir -p ./libraries/pio_in/
 mkdir -p ./libraries/onchip_memory2_0/
 mkdir -p ./libraries/master_0/
 mkdir -p ./libraries/jtag_uart_0/
+mkdir -p ./libraries/GPIO_EXTRA/
+mkdir -p ./libraries/GPIO_0/
 
 # ----------------------------------------
 # copy RAM/ROM files to simulation directory
@@ -206,10 +198,10 @@ if [ $SKIP_COM -eq 0 ]; then
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux_001                              -cdslib <<rsp_mux_001>>                             
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_mux.sv"                           -work rsp_mux                                  -cdslib <<rsp_mux>>                                 
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux                                  -cdslib <<rsp_mux>>                                 
-  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_demux_004.sv"                     -work rsp_demux_004                            -cdslib <<rsp_demux_004>>                           
+  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_demux_007.sv"                     -work rsp_demux_007                            -cdslib <<rsp_demux_007>>                           
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_rsp_demux.sv"                         -work rsp_demux                                -cdslib <<rsp_demux>>                               
-  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_mux_004.sv"                       -work cmd_mux_004                              -cdslib <<cmd_mux_004>>                             
-  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux_004                              -cdslib <<cmd_mux_004>>                             
+  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_mux_007.sv"                       -work cmd_mux_007                              -cdslib <<cmd_mux_007>>                             
+  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux_007                              -cdslib <<cmd_mux_007>>                             
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_mux.sv"                           -work cmd_mux                                  -cdslib <<cmd_mux>>                                 
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux                                  -cdslib <<cmd_mux>>                                 
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_cmd_demux_001.sv"                     -work cmd_demux_001                            -cdslib <<cmd_demux_001>>                           
@@ -218,8 +210,8 @@ if [ $SKIP_COM -eq 0 ]; then
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_merlin_reorder_memory.sv"                            -work pulpino_0_avalon_master_lsu_limiter      -cdslib <<pulpino_0_avalon_master_lsu_limiter>>     
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_sc_fifo.v"                                    -work pulpino_0_avalon_master_lsu_limiter      -cdslib <<pulpino_0_avalon_master_lsu_limiter>>     
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_st_pipeline_base.v"                           -work pulpino_0_avalon_master_lsu_limiter      -cdslib <<pulpino_0_avalon_master_lsu_limiter>>     
-  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_007.sv"                        -work router_007                               -cdslib <<router_007>>                              
-  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_006.sv"                        -work router_006                               -cdslib <<router_006>>                              
+  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_010.sv"                        -work router_010                               -cdslib <<router_010>>                              
+  xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_009.sv"                        -work router_009                               -cdslib <<router_009>>                              
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_002.sv"                        -work router_002                               -cdslib <<router_002>>                              
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router_001.sv"                        -work router_001                               -cdslib <<router_001>>                              
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_mm_interconnect_1_router.sv"                            -work router                                   -cdslib <<router>>                                  
@@ -289,13 +281,16 @@ if [ $SKIP_COM -eq 0 ]; then
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart_scfifo_w.sv"                        -work jtag_uart_0                              -cdslib <<jtag_uart_0>>                             
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart_sim_scfifo_r.sv"                    -work jtag_uart_0                              -cdslib <<jtag_uart_0>>                             
   xmvlog -sv "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv"                    -work jtag_uart_0                              -cdslib <<jtag_uart_0>>                             
+  xmvlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_GPIO_EXTRA.v"                                           -work GPIO_EXTRA                               -cdslib <<GPIO_EXTRA>>                              
+  xmvlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_GPIO_0.v"                                               -work GPIO_0                                   -cdslib <<GPIO_0>>                                  
   xmvlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v"                                                                                                                                                                    
+  xmvlog     "/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo"                                                                                                                                                                          
 fi
 
 # ----------------------------------------
 # elaborate top level design
 if [ $SKIP_ELAB -eq 0 ]; then
-  xmelab -update -access +w+r+c -namemap_mixgen +DISABLEGENCHK $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS $TOP_LEVEL_NAME
+  xmelab -update -access +w+r+c -namemap_mixgen +DISABLEGENCHK -relax $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS $TOP_LEVEL_NAME
 fi
 
 # ----------------------------------------
