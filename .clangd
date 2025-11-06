@@ -1,0 +1,7 @@
+CompileFlags:
+  Compiler: riscv32-unknown-elf-gcc
+  Add:
+    - -march=rv32im
+    - -mabi=ilp32
+    - -target
+    - riscv32-unknown-elf

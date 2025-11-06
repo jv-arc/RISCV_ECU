@@ -9,17 +9,24 @@
 // specific language governing permissions and limitations under the License.
 
 #include "pulpino.h"
+#include "debbuging.h"
 
 #define EXCEPTION_STACK_SIZE 72
 
 /* ========================================================= [ entry ] === */
   .section .text
 
-default_exc_handler:
-  jal x0, default_exc_handler
+
+
+
+/*----- RESET HANDLER ------
+Sets execution up before running
+programs, cleans registers, triggers
+stack creation and passes control to
+main execution.
+*/
 
 reset_handler:
-
   /* set all registers to zero */
   mv  x1, x0
   mv  x2, x1
@@ -56,6 +63,7 @@ reset_handler:
   /* stack initilization */
   la   x2, _stack_start
 
+
 _start:
   .global _start
   
@@ -86,23 +94,57 @@ main_entry:
 
   // external interrupts are handled by the same callback
   // until compiler supports IRQ routines
-  
-  // Aditional INT0
+
+
+  // Interuption number: 0
+	// Origin: JTAG DEBUG UART
+	// Address-range: 0x0010_0010 - 0x0010_0017
   .org 0x00
   jal x0, jtag_interrupt_handler
 
-  // Aditional INT1
-  .org 0x04
-  jal x0, null_handler
 
-	// INT2 being tested
+
+  // Interuption number: 1
+	// Origin: PIO_I (Board's keys and switches)
+	// Address-range: 0x0020_0020 - 0x0020_002F
+  .org 0x04
+  jal x0, board_input_handler
+
+
+  // Interuption number: 2
+	// Origin: TIMER (32bit IP timer)
+	// Address-range: 0x0020_00A0 - 0x0020_00AF
   .org 0x08
-  jal x0, interrupt_test_handler
-  
-  .rept 25
+  jal x0, timer_finished_handler
+ 
+ 
+  // Interuption number: 3
+	// Origin: GPIO_0 (the first 32 bits of the first bank)
+	// Address range: 0x0020_0040 - 0x0020_005F
+	.org 0x0C
+  jal x0, gpio_zero_handler
+
+
+  // Interuption number: 4
+	// Origin: GPIO_1 (the first 32 bits of the second bank)
+	// Address-range: 0x0020_0060 - 0x0020_007F
+  .org 0x10
+  jal x0, gpio_one_handler
+
+
+  // Interuption number: 5
+	// Origin: GPIO_EXTRA (the 8 remaining gpio pins, 4 from each bank)
+	// Address-range: 0x0020_0080 - 0x0020_008F
+  .org 0x14
+  jal x0, gpio_extra_handler
+
+
+	// default_exec_handler as fallback
+  .rept 19
   nop
   .endr
   jal x0, default_exc_handler
+
 
   // reset vector
   .org 0x80

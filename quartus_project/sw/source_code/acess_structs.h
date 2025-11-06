@@ -1,6 +1,10 @@
 #include <stdint.h>
 
 
+#define REG(addr)            (*((volatile uint32_t*) (addr)))
+
+
+
 typedef struct{
     uint32_t DATA;
     uint32_t DIRECTION;
@@ -10,10 +14,17 @@ typedef struct{
     uint32_t OUT_CLEAR;
 } pio_t;
 
+#define PIO1_T(addr)   (*((volatile pio_t*) (addr)))
+
+
+
 typedef struct{
     uint32_t DATA;
     uint32_t CONTROL;
 } jtag_uart_t;
+
+#define JTAG_UART_T(addr)   (*((volatile jtag_uart_t*) (addr)))
+
 
 
 typedef struct {
@@ -24,6 +35,10 @@ typedef struct {
     uint32_t SNAP_L;
     uint32_t SNAP_H;
 } interval_timer32_t;
+
+#define TIMER32_T(addr)    (*((volatile interval_timer32_t*) (addr)))
+
+
 
 typedef struct {
     uint32_t STATUS;
@@ -36,4 +51,4 @@ typedef struct {
     uint32_t SNAP_1;
 } interval_timer64_t;
 
-
+#define TIMER64_T(addr)    (*((volatile interval_timer64_t*) (addr)))

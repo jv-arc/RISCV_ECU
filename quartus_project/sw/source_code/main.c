@@ -3,58 +3,48 @@
 #include "mem_map.h"
 #include <stdint.h>
 
-// Cast address to uint_32 register
-#define REG(addr)            (*((volatile uint32_t*) (addr)))
+
+// Memory Addresses used
+#define ICP           ( REG (ICP_ADDR) )
+#define IRP           ( REG (IRP_ADDR) )
+#define TIMER         ( TIMER32_T (TIMER_BASE) )
+#define JTAG          ( JTAG_UART_T (JTAG_BASE) )
+#define PIO_OUT       ( PIO1_T (PIO_OUT_BASE) )
+#define PIO_IN        ( PIO1_T (PIO_IN_BASE) )
 
 // memory region for counting "variable"
-#define COUNT                (REG(0x02000000))
+#define COUNT         ( REG (VARIABLES) )
 
-
-/* 
-  ======= Comments about Debbuging with LEDs =======
-	Timer interrupt is configured for the interrupt number 2
-
-	Snippets of code are indentifies by their main number 0x0X-
-	followed by a number indicating a step 0x0-X
-
-	Example: step 4 of snippet A is indicated by 0x0A4
-	==================================================
-*/
 
 
 /* 
   Function to setup 32TIMER for interruptions:
-	- uses the bit 3 in the CONRTOL register (offset 0x04)
-	- writes time to 16 bit regions PERIODL (0x8) and PERIODH (0xC)
-	- cleans first bit of CONTROL register to clean interrupts in the peripheral
-	- Activates counting (START=1), in the single shot mode (CONT=0) and (ITO=1)
-	
 	Debugging LED format: 0x0A-
 */
 void setup_timer_interruption(void){
-	DEBUG(0x0A0);
+	DEBUG(0x0A0); 
 
 	// Stop counter
-	REG(TIMER+0x4) |= (1<<3);
+	TIMER.CONTROL |= (1<<3);
 	DEBUG(0x0A1);
 
 
 	// set time period
 	uint32_t period_full = MS2CYCLES(1);
-	REG(TIMER+0x8) =  (  period_full & 0xFFFF );
-	REG(TIMER+0xC) =  (( period_full >> 16 ) & 0xFFFF );
+	TIMER.PERIOD_L =  (  period_full & 0xFFFF );
+	TIMER.PERIOD_H =  (( period_full >> 16 ) & 0xFFFF );
 	DEBUG(0x0A2);
 
 
 	// Clear old timer interrupts
-	REG(TIMER) &= ~(1);
+	TIMER.STATUS &= ~(1);
 	DEBUG(0x0A3);
 
 
 	// Activate counting in repeating mode
 	// (START = 1 ; CONT = 1 ; ITO =1) => 5
-	uint32_t cleaned_value = REG(TIMER+0x4) & (~ 5);
-	REG(TIMER+0x4) = cleaned_value | 5;
+	uint32_t cleaned_value = TIMER.CONTROL & (~ 5);
+	TIMER.CONTROL = cleaned_value | 5;
 	DEBUG(0x0A4);
 }
 
@@ -73,12 +63,12 @@ void enable_irq(void){
 
 
 	// Clear enabled interruptions
-	REG(ICP) = 0xFFFFFFFF;
+	ICP = 0xFFFFFFFF;
 	DEBUG(0x0B1);
 
 
 	// Set IRP mask for interrupt 2
-	REG(IRP)     = (1<< 2);
+	IRP = (1<< 2);
 	DEBUG(0x0B2);
 
 
@@ -91,16 +81,6 @@ void enable_irq(void){
 }
 
 
-/*
-	Interrupt handler for unexpected IO interrupts 
-	INT_NUM = 2
-
-	Lights up all LEDs and cleans interrupts
-*/
-void __attribute__((interrupt)) null_handler(void){
-	REG(ICP) = 0xFFFFFFFF;
-	REG(PIO_OUT) = 0x3FF;
-}
 
 
 /*
@@ -109,31 +89,38 @@ void __attribute__((interrupt)) null_handler(void){
 */
 void __attribute__((interrupt)) jtag_interrupt_handler(void){
 	// Clean the interruprt
-	REG(ICP) = (1 << 0);
+	ICP = (1 << 0);
+	/*
+	Do Something here...
+	*/
 }
 
-
+/*
+	Interrupt handler for PIO_IN
+	INT_NUM = 0 
+*/
+void __attribute__((interrupt)) board_input_handler(void){
+	// Clean the interruprt
+	ICP = (1 << 1);
+}
 
 /*
-	Interrupt handler betng tested, timer interrupts
-	INT_NUM = 1
-
 	Debbuging LEDs format : 0x20-
 	(Leading 2 and 3 turns LEDR[9] on, so it's easy to see in waveform)
 */
-void __attribute__((interrupt)) interrupt_test_handler(void){
+void __attribute__((interrupt)) timer_finished_handler(void){
 	DEBUG(0x200);
 	
-	// clears interrupt on the interrupt constroler
-	REG(ICP) = (1 << 2);
-	REG(TIMER+4) |= ~1;
+	// clears interrupt on the interrupt controler
+	ICP = (1 << 2);
+	TIMER.CONTROL |= ~1;
 	DEBUG(0x201);
 	
 	// clears timeout bit in the timer
-	REG(TIMER) |= ~1;
+	TIMER.STATUS |= ~1;
 	DEBUG(0x202);
 
-	REG(PIO_OUT) = COUNT;
+	PIO_OUT.DATA = COUNT;
 	
 	if(COUNT==10){
 		COUNT = 0;
@@ -142,6 +129,49 @@ void __attribute__((interrupt)) interrupt_test_handler(void){
 	}
 }
 
+
+/*
+	Interrupt handler for JTAG, cleans the JTAG interrupt signal 
+	INT_NUM = 3
+*/
+void __attribute__((interrupt)) gpio_zero_handler(void){
+	// Clean the interruprt
+	ICP = (1 << 3);
+	/*
+	Do Something here...
+	*/
+}
+
+
+/*
+	Interrupt handler for JTAG, cleans the JTAG interrupt signal 
+	INT_NUM = 4
+*/
+void __attribute__((interrupt)) gpio_one_handler(void){
+	// Clean the interruprt
+	ICP = (1 << 4);
+	/*
+	Do Something here...
+	*/
+}
+
+
+/*
+	Interrupt handler for JTAG, cleans the JTAG interrupt signal 
+	INT_NUM = 5
+*/
+void __attribute__((interrupt)) gpio_extra_handler(void){
+	// Clean the interruprt
+	ICP = (1 << 5);
+	/*
+	Do Something here...
+	*/
+}
+
+void __attribute__ ((interrupt)) default_exc_handler(void){
+	DEBUG(0xFFFFFFFF);
+	default_exc_handler();
+}
 
 int main(int argc, char **argv){
 	// Setup process
@@ -153,7 +183,6 @@ int main(int argc, char **argv){
 	setup_timer_interruption();
 	DEBUG(0x0FF);
 	
-	// infinite loop
 	while (1){
 		DEBUG(0x3FF);
 	}
