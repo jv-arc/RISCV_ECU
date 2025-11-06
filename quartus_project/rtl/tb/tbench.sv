@@ -64,8 +64,15 @@ module tbench(
 		.GPIO_1    (gpio_1)
 	);
 
-	wire [31:0] debug_wire;
-	assign debug_wire = dut.pulpino_qsys_test.debug_wire;
+
+	// Separating like this makes them easier to read no waveforms
+	wire [7:0] debug0;
+	wire [7:0] debug1;
+	wire [7:0] debug2;
+	wire [7:0] debug3;
+	assign {debug0, debug1, debug2, debug3} = dut.pulpino_qsys_test.debug_wire;
+
+
 
 //==================================================
 //                   SIMULATION
