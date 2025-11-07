@@ -1,8 +1,8 @@
 #define DEBUG_FLAG
 
 // No-reloading guard
-#ifndef DEBUG_H
-#define DEBUG_H
+#ifndef DEBUG_GUARD
+#define DEBUG_GUARD
 
 	#ifdef DEBUG_FLAG
 
@@ -38,5 +38,5 @@
 	#define FLAG(a,b,c,d)               DEBUG(((a)<<24)+((b)<<16)+((c)<<8)+((d)<<0))
 
 
-#endif // DEBUG_H
+#endif // closing DEBUG_GUARD
 

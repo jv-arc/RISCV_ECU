@@ -1,12 +1,35 @@
-#include "acess_structs.h"
-#include "debbuging.h"
-#include "mem_map.h"
+#define  BUFFER_SIZE 64
+
 #include <stdint.h>
+#include "custom_structs.h"
+#include "debugging.h"
+#include "mem_map.h"
 
 
-// Memory Addresses used
-#define ICP           ( REG (ICP_ADDR) )
-#define IRP           ( REG (IRP_ADDR) )
+/*
+=======================================================
+     _ __ ___   __ _  ___ _ __ ___  ___
+    | '_ ` _ \ / _` |/ __| '__/ _ \/ __|
+    | | | | | | (_| | (__| | | (_) \__ \
+    |_| |_| |_|\__,_|\___|_|  \___/|___/
+ 
+=======================================================
+*/
+/*
+---------------PERIPHERAL ACCESS MACROS--------------------
+   - Special types and casting macros are defined in
+	 the header file "custom_structs.h"
+
+	 - Memory addresses are defined in "mem_map.h" and
+	 correspond to the ones defined using Plataform Designer
+	 on the "sys.qsys" file
+
+	 - Debugging macros such as DEBUG() and FLAG() with
+	 respective enums are defined in the header file
+	 "debugging.h" conditionally and default to comments
+	 if "DEBUG_FLAG" is not set
+----------------------------------------------------------
+*/
 #define TIMER         ( TIMER32_T (TIMER_BASE) )
 #define JTAG          ( JTAG_UART_T (JTAG_BASE) )
 #define PIO_OUT       ( PIO_T (PIO_OUT_BASE) )
@@ -14,20 +37,42 @@
 #define GPIO_0        ( PIO_T (GPIO_0_BASE) )
 #define GPIO_1        ( PIO_T (GPIO_1_BASE) )
 #define GPIO_E        ( PIO_T (GPIO_E_BASE) )
-
-// memory region for counting "variable"
-#define COUNT         ( REG (VARIABLES) )
+#define INTERRUPT     ( EVENT_T (EVENT_UNIT_BASE + 0x00) )
+#define EVENT         ( EVENT_T (EVENT_UNIT_BASE + 0x10) )
+#define SLEEP         ( SLEEP_T (EVENT_UNIT_BASE + 0x20) )
 
 /*
- ==== Debugging Convention ====
-If DEBUG_FLAG is defined the DEBUG() macro
-will be defined in the "debbuging.h" header
+----------------GLOBAL "VARIABLES"----------------
+  WARNING!: This is a bad workaround I'm only
+	doing this while I'm not entirelly sure how to
+	properly do this using the linkerscript file
 
-There are enum definition and conventions
-are in the debbugging file
- ==============================
+	- VARIABLES is defined in "mem_map.h" into a
+	(suposedly) safe memory space
+
+	- REG() casts any address into a uint32_t
+	
+--------------------------------------------------
 */
 
+//used to count the amount of timing interrupts
+#define COUNT         ( REG (VARIABLES) )
+
+
+
+
+
+
+/*
+=========================================
+           _   _   _ _
+     _   _| |_(_) (_) |_ _   _
+    | | | | __| | | | __| | | |
+    | |_| | |_| | | | |_| |_| |
+     \__,_|\__|_|_|_|\__|\__, |
+                         |___/
+=========================================
+*/
 void jtag_put_char(char c){
 	FLAG(NORMAL,FUNC,0x00,0x00);
 	while((JTAG.CONTROL >> 16) == 0){};
@@ -44,7 +89,6 @@ char jtag_get_char(){
 	FLAG(NORMAL,FUNC,0x01,0x02);
 }
 
-//======Functions for PIO Control============
 void set_GPIO_zero_direction(uint32_t mask){
 	GPIO_0.DIRECTION = mask;
 	FLAG(NORMAL,SETUP,0x00,0x00);
@@ -94,18 +138,13 @@ void set_PIO_IN_interruptions(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x06,0x01);
 }
 
-// Functions for General Setup
 
-void setup_IO(void){
-
-}
 
 void setup_JTAG(void){
-
 }
 
 void setup_timer_interruption(uint32_t counting_mode, uint32_t time){
-	
+ 
 	// Stop counter
 	TIMER.CONTROL |= (1<<3);
 	FLAG(NORMAL,SETUP,0x08,0x00);
@@ -134,19 +173,16 @@ void setup_timer_interruption(uint32_t counting_mode, uint32_t time){
 }
 
 
-void enable_irq(void){
+void enable_irq(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x09,0x00);
 
-
-	// Clear enabled interruptions
-	ICP = 0xFFFFFFFF;
+	// Clear all pending interruptions
+	INTERRUPT.PENDING_CLEAR = 0xFFFFFFFF;
 	FLAG(NORMAL,SETUP,0x09,0x01);
 
-
-	// Set IRP mask for interrupt 2
-	IRP = (1<< 2);
+	// Set mask to enabble interrupts
+	INTERRUPT.ENABLE = mask;
 	FLAG(NORMAL,SETUP,0x09,0x02);
-
 
 	// Set mstatus to 8
 	__asm__(
@@ -158,36 +194,49 @@ void enable_irq(void){
 
 
 
+/*
+==================================================
+     _                     _ _
+    | |__   __ _ _ __   __| | | ___ _ __ ___
+    | '_ \ / _` | '_ \ / _` | |/ _ \ '__/ __|
+    | | | | (_| | | | | (_| | |  __/ |  \__ \
+    |_| |_|\__,_|_| |_|\__,_|_|\___|_|  |___/
 
+==================================================
+*/
 /*
 	Interrupt handler for JTAG, cleans the JTAG interrupt signal 
-	INT_NUM = 0 
+	INT_NUM = 0
 */
 void __attribute__((interrupt)) jtag_interrupt_handler(void){
 	FLAG(NORMAL,ISR,0x00,0x00);
-	ICP = (1 << 0);
+	INTERRUPT.PENDING_CLEAR = (1 << 0);
 	FLAG(NORMAL,ISR,0x00,0x01);
 }
 
+
+
 /*
 	Interrupt handler for PIO_IN
-	INT_NUM = 0
+	INT_NUM = 1
 */
 void __attribute__((interrupt)) board_input_handler(void){
 	FLAG(NORMAL,ISR,0x01,0x00);
-	ICP = (1 << 1);
+	INTERRUPT.PENDING_CLEAR = (1 << 1);
 	FLAG(NORMAL,ISR,0x01,0x01);
 }
 
+
+
 /*
-	Debbuging LEDs format : 0x20-
-	(Leading 2 and 3 turns LEDR[9] on, so it's easy to see in waveform)
+	Interrupt handler for when the timer finish it's count.
+	INT_NUM = 2
 */
 void __attribute__((interrupt)) timer_finished_handler(void){
 	FLAG(NORMAL,ISR,0x02,0x00);
 	
 	// clears interrupt on the interrupt controler
-	ICP = (1 << 2);
+	INTERRUPT.PENDING_CLEAR = (1 << 2);
 	TIMER.CONTROL |= ~1;
 	FLAG(NORMAL,ISR,0x02,0x01);
 	
@@ -196,78 +245,116 @@ void __attribute__((interrupt)) timer_finished_handler(void){
 	FLAG(NORMAL,ISR,0x02,0x02);
 
 	PIO_OUT.DATA = COUNT;
-	
-	if(COUNT==10){
-		COUNT = 0;
+  if (PIO_OUT.DATA == 10){
+		FLAG(SUCCESS,ISR,0x02,0x03);
+	}
+	if(COUNT == 10){
+		COUNT = 1;
 	} else {
 		COUNT ++;
-
-		FLAG(SUCCESS,ISR,0x02,0x03);
 	}
 
 	FLAG(NORMAL,ISR,0x02,0x04);
 }
 
 
+
 /*
-	Interrupt handler for JTAG, cleans the JTAG interrupt signal 
+	Interrupt handler for GPIOs from bank 0
 	INT_NUM = 3
 */
 void __attribute__((interrupt)) gpio_zero_handler(void){
 	FLAG(NORMAL,ISR,0x03,0x00);
 	PIO_OUT.DATA = 3;
+	
+	// Cleans interrupts on the peripheral
 	uint32_t interrupt = GPIO_1.DATA;
 	PIO_OUT.DATA = interrupt;
 	GPIO_1.EDGE_CAPTURE = interrupt;
-	ICP = (1 << 3);
+
+	// Cleans interrupts on the manager
+	INTERRUPT.PENDING_CLEAR = (1 << 3);
 	FLAG(NORMAL,ISR,0x03,0x01);
 }
 
 
+
 /*
-	Interrupt handler for JTAG, cleans the JTAG interrupt signal 
+	Interrupt handler for for GPIOs from bank 1
 	INT_NUM = 4
 */
 void __attribute__((interrupt)) gpio_one_handler(void){
 	FLAG(NORMAL,ISR,0x04,0x00);
 	PIO_OUT.DATA = 4;
+
+	// Cleans interrupts on the peripheral
 	uint32_t interrupt = GPIO_0.DATA;
 	PIO_OUT.DATA = interrupt;
 	GPIO_0.EDGE_CAPTURE = interrupt;
-	ICP = (1 << 4);
+
+	// Cleans interrupts on the manager
+	INTERRUPT.PENDING_CLEAR = (1 << 4);
 	FLAG(NORMAL,ISR,0x04,0x01);
 }
 
 
+
 /*
-	Interrupt handler for JTAG, cleans the JTAG interrupt signal 
+	Interrupt handler for extra GPIOs that won't fit in the ones before
 	INT_NUM = 5
 */
 void __attribute__((interrupt)) gpio_extra_handler(void){
 	FLAG(NORMAL,ISR,0x05,0x00);
 	PIO_OUT.DATA = 5;
+
+	// Cleans interrupts on the peripheral
 	uint32_t interrupt = GPIO_E.DATA;
 	PIO_OUT.DATA = interrupt;
 	GPIO_E.EDGE_CAPTURE = interrupt;
-	ICP = (1 << 5);
+
+	// Cleans interrupts on the manager
+	INTERRUPT.PENDING_CLEAR = (1 << 5);
 	FLAG(NORMAL,ISR,0x05,0x01);
 }
 
+
+
+/*
+  Fallback interrupt handler, asserts error debug and loops
+	it should only trigger if an unnexpected interrupt happens
+
+	INT_NUM = anything after 5 and before 20
+*/
 void __attribute__ ((interrupt)) default_exc_handler(void){
 	FLAG(FAILURE,ISR,0x06,0x00);
 	default_exc_handler();
 }
 
+
+
+
+
+
+
+/*
+============================================
+                     _
+     _ __ ___   __ _(_)_ __
+    | '_ ` _ \ / _` | | '_ \
+    | | | | | | (_| | | | | |
+    |_| |_| |_|\__,_|_|_| |_|
+
+============================================
+*/
+
 int main(int argc, char **argv){
-	// Setup process
 	COUNT = 0;
 	FLAG(NORMAL,MAIN,0x00,0x00);
-
-	enable_irq();
+	enable_irq(0xFFFFFFFF);
 	FLAG(NORMAL,MAIN,0x00,0x01);
 	setup_timer_interruption(1, 1); // 1ms repeating
 	FLAG(NORMAL,MAIN,0x00,0x02);
-	setup_IO();
+//	setup_IO();
 	FLAG(NORMAL,MAIN,0x00,0x03);
 
 	while (1){
