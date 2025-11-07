@@ -6,7 +6,7 @@
 #  makefiles across the project
 # =======================================================
 
-all: auto-testbench
+all: rtl-sim-gui
 
 NPROC=$(shell nproc)
 PROJECT_DIR=$(shell pwd)
