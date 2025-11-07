@@ -14,7 +14,7 @@ typedef struct{
     uint32_t OUT_CLEAR;
 } pio_t;
 
-#define PIO1_T(addr)   (*((volatile pio_t*) (addr)))
+#define PIO_T(addr)   (*((volatile pio_t*) (addr)))
 
 
 
