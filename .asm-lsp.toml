@@ -1,0 +1,16 @@
+[[project]]
+path = "."
+assembler = "gas"
+version = "0.10.0"
+instruction_set = "riscv"
+
+[project.opts]
+compiler = "riscv64-unknown-elf-gcc"
+compile_flags_txt = [
+    '"-T riscv.ld"',
+    "-nostdlib",
+    "-march=rv32im_zicsr",
+    "-mabi=ilp32",
+]
+diagnostics = true
+default_diagnostics = true

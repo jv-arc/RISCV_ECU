@@ -1,5 +1,6 @@
-#define  BUFFER_SIZE 64
 
+
+#define  BUFFER_SIZE 64 //needs to be before "#include "custom_structs.h"
 #include <stdint.h>
 #include "custom_structs.h"
 #include "debugging.h"
@@ -7,71 +8,73 @@
 
 
 /*
-=======================================================
-     _ __ ___   __ _  ___ _ __ ___  ___
-    | '_ ` _ \ / _` |/ __| '__/ _ \/ __|
-    | | | | | | (_| | (__| | | (_) \__ \
-    |_| |_| |_|\__,_|\___|_|  \___/|___/
- 
-=======================================================
+*====================================================
+*     _ __ ___   __ _  ___ _ __ ___  ___
+*    | '_ ` _ \ / _` |/ __| '__/ _ \/ __|
+*    | | | | | | (_| | (__| | | (_) \__ \
+*    |_| |_| |_|\__,_|\___|_|  \___/|___/
+*
+*=====================================================
 */
+
+
 /*
----------------PERIPHERAL ACCESS MACROS--------------------
-   - Special types and casting macros are defined in
-	 the header file "custom_structs.h"
-
-	 - Memory addresses are defined in "mem_map.h" and
-	 correspond to the ones defined using Plataform Designer
-	 on the "sys.qsys" file
-
-	 - Debugging macros such as DEBUG() and FLAG() with
-	 respective enums are defined in the header file
-	 "debugging.h" conditionally and default to comments
-	 if "DEBUG_FLAG" is not set
-----------------------------------------------------------
+*---------------peripheral access macros--------------------
+*   - special types and casting macros are defined in
+*  the header file "custom_structs.h"
+*
+*   - memory addresses are defined in "mem_map.h" and
+*  correspond to the ones defined using plataform designer
+*  on the "sys.qsys" file
+*
+*   - debugging macros such as debug() and flag() with
+*  respective enums are defined in the header file
+*  "debugging.h" conditionally and default to comments
+*  if "debug_flag" macro is not defined.
+*----------------------------------------------------------
 */
-#define TIMER         ( TIMER32_T (TIMER_BASE) )
-#define JTAG          ( JTAG_UART_T (JTAG_BASE) )
-#define PIO_OUT       ( PIO_T (PIO_OUT_BASE) )
-#define PIO_IN        ( PIO_T (PIO_IN_BASE) )
-#define GPIO_0        ( PIO_T (GPIO_0_BASE) )
-#define GPIO_1        ( PIO_T (GPIO_1_BASE) )
-#define GPIO_E        ( PIO_T (GPIO_E_BASE) )
-#define INTERRUPT     ( EVENT_T (EVENT_UNIT_BASE + 0x00) )
-#define EVENT         ( EVENT_T (EVENT_UNIT_BASE + 0x10) )
-#define SLEEP         ( SLEEP_T (EVENT_UNIT_BASE + 0x20) )
+
+#define TIMER         ( TIMER32_T    (TIMER_BASE) )
+#define JTAG          ( JTAG_UART_T  (JTAG_BASE) )
+#define PIO_OUT       ( PIO_T        (PIO_OUT_BASE) )
+#define PIO_IN        ( PIO_T        (PIO_IN_BASE) )
+#define GPIO_0        ( PIO_T        (GPIO_0_BASE) )
+#define GPIO_1        ( PIO_T        (GPIO_1_BASE) )
+#define GPIO_E        ( PIO_T        (GPIO_E_BASE) )
+#define EVENT_UNIT    ( EVENT_UNIT_T (EVENT_UNIT_BASE) )
 
 /*
 ----------------GLOBAL "VARIABLES"----------------
-  WARNING!: This is a bad workaround I'm only
-	doing this while I'm not entirelly sure how to
-	properly do this using the linkerscript file
-
-	- VARIABLES is defined in "mem_map.h" into a
-	(suposedly) safe memory space
-
-	- REG() casts any address into a uint32_t
-	
---------------------------------------------------
+*  WARNING!: This is a bad workaround I'm only
+*  doing this while I'm not entirely sure how to
+*  properly manipulate memory space in the linkerscript
+*  file without breaking anything
+*
+*  VARIABLES is defined in "mem_map.h" into a
+*  (supposedly) safe memory space
+*-------------------------------------------------
 */
 
-//used to count the amount of timing interrupts
-#define COUNT         ( REG (VARIABLES) )
+#define R_BUFFER_ADDR ( BUFFER_OFFSET (VARIABLES , 0) )
+#define W_BUFFER_ADDR ( BUFFER_OFFSET (VARIABLES , 1) )
+#define COUNT_ADDR    ( BUFFER_OFFSET (VARIABLES , 2) )
 
-
+#define R_BUFFER      ( BUFFER_T (R_BUFFER_ADDR) )
+#define W_BUFFER      ( BUFFER_T (W_BUFFER_ADDR) )
+#define COUNT         ( REG_T    (COUNT_ADDR) )
 
 
 
 
 /*
-=========================================
-           _   _   _ _
-     _   _| |_(_) (_) |_ _   _
-    | | | | __| | | | __| | | |
-    | |_| | |_| | | | |_| |_| |
-     \__,_|\__|_|_|_|\__|\__, |
-                         |___/
-=========================================
+*=========================================
+*           _   _   _ _
+*     _   _| |_(_) (_) |_ _   _
+*    | | | | __| | | | __| | | |
+*    | |_| | |_| | | | |_| |_| |
+*     \__,_|\__|_|_|_|\__|\__, |
+*                         |___/
+*=========================================
 */
 void jtag_put_char(char c){
 	FLAG(NORMAL,FUNC,0x00,0x00);
@@ -138,15 +141,10 @@ void set_PIO_IN_interruptions(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x06,0x01);
 }
 
-
-
-void setup_JTAG(void){
-}
-
 void setup_timer_interruption(uint32_t counting_mode, uint32_t time){
  
 	// Stop counter
-	TIMER.CONTROL |= (1<<3);
+	TIMER.CONTROL |= (1U << 3);
 	FLAG(NORMAL,SETUP,0x08,0x00);
 
 	// set time period
@@ -161,9 +159,9 @@ void setup_timer_interruption(uint32_t counting_mode, uint32_t time){
 
 	// Values for configuraing the Timer
 	uint32_t setup = 0;
-	setup |=                     (1<<0); // (ITO) clean
-	setup |= ((counting_mode & 1) << 1); // (CONT) repeating or not
-	setup |=                     (1<<2); // (START) start now
+	setup |=                     (1U << 0); // (ITO) clean
+	setup |= ((counting_mode & 1)    << 1); // (CONT) repeating or not
+	setup |=                     (1U << 2); // (START) start now
 	FLAG(NORMAL,SETUP,0x08,0x03);
 
 	// Clean and write to register
@@ -177,11 +175,11 @@ void enable_irq(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x09,0x00);
 
 	// Clear all pending interruptions
-	INTERRUPT.PENDING_CLEAR = 0xFFFFFFFF;
+	EVENT_UNIT.INTER.PENDING_CLEAR = 0xFFFFFFFF;
 	FLAG(NORMAL,SETUP,0x09,0x01);
 
 	// Set mask to enabble interrupts
-	INTERRUPT.ENABLE = mask;
+	EVENT_UNIT.INTER.ENABLE = mask;
 	FLAG(NORMAL,SETUP,0x09,0x02);
 
 	// Set mstatus to 8
@@ -195,48 +193,49 @@ void enable_irq(uint32_t mask){
 
 
 /*
-==================================================
-     _                     _ _
-    | |__   __ _ _ __   __| | | ___ _ __ ___
-    | '_ \ / _` | '_ \ / _` | |/ _ \ '__/ __|
-    | | | | (_| | | | | (_| | |  __/ |  \__ \
-    |_| |_|\__,_|_| |_|\__,_|_|\___|_|  |___/
-
-==================================================
+*==================================================
+*     _                     _ _
+*    | |__   __ _ _ __   __| | | ___ _ __ ___
+*    | '_ \ / _` | '_ \ / _` | |/ _ \ '__/ __|
+*    | | | | (_| | | | | (_| | |  __/ |  \__ \
+*    |_| |_|\__,_|_| |_|\__,_|_|\___|_|  |___/
+*
+*==================================================
 */
+
 /*
-	Interrupt handler for JTAG, cleans the JTAG interrupt signal 
-	INT_NUM = 0
+* Interrupt handler for JTAG, cleans the JTAG interrupt signal 
+* INT_NUM = 0
 */
 void __attribute__((interrupt)) jtag_interrupt_handler(void){
 	FLAG(NORMAL,ISR,0x00,0x00);
-	INTERRUPT.PENDING_CLEAR = (1 << 0);
+	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 0);
 	FLAG(NORMAL,ISR,0x00,0x01);
 }
 
 
 
 /*
-	Interrupt handler for PIO_IN
-	INT_NUM = 1
+* Interrupt handler for PIO_IN
+* INT_NUM = 1
 */
 void __attribute__((interrupt)) board_input_handler(void){
 	FLAG(NORMAL,ISR,0x01,0x00);
-	INTERRUPT.PENDING_CLEAR = (1 << 1);
+	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 1);
 	FLAG(NORMAL,ISR,0x01,0x01);
 }
 
 
 
 /*
-	Interrupt handler for when the timer finish it's count.
-	INT_NUM = 2
+* Interrupt handler for when the timer finish it's count.
+* INT_NUM = 2
 */
 void __attribute__((interrupt)) timer_finished_handler(void){
 	FLAG(NORMAL,ISR,0x02,0x00);
 	
-	// clears interrupt on the interrupt controler
-	INTERRUPT.PENDING_CLEAR = (1 << 2);
+	// clears interrupt on the interrupt controller
+	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 2);
 	TIMER.CONTROL |= ~1;
 	FLAG(NORMAL,ISR,0x02,0x01);
 	
@@ -260,8 +259,8 @@ void __attribute__((interrupt)) timer_finished_handler(void){
 
 
 /*
-	Interrupt handler for GPIOs from bank 0
-	INT_NUM = 3
+* Interrupt handler for GPIOs from bank 0
+* INT_NUM = 3
 */
 void __attribute__((interrupt)) gpio_zero_handler(void){
 	FLAG(NORMAL,ISR,0x03,0x00);
@@ -273,15 +272,15 @@ void __attribute__((interrupt)) gpio_zero_handler(void){
 	GPIO_1.EDGE_CAPTURE = interrupt;
 
 	// Cleans interrupts on the manager
-	INTERRUPT.PENDING_CLEAR = (1 << 3);
+	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 3);
 	FLAG(NORMAL,ISR,0x03,0x01);
 }
 
 
 
 /*
-	Interrupt handler for for GPIOs from bank 1
-	INT_NUM = 4
+* Interrupt handler for for GPIOs from bank 1
+* INT_NUM = 4
 */
 void __attribute__((interrupt)) gpio_one_handler(void){
 	FLAG(NORMAL,ISR,0x04,0x00);
@@ -293,15 +292,15 @@ void __attribute__((interrupt)) gpio_one_handler(void){
 	GPIO_0.EDGE_CAPTURE = interrupt;
 
 	// Cleans interrupts on the manager
-	INTERRUPT.PENDING_CLEAR = (1 << 4);
+	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 4);
 	FLAG(NORMAL,ISR,0x04,0x01);
 }
 
 
 
 /*
-	Interrupt handler for extra GPIOs that won't fit in the ones before
-	INT_NUM = 5
+* Interrupt handler for extra GPIOs that won't fit in the ones before
+* INT_NUM = 5
 */
 void __attribute__((interrupt)) gpio_extra_handler(void){
 	FLAG(NORMAL,ISR,0x05,0x00);
@@ -313,21 +312,21 @@ void __attribute__((interrupt)) gpio_extra_handler(void){
 	GPIO_E.EDGE_CAPTURE = interrupt;
 
 	// Cleans interrupts on the manager
-	INTERRUPT.PENDING_CLEAR = (1 << 5);
+	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 5);
 	FLAG(NORMAL,ISR,0x05,0x01);
 }
 
 
 
 /*
-  Fallback interrupt handler, asserts error debug and loops
-	it should only trigger if an unnexpected interrupt happens
-
-	INT_NUM = anything after 5 and before 20
+*  Fallback interrupt handler, asserts FLAG FAILUE and loops
+*  it should only trigger if an unnexpected interrupt happens
+*
+*  INT_NUM = anything after 5 and before 20
 */
 void __attribute__ ((interrupt)) default_exc_handler(void){
 	FLAG(FAILURE,ISR,0x06,0x00);
-	default_exc_handler();
+	while(1){};
 }
 
 
@@ -337,14 +336,14 @@ void __attribute__ ((interrupt)) default_exc_handler(void){
 
 
 /*
-============================================
-                     _
-     _ __ ___   __ _(_)_ __
-    | '_ ` _ \ / _` | | '_ \
-    | | | | | | (_| | | | | |
-    |_| |_| |_|\__,_|_|_| |_|
-
-============================================
+*============================================
+*                     _
+*     _ __ ___   __ _(_)_ __
+*    | '_ ` _ \ / _` | | '_ \
+*    | | | | | | (_| | | | | |
+*    |_| |_| |_|\__,_|_|_| |_|
+*
+*============================================
 */
 
 int main(int argc, char **argv){
@@ -354,7 +353,6 @@ int main(int argc, char **argv){
 	FLAG(NORMAL,MAIN,0x00,0x01);
 	setup_timer_interruption(1, 1); // 1ms repeating
 	FLAG(NORMAL,MAIN,0x00,0x02);
-//	setup_IO();
 	FLAG(NORMAL,MAIN,0x00,0x03);
 
 	while (1){
