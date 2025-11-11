@@ -11,7 +11,7 @@
 #define PIO_IN_BASE             0x00200020
 #define GPIO_0_BASE             0x00200040
 #define GPIO_1_BASE             0x00200060
-#define GPIO_E_BASE             0x00200060
+#define GPIO_E_BASE             0x00200080
 #define TIMER_BASE              0x002000A0
 
 

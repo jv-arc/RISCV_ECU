@@ -47,20 +47,26 @@ module tbench;
 	//==================================================
 
 	//first bank declarations
-	wire [35:0] gpio_0;
-	reg  [35:0] gpio_0_drive;
-	reg  [35:0] gpio_0_en;
+	wire [31:0] gpio_0;
+	reg  [31:0] gpio_0_drive;
+	reg  [31:0] gpio_0_en;
 
 	//second bank declarations
-	wire [35:0] gpio_1;
-	reg  [35:0] gpio_1_drive;
-	reg  [35:0] gpio_1_en;
+	wire [31:0] gpio_1;
+	reg  [31:0] gpio_1_drive;
+	reg  [31:0] gpio_1_en;
+
+	//extra bank declarations
+	wire [7:0] gpio_e;
+	reg  [7:0] gpio_e_drive;
+	reg  [7:0] gpio_e_en;
+
 
 	// Tristate logic needs to be in this order to match Qsys convention
 	// '1' ==> output ; '0' ==> input
-	assign gpio_0 = gpio_0_en ? 36'hz : gpio_0_drive;
-	assign gpio_1 = gpio_1_en ? 36'hz : gpio_1_drive;
-
+	assign gpio_0 = gpio_0_en ? 32'hz : gpio_0_drive;
+	assign gpio_1 = gpio_1_en ? 32'hz : gpio_1_drive;
+	assign gpio_e = gpio_e_en ? 8'hz  : gpio_e_drive;
 
 
 
@@ -75,7 +81,8 @@ module tbench;
 		.SW        (sw_in),
 		.LEDR      (ledr_out),
 		.GPIO_0    (gpio_0),
-		.GPIO_1    (gpio_1)
+		.GPIO_1    (gpio_1),
+		.GPIO_E    (gpio_e)
 	);
 
 
@@ -126,12 +133,14 @@ module tbench;
 		sw_in = 10'b0;
 
 		// all gpios set as input
-		gpio_0_en = 36'b0;
-		gpio_1_en = 36'b0;
+		gpio_0_en = 32'b0;
+		gpio_1_en = 32'b0;
+		gpio_e_en = 8'b0;
 
 		// all gpios cleaned
-		gpio_0_drive = 36'b0;
-		gpio_1_drive = 36'b0;
+		gpio_0_drive = 32'b0;
+		gpio_1_drive = 32'b0;
+		gpio_e_drive = 8'b0;
  
  
 		#100
@@ -153,23 +162,15 @@ module tbench;
 			// Wait for the cpu to be idle
 			wait_for_flag2({NORMAL, WHILE, 8'h00, 8'h00});
 
-			// Trigger interrupt
-			// those wires are 36 but long and are directly mapped
-			if(i<36) begin
-				gpio_0_drive[i] = 1'b1;
-				#cpu_period
-				gpio_0_drive[i] = 1'b0;
-			end
-			else if(i<72) begin
-				gpio_1_drive[i-36] = 1'b1;
-				#cpu_period
-				gpio_1_drive[i-36] = 1'b0;
-			end
 			
 			pos = get_gpio_pos(i);
 			bank = get_gpio_bank(i);
 
 			if( bank == 0 ) begin
+				gpio_0_drive[pos] = 1'b1;
+				#cpu_period
+				gpio_0_drive[pos] = 1'b0;
+
 				//Processor word is only 32 bit long
 				expected_value = 32'h00000000;
 				expected_value[pos] = 1'b1;
@@ -180,6 +181,10 @@ module tbench;
 				assert_debug_after_flag({NORMAL, ISR, 8'h03, 8'h02}, expected_value, timeout_limit);
 			end
 			else if(bank == 1) begin
+				gpio_1_drive[pos] = 1'b1;
+				#cpu_period
+				gpio_1_drive[pos] = 1'b0;
+
 				//Processor word is only 32 bit long
 				expected_value = 32'h00000000;
 				expected_value[pos] = 1'b1;
@@ -189,7 +194,11 @@ module tbench;
 				assert_debug_after_flag({NORMAL, ISR, 8'h04, 8'h01}, 0, timeout_limit);
 				assert_debug_after_flag({NORMAL, ISR, 8'h04, 8'h02}, expected_value, timeout_limit);
 			end
-			else if(bank==2) begin
+			else if(bank == 2) begin
+				gpio_e_drive[pos] = 1'b1;
+				#cpu_period
+				gpio_e_drive[pos] = 1'b0;
+
 				//Processor word is only 32 bit long
 				expected_value = 32'h00000000;
 				expected_value[pos] = 1'b1;

@@ -3,8 +3,9 @@ module pulpino_qsys_test (
 	input  [3:0]  KEY,
 	input  [9:0]  SW,
 	output [9:0]  LEDR,
-	inout  [35:0] GPIO_0,
-	inout  [35:0] GPIO_1
+	inout  [31:0] GPIO_0,
+	inout  [31:0] GPIO_1,
+	inout  [7:0]  GPIO_E
 );
 
 
@@ -72,7 +73,7 @@ sys u0 (
 	.reset_reset_n                         (reset_n),
 	.gpio_0_external_connection_export     (GPIO_0[31:0]),
 	.gpio_1_external_connection_export     (GPIO_1[31:0]),
-	.gpio_extra_external_connection_export ({GPIO_1[35:32], GPIO_0[35:32]}),
+	.gpio_extra_external_connection_export (GPIO_E[7:0]),
 	.debug_external_connection_export      (debug_wire)
 );
 

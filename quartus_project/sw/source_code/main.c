@@ -448,20 +448,13 @@ void __attribute__ ((interrupt)) default_exc_handler(void){
 int main(int argc, char **argv){
 	DEBUG(0x55555555);
 
-	// Set GPIO_0 as input
 	set_gpio_zero_as_input(0xFFFFFFFF);
 	set_gpio_one_as_input(0xFFFFFFFF);
 	set_gpio_extra_as_input(0xFFFFFFFF);
-	FLAG(NORMAL,MAIN,0x00,0x01);
-	
-	// Enable GPIO_0 interruptions
 	set_gpio_zero_interruptions(0xFFFFFFFF);
 	set_gpio_one_interruptions(0xFFFFFFFF);
 	set_gpio_extra_interruptions(0xFFFFFFFF);
-	FLAG(NORMAL,MAIN,0x00,0x02);
-
 	enable_irq();
-	FLAG(NORMAL,MAIN,0x00,0x03);
 
 	while (1){
 		//Needs to be inside to reassert after ISR
