@@ -23,13 +23,13 @@ task wait_for_flag2;
 
 		while (debug_wire != expected_flag && current_time < max_time) begin
 			@(posedge tb_clk);
-			current_time = current_time +1;
+			current_time = current_time + 1;
 		end
 
 		if(current_time < max_time) begin
 			$display("[FLAG-LOG] flag 0x%h reached at %t", expected_flag, $time);
 		end else begin
-			$display("[FLAG-ERROR] flag no reached on time");
+			$display("[FLAG-ERROR] flag 0x%h not reached - current time: %t", expected_flag, $time);
 		end
 
 	end
@@ -81,7 +81,7 @@ task assert_debug_after_flag;
 
 		// Checks if we timed out
 		if(time_count >= max_time) begin
-			$display("ERROR: Wait for flag 0x%h took too long", expected_flag);
+			$display("ERROR: Wait for flag 0x%h took too long - current time: %t", expected_flag, $time);
 		end
 
 
@@ -97,7 +97,7 @@ task assert_debug_after_flag;
 
 			// Checks again if we timed out
 			if(time_count >= max_time) begin
-				$display("ERROR: Waited too long for debug value!");
+				$display("ERROR: Waited too long for debug value! - current time: %t", $time);
 			end
 
 			// If we didn't timeout, that means the debug_wire changed
@@ -108,10 +108,10 @@ task assert_debug_after_flag;
 
 				// Test value
 				if(captured_value == expected_debug) begin
-					$display("ASSERTION COMPLETED, wire_debug is 0x%h", captured_value);
+					$display("ASSERTION COMPLETED, wire_debug is 0x%h - current time: %t", captured_value, $time);
 				end else begin
-					$display("ERROR: wire_debug contains 0x%h", captured_value);
 					$display("ASSERTION FAILED: the expected value was 0x%h", expected_debug);
+					$display("wire_debug contains 0x%h at time %t", captured_value, $time);
 				end
 
 			end

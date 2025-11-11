@@ -1,13 +1,21 @@
 `timescale 1ns/10ps
 
-
 module tbench;
-	`include "flag_values.svh"
+	// `include "flag_values.svh"
+	
+	parameter NORMAL = 8'h00;
+	parameter SUCCESS = 8'hF0;
+	parameter FAILURE = 8'hFF;
 
+	parameter MAIN = 8'h00;
+	parameter WHILE = 8'h01;
+	parameter FUNC = 8'h02;
+	parameter SETUP = 8'h03;
+	parameter ISR = 8'h04;
 
-//==================================================
-//                 BASIC SETUP
-//==================================================
+	//==================================================
+	//                 BASIC SETUP
+	//==================================================
 
 	// fixed during simulation
 	parameter BOOT_ADDR = 32'h00008000;
@@ -22,7 +30,6 @@ module tbench;
 	assign fetch_enable = 1'b1;
 	assign clock_gating = 1'b0;
 	
-	
 	// changing during the simulation
 	reg  tb_clk;
 	reg  jtag_reset;
@@ -33,9 +40,11 @@ module tbench;
 
 
 
-//==================================================
-//                TRI-STATE SETUP
-//==================================================
+
+
+	//==================================================
+	//                TRI-STATE SETUP
+	//==================================================
 
 	//first bank declarations
 	wire [35:0] gpio_0;
@@ -47,19 +56,18 @@ module tbench;
 	reg  [35:0] gpio_1_drive;
 	reg  [35:0] gpio_1_en;
 
-
-	// Tristate logic
-	// needs to be in this order to match Qsys convention
-	// '1' the pin is an output
-	// '0' the pin is an input
+	// Tristate logic needs to be in this order to match Qsys convention
+	// '1' ==> output ; '0' ==> input
 	assign gpio_0 = gpio_0_en ? 36'hz : gpio_0_drive;
 	assign gpio_1 = gpio_1_en ? 36'hz : gpio_1_drive;
 
 
 
-//==================================================
-//                   Instantiation
-//==================================================
+
+
+	//==================================================
+	//                   Instantiation
+	//==================================================
 
 	pulpino_qsys_test dut (
 		.CLOCK_50  (tb_clk),
@@ -95,19 +103,23 @@ module tbench;
 	// wire branch_decision;
 	// assign jump_decidion = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.branch_decision;
 
-//==================================================
-//                   SIMULATION
-//==================================================
+	//==================================================
+	//                   SIMULATION
+	//==================================================
 
 	`include "debug_after_flag.svh"
 	`include "gpio_helper.svh"
 	initial begin
 
-		
-		//======================
-		//  Initial Conditions
-		//======================
-		
+		integer i;
+		integer pos;
+		integer bank;
+		integer timeout_limit;
+		reg [31:0] expected_value;
+	
+
+		//==== Initial Conditions ====
+		timeout_limit = 500;
 		tb_clk = 0;
 		key_reset = 1'b0;
 		KEY_r = 3'b1;
@@ -123,37 +135,83 @@ module tbench;
  
  
 		#100
-	
+
+
 		for(i=0; i<72; i++) begin
-			// Turning on the core
+			$display("==============STARTING TEST FOR GPIO: %d  ==================", i);
+			// Resetting the core
+			key_reset = 1'b0;
+			#cpu_period
+			#cpu_period
 			key_reset = 1'b1;
 
+			// Confirm correct execution
 			wait_for_stable_debug();
 			wait_for_main();
 
-			// Wait for final loop indicating the cpu is idle
+
+			// Wait for the cpu to be idle
 			wait_for_flag2({NORMAL, WHILE, 8'h00, 8'h00});
 
-
 			// Trigger interrupt
-			gpio_0_drive[0] = 1'b1;
-			#cpu_period
-			gpio_0_drive[0] = 1'b0;
+			// those wires are 36 but long and are directly mapped
+			if(i<36) begin
+				gpio_0_drive[i] = 1'b1;
+				#cpu_period
+				gpio_0_drive[i] = 1'b0;
+			end
+			else if(i<72) begin
+				gpio_1_drive[i-36] = 1'b1;
+				#cpu_period
+				gpio_1_drive[i-36] = 1'b0;
+			end
+			
+			pos = get_gpio_pos(i);
+			bank = get_gpio_bank(i);
 
-			// Wait until handler starts
-			wait_for_flag2({NORMAL, ISR, 8'h03, 8'h00});
-			assert_debug_after_flag({NORMAL, ISR, 0'h04, 8'h01}, 0x)
+			if( bank == 0 ) begin
+				//Processor word is only 32 bit long
+				expected_value = 32'h00000000;
+				expected_value[pos] = 1'b1;
+				
+				//bank 0 is handler 3
+				wait_for_flag2({NORMAL, ISR, 8'h03, 8'h00});
+				assert_debug_after_flag({NORMAL, ISR, 8'h03, 8'h01}, 0, timeout_limit);
+				assert_debug_after_flag({NORMAL, ISR, 8'h03, 8'h02}, expected_value, timeout_limit);
+			end
+			else if(bank == 1) begin
+				//Processor word is only 32 bit long
+				expected_value = 32'h00000000;
+				expected_value[pos] = 1'b1;
+				
+				//bank 1 is handler 4
+				wait_for_flag2({NORMAL, ISR, 8'h04, 8'h00});
+				assert_debug_after_flag({NORMAL, ISR, 8'h04, 8'h01}, 0, timeout_limit);
+				assert_debug_after_flag({NORMAL, ISR, 8'h04, 8'h02}, expected_value, timeout_limit);
+			end
+			else if(bank==2) begin
+				//Processor word is only 32 bit long
+				expected_value = 32'h00000000;
+				expected_value[pos] = 1'b1;
+				
+				//bank 2 is handler 5
+				wait_for_flag2({NORMAL, ISR, 8'h05, 8'h00});
+				assert_debug_after_flag({NORMAL, ISR, 8'h05, 8'h01}, 0, timeout_limit);
+				assert_debug_after_flag({NORMAL, ISR, 8'h05, 8'h02}, expected_value, timeout_limit);
+			end
 
-		//==========================================
+
+			// Wait CPU to become idle again
+			wait_for_flag({NORMAL, WHILE, 8'h00, 8'h00});
+
+		end
 
 
-		wait_for_flag({NORMAL, WHILE, 8'h00, 8'h00});
 
-		// End simulation
+		//===== Finish the simulation ====
 		#200
 		$stop;
 	end
-
 
 	// Clock Generation
 	always begin
