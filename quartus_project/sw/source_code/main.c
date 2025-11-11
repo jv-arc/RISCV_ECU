@@ -41,7 +41,6 @@
 #define GPIO_0        ( PIO_T        (GPIO_0_BASE) )
 #define GPIO_1        ( PIO_T        (GPIO_1_BASE) )
 #define GPIO_E        ( PIO_T        (GPIO_E_BASE) )
-#define EVENT_UNIT    ( EVENT_UNIT_T (EVENT_UNIT_BASE) )
 
 /*
 ----------------GLOBAL "VARIABLES"----------------
@@ -76,118 +75,194 @@
 *                         |___/
 *=========================================
 */
+
+
+/*
+* ==========JTAG BASIC FUNCTIONS===========
+*/
 void jtag_put_char(char c){
 	FLAG(NORMAL,FUNC,0x00,0x00);
-	while((JTAG.CONTROL >> 16) == 0){};
-	FLAG(NORMAL,FUNC,0x00,0x01);
-	JTAG.DATA = c;
-	FLAG(NORMAL,FUNC,0x00,0x02);
-}
 
+	// Needs to go before the loop so we avoid
+	// extra writing
+	FLAG(NORMAL,WHILE,0x01,0x00);
+	while((JTAG.CONTROL >> 16) == 0){};
+	JTAG.DATA = c;
+
+	FLAG(NORMAL,FUNC,0x00,0x01);
+}
 char jtag_get_char(){
 	FLAG(NORMAL,FUNC,0x01,0x00);
+
+	FLAG(NORMAL,WHILE,0x02,0x00);
 	while(((JTAG.DATA >> 15) & 1) == 1){};
+
+	// Before to not be cut by return
 	FLAG(NORMAL,FUNC,0x01,0x01);
   return (char)(JTAG.DATA & 0xFF);
-	FLAG(NORMAL,FUNC,0x01,0x02);
 }
 
-void set_GPIO_zero_direction(uint32_t mask){
-	GPIO_0.DIRECTION = mask;
+
+
+/*
+* ==========SETTING GPIO AS INPUTS===========
+*/
+void set_gpio_zero_as_input(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x00,0x00);
-	GPIO_0.OUT_CLEAR = mask;
+
+	// inputs are '0'
+	GPIO_0.DIRECTION &= ~mask;
+
 	FLAG(NORMAL,SETUP,0x00,0x01);
 }
-
-void set_GPIO_one_direction(uint32_t mask){
-	GPIO_1.OUT_CLEAR = mask;
+void set_gpio_one_as_input(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x01,0x00);
-	GPIO_1.DIRECTION = mask;
+
+	// inputs are '0'
+	GPIO_1.DIRECTION &= ~mask;
+
 	FLAG(NORMAL,SETUP,0x01,0x01);
 }
-
-void set_GPIO_extra_direction(uint32_t mask){
-	GPIO_E.OUT_CLEAR = mask;
+void set_gpio_extra_as_input(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x02,0x00);
-	GPIO_E.DIRECTION = mask;
+
+	// inputs are '0'
+	GPIO_E.DIRECTION &= ~mask;
+
 	FLAG(NORMAL,SETUP,0x02,0x01);
 }
 
-void set_GPIO_zero_interruptions(uint32_t mask){
-	GPIO_0.EDGE_CAPTURE = mask;
+
+
+/*
+* ==========SETTING GPIO AS OUTPUTS===========
+*/
+void set_gpio_zero_as_output(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x03,0x00);
-	GPIO_0.INT_MASK = mask;
+
+	// It's necessary to clean the gpio before
+	//otherwise it can be stuck at high.
+	GPIO_0.OUT_CLEAR = mask;
+
+	// inputs are '1'
+	GPIO_0.DIRECTION |= mask;
+
 	FLAG(NORMAL,SETUP,0x03,0x01);
 }
-
-void set_GPIO_one_interruptions(uint32_t mask){
-	GPIO_1.EDGE_CAPTURE = mask;
+void set_gpio_one_as_output(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x04,0x00);
-	GPIO_1.INT_MASK = mask;
+
+	// It's necessary to clean the gpio before
+	//otherwise it can be stuck at high.
+	GPIO_1.OUT_CLEAR = mask;
+
+	// inputs are '1'
+	GPIO_1.DIRECTION |= mask;
 	FLAG(NORMAL,SETUP,0x04,0x01);
 }
-
-void set_GPIO_extra_interruptions(uint32_t mask){
-	GPIO_E.EDGE_CAPTURE = mask;
+void set_gpio_extra_as_output(uint32_t mask){
 	FLAG(NORMAL,SETUP,0x05,0x00);
-	GPIO_E.INT_MASK = mask;
+
+	// It's necessary to clean the gpio before
+	//otherwise it can be stuck at high.
+	GPIO_E.OUT_CLEAR = mask;
+
+	// inputs are '1'
+	GPIO_E.DIRECTION |= mask;
 	FLAG(NORMAL,SETUP,0x05,0x01);
 }
 
-void set_PIO_IN_interruptions(uint32_t mask){
-	PIO_IN.EDGE_CAPTURE = 1;
-	FLAG(NORMAL,SETUP,0x06,0x00);
-	PIO_IN.INT_MASK = mask;
+
+
+/*
+* ==========SETTING GPIO INTERRUPTIONS===========
+*/
+void set_gpio_zero_interruptions(uint32_t mask){
+	FLAG(NORMAL,SETUP,0x06, 0x00);
+
+	// Cleans pending interrupts before enabling them
+	// otherwise we might get interruptions that were
+	// triggered begore enabling them
+	GPIO_0.EDGE_CAPTURE = mask;
+	GPIO_0.INT_MASK = mask;
+
 	FLAG(NORMAL,SETUP,0x06,0x01);
 }
+void set_gpio_one_interruptions(uint32_t mask){
+	FLAG(NORMAL,SETUP,0x07, 0x00);
 
+	// Cleans pending interrupts before enabling them
+	// otherwise we might get interruptions that were
+	// triggered begore enabling them
+	GPIO_1.EDGE_CAPTURE = mask;
+	GPIO_1.INT_MASK = mask;
+
+	FLAG(NORMAL,SETUP,0x07,0x01);
+}
+void set_gpio_extra_interruptions(uint32_t mask){
+	FLAG(NORMAL,SETUP,0x07, 0x00);
+
+	// Cleans pending interrupts before enabling them
+	// otherwise we might get interruptions that were
+	// triggered begore enabling them
+	GPIO_E.EDGE_CAPTURE = mask;
+	GPIO_E.INT_MASK = mask;
+
+	FLAG(NORMAL,SETUP,0x07,0x01);
+}
+
+
+
+/*
+* ==========SETTING OTHER INTERRUPTIONS===========
+*/
+void set_pio_in_interruptions(uint32_t mask){
+	FLAG(NORMAL,SETUP,0x08, 0x00);
+
+	PIO_IN.EDGE_CAPTURE = 1;
+	PIO_IN.INT_MASK = mask;
+
+	FLAG(NORMAL,SETUP,0x08,0x01);
+}
 void setup_timer_interruption(uint32_t counting_mode, uint32_t time){
- 
+	FLAG(NORMAL,SETUP,0x09, 0x00);
+
 	// Stop counter
 	TIMER.CONTROL |= (1U << 3);
-	FLAG(NORMAL,SETUP,0x08,0x00);
+	FLAG(NORMAL,SETUP,0x09,0x01);
 
 	// set time period
 	uint32_t period_full = MS2CYCLES(time);
 	TIMER.PERIOD_L =  (  period_full & 0xFFFF );
 	TIMER.PERIOD_H =  (( period_full >> 16 ) & 0xFFFF );
-	FLAG(NORMAL,SETUP,0x08,0x01);
+	FLAG(NORMAL,SETUP,0x09,0x02);
 
 	// Clear old timer interrupts
 	TIMER.STATUS &= ~(1);
-	FLAG(NORMAL,SETUP,0x08,0x02);
+	FLAG(NORMAL,SETUP,0x09,0x03);
 
 	// Values for configuraing the Timer
 	uint32_t setup = 0;
 	setup |=                     (1U << 0); // (ITO) clean
 	setup |= ((counting_mode & 1)    << 1); // (CONT) repeating or not
 	setup |=                     (1U << 2); // (START) start now
-	FLAG(NORMAL,SETUP,0x08,0x03);
+	FLAG(NORMAL,SETUP,0x09,0x04);
 
 	// Clean and write to register
 	uint32_t cleaned_value = TIMER.CONTROL & (~ 5);
 	TIMER.CONTROL = cleaned_value | setup;
-	FLAG(NORMAL,SETUP,0x08,0x04);
+	FLAG(NORMAL,SETUP,0x09,0x05);
 }
+void enable_irq(){
+	FLAG(NORMAL,SETUP,0x0a,0x00);
 
+	//Sets machine interrupts on
+	//__asm__("csrs mie, 0x800");
+	
+	//Sets global interruptions on
+	__asm__("csrs mstatus, 0x8");
 
-void enable_irq(uint32_t mask){
-	FLAG(NORMAL,SETUP,0x09,0x00);
-
-	// Clear all pending interruptions
-	EVENT_UNIT.INTER.PENDING_CLEAR = 0xFFFFFFFF;
-	FLAG(NORMAL,SETUP,0x09,0x01);
-
-	// Set mask to enabble interrupts
-	EVENT_UNIT.INTER.ENABLE = mask;
-	FLAG(NORMAL,SETUP,0x09,0x02);
-
-	// Set mstatus to 8
-	__asm__(
-		"li x6, 0x00000008\n"
-		"csrs mstatus, x6"
-	);
-	FLAG(NORMAL,SETUP,0x09,0x03);
+	FLAG(NORMAL,SETUP,0x0a,0x03);
 }
 
 
@@ -209,7 +284,8 @@ void enable_irq(uint32_t mask){
 */
 void __attribute__((interrupt)) jtag_interrupt_handler(void){
 	FLAG(NORMAL,ISR,0x00,0x00);
-	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 0);
+
+
 	FLAG(NORMAL,ISR,0x00,0x01);
 }
 
@@ -221,7 +297,8 @@ void __attribute__((interrupt)) jtag_interrupt_handler(void){
 */
 void __attribute__((interrupt)) board_input_handler(void){
 	FLAG(NORMAL,ISR,0x01,0x00);
-	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 1);
+
+
 	FLAG(NORMAL,ISR,0x01,0x01);
 }
 
@@ -235,7 +312,6 @@ void __attribute__((interrupt)) timer_finished_handler(void){
 	FLAG(NORMAL,ISR,0x02,0x00);
 	
 	// clears interrupt on the interrupt controller
-	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 2);
 	TIMER.CONTROL |= ~1;
 	FLAG(NORMAL,ISR,0x02,0x01);
 	
@@ -264,16 +340,24 @@ void __attribute__((interrupt)) timer_finished_handler(void){
 */
 void __attribute__((interrupt)) gpio_zero_handler(void){
 	FLAG(NORMAL,ISR,0x03,0x00);
-	PIO_OUT.DATA = 3;
-	
-	// Cleans interrupts on the peripheral
-	uint32_t interrupt = GPIO_1.DATA;
-	PIO_OUT.DATA = interrupt;
-	GPIO_1.EDGE_CAPTURE = interrupt;
 
-	// Cleans interrupts on the manager
-	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 3);
+	// Debug GPIO_0.DATA
+	uint32_t read_data = GPIO_0.DATA;
 	FLAG(NORMAL,ISR,0x03,0x01);
+	DEBUG(read_data);
+
+
+	// Confirms GPIO_0.EDGE_CAPTURE
+	uint32_t interrupt_in_peripheral = GPIO_0.EDGE_CAPTURE;
+	FLAG(NORMAL,ISR,0x03,0x02);
+	DEBUG(interrupt_in_peripheral);
+
+
+	// Cleans interrupt
+	GPIO_0.EDGE_CAPTURE = interrupt_in_peripheral;
+
+
+	FLAG(NORMAL,ISR,0x03,0x04);
 }
 
 
@@ -284,16 +368,24 @@ void __attribute__((interrupt)) gpio_zero_handler(void){
 */
 void __attribute__((interrupt)) gpio_one_handler(void){
 	FLAG(NORMAL,ISR,0x04,0x00);
-	PIO_OUT.DATA = 4;
 
-	// Cleans interrupts on the peripheral
-	uint32_t interrupt = GPIO_0.DATA;
-	PIO_OUT.DATA = interrupt;
-	GPIO_0.EDGE_CAPTURE = interrupt;
-
-	// Cleans interrupts on the manager
-	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 4);
+	// Debug GPIO_0.DATA
+	uint32_t read_data = GPIO_1.DATA;
 	FLAG(NORMAL,ISR,0x04,0x01);
+	DEBUG(read_data);
+
+
+	// Confirms GPIO_0.EDGE_CAPTURE
+	uint32_t interrupt_in_peripheral = GPIO_1.EDGE_CAPTURE;
+	FLAG(NORMAL,ISR,0x04,0x02);
+	DEBUG(interrupt_in_peripheral);
+
+
+	// Cleans interrupt
+	GPIO_1.EDGE_CAPTURE = interrupt_in_peripheral;
+
+
+	FLAG(NORMAL,ISR,0x04,0x04);
 }
 
 
@@ -304,22 +396,29 @@ void __attribute__((interrupt)) gpio_one_handler(void){
 */
 void __attribute__((interrupt)) gpio_extra_handler(void){
 	FLAG(NORMAL,ISR,0x05,0x00);
-	PIO_OUT.DATA = 5;
 
-	// Cleans interrupts on the peripheral
-	uint32_t interrupt = GPIO_E.DATA;
-	PIO_OUT.DATA = interrupt;
-	GPIO_E.EDGE_CAPTURE = interrupt;
-
-	// Cleans interrupts on the manager
-	EVENT_UNIT.INTER.PENDING_CLEAR = (1U << 5);
+	// Debug GPIO_0.DATA
+	uint32_t read_data = GPIO_E.DATA;
 	FLAG(NORMAL,ISR,0x05,0x01);
+	DEBUG(read_data);
+
+
+	// Confirms GPIO_0.EDGE_CAPTURE
+	uint32_t interrupt_in_peripheral = GPIO_E.EDGE_CAPTURE;
+	FLAG(NORMAL,ISR,0x05,0x02);
+	DEBUG(interrupt_in_peripheral);
+
+
+	// Cleans interrupt
+	GPIO_E.EDGE_CAPTURE = interrupt_in_peripheral;
+
+	FLAG(NORMAL,ISR,0x05,0x04);
 }
 
 
 
 /*
-*  Fallback interrupt handler, asserts FLAG FAILUE and loops
+*  Fallback interrupt handler, asserts FLAG FAILURE and loops
 *  it should only trigger if an unnexpected interrupt happens
 *
 *  INT_NUM = anything after 5 and before 20
@@ -347,15 +446,21 @@ void __attribute__ ((interrupt)) default_exc_handler(void){
 */
 
 int main(int argc, char **argv){
-	COUNT = 0;
-	FLAG(NORMAL,MAIN,0x00,0x00);
-	enable_irq(0xFFFFFFFF);
+	DEBUG(0x55555555);
+
+	// Set GPIO_0 as input
+	set_gpio_zero_as_input(1);
 	FLAG(NORMAL,MAIN,0x00,0x01);
-	setup_timer_interruption(1, 1); // 1ms repeating
+	
+	// Enable GPIO_0 interruptions
+	set_gpio_zero_interruptions(1);
 	FLAG(NORMAL,MAIN,0x00,0x02);
+
+	enable_irq();
 	FLAG(NORMAL,MAIN,0x00,0x03);
 
 	while (1){
+		//Needs to be inside to reassert after ISR
 		FLAG(NORMAL,WHILE,0x00,0x00);
 	}
 	return 0;

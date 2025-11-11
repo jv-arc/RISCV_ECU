@@ -102,10 +102,19 @@
 
 
 
-
+	//====================================================================
+	// MY LIFE WAS A LIE, THERE IS NO EVENT UNIT IN THE PROJECT!!!!!!!!!!!
+	// THIS IS JUST GHOST CODE!!!!!!!
+	//
+	// I WAS WRITING CONTROL DATA INTO UNMAPPED MEMORY THINKING IT WAS
+  // CRUCIAL, BUT IT WAS USELESS
+	//
+	// Let this code here be a testment to my lack of debugging skills, and
+	// also to be used if one day I use the Pulpino event unit
+	//
 	//=================STRUCTS AND MACROS FOR EVENT UNIT==================
 	// The event unit controls both sleep, interruptions and events. This
-  // is a bit different from traditional RISC-V implementations, and was
+  // is a bit different from traditional RISC-V implementations, and was	     <== Pure baloney
 	// not defined in this project, but it's actually inherited from the
   // 'zero-riscy' implementation. As far as I know it's one of the only
   // peripherals being used on the project that can be found on the
@@ -156,6 +165,12 @@
 	// Example: if DIRECTION isn't available at a specific config
 	// INT_MASK stays in the same place, not moving to take
 	// DIRECTION's memory address on the mapping.
+	//
+	// The DATA register can be used to read and write anything but
+	// the write operation must provide the full value. Meanwhile
+	// the OUT_SET and OUT_CLEAR ones cannot be read but they don't
+	// need the whole value. It only clears or sets bits you write
+	// as 1. This is useful for atomic operations.
 	//
 
 	typedef struct{

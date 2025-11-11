@@ -18,7 +18,7 @@
 
 	#endif
 
-	// Independent of DEBUG_FLAG
+	// Independent of DEBUG_FLAG:
 	#define MS2CYCLES(n)              (((n)*(timer_conversion_factor))-1)
 
 	typedef enum {
@@ -33,9 +33,9 @@
 		FUNC = 0x02,
 		SETUP = 0x03,
 		ISR = 0x04
-	} TYPE_T;
+	} SECTION_TYPE_T;
 
-	#define FLAG(a,b,c,d)               DEBUG(((a)<<24)+((b)<<16)+((c)<<8)+((d)<<0))
+	#define FLAG(a,b,c,d)               DEBUG( ((a)<<24) + ((b)<<16) + ((c)<<8) + ((d)<<0) )
 
 
 #endif // closing DEBUG_GUARD

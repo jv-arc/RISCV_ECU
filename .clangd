@@ -5,3 +5,7 @@ CompileFlags:
     - -mabi=ilp32
     - -target
     - riscv32-unknown-elf
+
+  Diagnostics:
+    Suppress: ['EVENT_UNIT']
+    UnusedIncludes: None
