@@ -111,4 +111,4 @@ ASSEMBLY_STAMP = $(STAMPS_DIR)/assembly_stamp
 FITTING_STAMP = $(STAMPS_DIR)/fitting_stamp
 
 
-
+SIM_DIR = $(Q_DIR)/tcl_scripts

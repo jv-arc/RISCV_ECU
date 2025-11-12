@@ -193,13 +193,14 @@ vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sy
 vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_GPIO_0.v"                                               -work GPIO_0                                  
 vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_DEBUG.v"                                                -work DEBUG                                   
 vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v"                                                                                                               
-vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo"                                                                                                                     
+vlog     "/home/jvctr/0/POLIno_qsys/quartus_project/main_pll/pll_sim/pll.vo"                                                                                                            
 
-vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project {/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo}
-vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl {/home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v}
+vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/main_pll {/home/jvctr/0/POLIno_qsys/quartus_project/main_pll/pll.vo}
 vlib pll
 vmap pll pll
-vlog -sv -work pll +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/pll {/home/jvctr/0/POLIno_qsys/quartus_project/pll/pll_0002.v}
+vlog -sv -work pll +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/main_pll {/home/jvctr/0/POLIno_qsys/quartus_project/main_pll/pll.v}
+vlog -sv -work work +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/rtl {/home/jvctr/0/POLIno_qsys/quartus_project/rtl/pulpino_qsys_test.v}
+vlog -sv -work pll +incdir+/home/jvctr/0/POLIno_qsys/quartus_project/main_pll/pll {/home/jvctr/0/POLIno_qsys/quartus_project/main_pll/pll/pll_0002.v}
 vlib sys
 vmap sys sys
 
@@ -210,3 +211,4 @@ vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lns
 add wave *
 view structure
 view signals
+run 100 us

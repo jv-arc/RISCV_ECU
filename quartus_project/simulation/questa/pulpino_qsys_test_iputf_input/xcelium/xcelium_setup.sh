@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 24.1 1077 linux 2025.11.06.12:36:48
+# ACDS 24.1 1077 linux 2025.11.14.17:28:20
 
 # ----------------------------------------
 # xcelium - auto-generated simulation script
@@ -97,7 +97,7 @@
 # 
 # IP SIMULATION SCRIPT
 # ----------------------------------------
-# ACDS 24.1 1077 linux 2025.11.06.12:36:48
+# ACDS 24.1 1077 linux 2025.11.14.17:28:20
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="pll"
@@ -286,7 +286,7 @@ if [ $SKIP_COM -eq 0 ]; then
   xmvlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_GPIO_0.v"                                               -work GPIO_0                                   -cdslib <<GPIO_0>>                                  
   xmvlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_DEBUG.v"                                                -work DEBUG                                    -cdslib <<DEBUG>>                                   
   xmvlog     "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v"                                                                                                                                                                    
-  xmvlog     "/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo"                                                                                                                                                                          
+  xmvlog     "/home/jvctr/0/POLIno_qsys/quartus_project/main_pll/pll_sim/pll.vo"                                                                                                                                                                 
 fi
 
 # ----------------------------------------

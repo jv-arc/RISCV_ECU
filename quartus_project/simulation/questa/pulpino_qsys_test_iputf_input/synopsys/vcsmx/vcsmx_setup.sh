@@ -95,4 +95,4 @@ vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/
 vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_GPIO_0.v"                                               -work GPIO_0                                  
 vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_DEBUG.v"                                                -work DEBUG                                   
 vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/sys.v"                                                                                                               
-vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/pll_sim/pll.vo"                                                                                                                     
+vlogan +v2k           "/home/jvctr/0/POLIno_qsys/quartus_project/main_pll/pll_sim/pll.vo"                                                                                                            

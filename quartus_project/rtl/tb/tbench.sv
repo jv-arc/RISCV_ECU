@@ -13,6 +13,9 @@ module tbench;
 	parameter SETUP = 8'h03;
 	parameter ISR = 8'h04;
 
+
+
+
 	//==================================================
 	//                 BASIC SETUP
 	//==================================================
@@ -39,36 +42,64 @@ module tbench;
 	wire [9:0] ledr_out;
 
 
+ 
+
+  //  ╭─────────────────╮
+  //  │ TRI-STATE SETUP │
+  //  ╰─────────────────╯
 
 
-
-	//==================================================
-	//                TRI-STATE SETUP
-	//==================================================
-
-	//first bank declarations
+  //first bank declarations
 	wire [31:0] gpio_0;
 	reg  [31:0] gpio_0_drive;
-	reg  [31:0] gpio_0_en;
+	reg  [31:0] gpio_0_direction;
 
 	//second bank declarations
 	wire [31:0] gpio_1;
 	reg  [31:0] gpio_1_drive;
-	reg  [31:0] gpio_1_en;
+	reg  [31:0] gpio_1_direction;
 
 	//extra bank declarations
 	wire [7:0] gpio_e;
 	reg  [7:0] gpio_e_drive;
-	reg  [7:0] gpio_e_en;
+	reg  [7:0] gpio_e_direction;
 
 
 	// Tristate logic needs to be in this order to match Qsys convention
 	// '1' ==> output ; '0' ==> input
-	assign gpio_0 = gpio_0_en ? 32'hz : gpio_0_drive;
-	assign gpio_1 = gpio_1_en ? 32'hz : gpio_1_drive;
-	assign gpio_e = gpio_e_en ? 8'hz  : gpio_e_drive;
+	assign gpio_0 = gpio_0_direction ? gpio_0_drive :  32'hz ;
+	assign gpio_1 = gpio_1_direction ? gpio_1_drive :  32'hz ;
+	assign gpio_e = gpio_e_direction ? gpio_e_drive :  8'hz  ;
 
 
+
+
+
+
+  // ╭──────────────╮
+  // │ PINOUT SETUP │
+  // ╰──────────────╯
+
+	localparam data_size = 8;
+	localparam pinout_size = data_size + 4;
+
+  wire adc_trigger;
+  wire adc_reset;
+  wire adc_dvalid;
+  wire adc_busy;
+
+	wire [data_size-1:0]   adc_data;
+	wire [pinout_size-1:0] adc_pinout;
+
+	// WARNING: In Verilog concatenation the left most bit goes into MSB
+	assign adc_pinout={adc_trigger, adc_reset, adc_data, adc_dvalid, adc_busy};
+	localparam offset = 10;
+
+	// The expression (2**pinout_size)-1) creates a  word of 1 that is
+	// pinout_size long, multiplying it by 2*offset move the word to the
+	// correct position
+	integer adc_pinout_mask = (((2**pinout_size)-1)*(2**(offset)));
+	integer adc_trigger_mask = (2**(offset+pinout_size));
 
 
 	//==================================================
@@ -85,6 +116,27 @@ module tbench;
 		.GPIO_E    (gpio_e)
 	);
 
+	adc_mock #(
+
+		.DELAY_DEPTH(5),
+		.WORD_SIZE(data_size),
+		.ADDR_DEPTH()
+
+	)adc(
+
+		.CLK(tb_clk),
+		.TRIGGER(adc_trigger),
+		.RESET(adc_reset),
+		.DATA(adc_data),
+		.DVALID(adc_dvalid),
+		.BUSY(adc_busy),
+
+		.TB_FORCE_ADDR(1'b0),
+		.TB_FORCE_DATA(1'b0),
+		.TB_DATA(),
+		.TB_ADDR()
+
+	);
 
 	
 	// wire [7:0] debug1;
@@ -100,15 +152,22 @@ module tbench;
 	assign received_irq = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.id_stage_i.irq_i;
 	wire [4:0] irq_id;
 	assign irq_id = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.id_stage_i.irq_id_i;
-	//
+	
 	// wire [31:0] pc_id;
-	// assign pc_if = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.pc_if;
+	// assign pc_if = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.if_stage_i.pc_if;
 	//
 	// wire [31:0] jump_target;
 	// assign jump_target = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.jump_target_ex;
 	//
 	// wire branch_decision;
 	// assign jump_decidion = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.branch_decision;
+
+
+	wire [data_size-1:0] memory_value;
+	assign memory_value = adc.fake_adc_data.ADDR;
+	reg [data_size-1:0] data_read;
+
+
 
 	//==================================================
 	//                   SIMULATION
@@ -119,107 +178,89 @@ module tbench;
 	initial begin
 
 		integer i;
-		integer pos;
-		integer bank;
 		integer timeout_limit;
-		reg [31:0] expected_value;
 	
-
 		//==== Initial Conditions ====
 		timeout_limit = 500;
 		tb_clk = 0;
 		key_reset = 1'b0;
 		KEY_r = 3'b1;
 		sw_in = 10'b0;
-
-		// all gpios set as input
-		gpio_0_en = 32'b0;
-		gpio_1_en = 32'b0;
-		gpio_e_en = 8'b0;
-
-		// all gpios cleaned
+		
+		// Cleaning all gpio_0 outputs
+		gpio_0_direction = 32'b0;
 		gpio_0_drive = 32'b0;
-		gpio_1_drive = 32'b0;
-		gpio_e_drive = 8'b0;
- 
- 
+
 		#100
 
 
-		for(i=0; i<72; i++) begin
-			$display("==============STARTING TEST FOR GPIO: %d  ==================", i);
-			// Resetting the core
-			key_reset = 1'b0;
+		$display("=====================================");
+		$display("             ADC MOC TEST");
+		$display("=====================================");
+	
+
+		// Resetting the core
+		key_reset = 1'b0;
+		#cpu_period
+		#cpu_period
+		key_reset = 1'b1;
+
+
+		// Confirm correct execution
+		wait_for_stable_debug();
+		wait_for_main();
+
+
+		// wait for the cpu to get idle
+		//for(i=0; i < ((2**data_size) -1); i++) begin
+		for(i=0; i < 2; i++) begin
+			$display("\n\n");
+			$display("TESTING MEMORY ADDRESS: %d", i);
+			$display("----------------------------");
+
+
+
+			// Press Button to read data
+			KEY_r[0] = 1'b0;
+			$display("Button pressed");
 			#cpu_period
-			#cpu_period
-			key_reset = 1'b1;
-
-			// Confirm correct execution
-			wait_for_stable_debug();
-			wait_for_main();
+			KEY_r[0] = 1'b1;
+			$display("Button released");
 
 
-			// Wait for the cpu to be idle
+			$display("Check if PIO_IN interruption was reached");
+			wait_for_flag2({NORMAL, ISR, 8'h01, 8'h00});
+
+			$display("Check if adc trigger was reached");
+			wait_for_flag2({NORMAL, FUNC, 8'h02, 8'h00});
+
+			$display("Wait for fake_adc_data start");
+			wait_match(adc.fake_adc_data.ENABLE, 1'b1, 500);
+			#clk_period
+			data_read = adc.fake_adc_data.DATA;
+
+
+			$display("Wait to come back to event_loop");
 			wait_for_flag2({NORMAL, WHILE, 8'h00, 8'h00});
 
-			
-			pos = get_gpio_pos(i);
-			bank = get_gpio_bank(i);
 
-			if( bank == 0 ) begin
-				gpio_0_drive[pos] = 1'b1;
-				#cpu_period
-				gpio_0_drive[pos] = 1'b0;
-
-				//Processor word is only 32 bit long
-				expected_value = 32'h00000000;
-				expected_value[pos] = 1'b1;
-				
-				//bank 0 is handler 3
-				wait_for_flag2({NORMAL, ISR, 8'h03, 8'h00});
-				assert_debug_after_flag({NORMAL, ISR, 8'h03, 8'h01}, 0, timeout_limit);
-				assert_debug_after_flag({NORMAL, ISR, 8'h03, 8'h02}, expected_value, timeout_limit);
-			end
-			else if(bank == 1) begin
-				gpio_1_drive[pos] = 1'b1;
-				#cpu_period
-				gpio_1_drive[pos] = 1'b0;
-
-				//Processor word is only 32 bit long
-				expected_value = 32'h00000000;
-				expected_value[pos] = 1'b1;
-				
-				//bank 1 is handler 4
-				wait_for_flag2({NORMAL, ISR, 8'h04, 8'h00});
-				assert_debug_after_flag({NORMAL, ISR, 8'h04, 8'h01}, 0, timeout_limit);
-				assert_debug_after_flag({NORMAL, ISR, 8'h04, 8'h02}, expected_value, timeout_limit);
-			end
-			else if(bank == 2) begin
-				gpio_e_drive[pos] = 1'b1;
-				#cpu_period
-				gpio_e_drive[pos] = 1'b0;
-
-				//Processor word is only 32 bit long
-				expected_value = 32'h00000000;
-				expected_value[pos] = 1'b1;
-				
-				//bank 2 is handler 5
-				wait_for_flag2({NORMAL, ISR, 8'h05, 8'h00});
-				assert_debug_after_flag({NORMAL, ISR, 8'h05, 8'h01}, 0, timeout_limit);
-				assert_debug_after_flag({NORMAL, ISR, 8'h05, 8'h02}, expected_value, timeout_limit);
-			end
+			$display("\n\n Interruption test:");
 
 
-			// Wait CPU to become idle again
+			$display("Check if ADC ISR was reached");
+			wait_for_flag2({NORMAL, ISR, 8'h03, 8'h00});
+			$display("Check if data read by the processor matches data in the ADC input");
+			assert_debug_after_flag({NORMAL, ISR, 8'h03, 8'h04}, data_read, timeout_limit);
+
+			$display("Wait for the cpu go to the event_loop again");
 			wait_for_flag({NORMAL, WHILE, 8'h00, 8'h00});
-
+			$display("Test case %d ended", i);
 		end
 
-
-
-		//===== Finish the simulation ====
+		$display("....Simulation Ended");
 		#200
 		$stop;
+
 	end
 
 	// Clock Generation

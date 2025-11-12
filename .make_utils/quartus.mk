@@ -19,8 +19,9 @@ quartus-gui:
 
 
 rtl-sim-gui: $(RELOAD_STAMP) $(TB_COMPILE_STAMP)
-	cd $(Q_DIR) && \
-	vsim -do "source $(rtl_sim_file); run -all"
+	export PROJECT_DIR=$(Q_DIR) && \
+	export SIM_DIR=$(SIM_DIR) && \
+	vsim -do "source $(SIM_DIR)/rtl_sim_base.tcl; run -all"
 
 
 gate-sim-gui: $(RELOAD_STAMP) $(TB_COMPILE_STAMP)
