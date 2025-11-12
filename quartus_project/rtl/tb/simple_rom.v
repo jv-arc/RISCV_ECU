@@ -1,7 +1,7 @@
 module simple_rom #(
 	parameter WORD_SIZE,
 	parameter ADDR_DEPTH,
-	parameter memory_file
+	parameter MEMORY_FILE
 )(
 	input                   CLK,
 	input                   ENABLE,
@@ -12,12 +12,11 @@ module simple_rom #(
 	reg [WORD_SIZE-1:0] memory[ROM_SIZE-1:0];
 
 	initial begin
-		$redmemh(memory_file, memory);
+		$redmemh(MEMORY_FILE, memory);
 	end
 
-	always(@posedge CLK) begin
-		if (ENABLE == 1'b1) begin
-			DATA = memory[ADDR];
+	always @(posedge CLK) begin
+		DATA = (ENABLE == 1'b1) ? memory[ADDR] : 1'b0;
 	end
 
 endmodule
