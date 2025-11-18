@@ -476,7 +476,7 @@ module zeroriscy_core
     .alu_operand_a_i            ( alu_operand_a_ex      ),
     .alu_operand_b_i            ( alu_operand_b_ex      ),
 
-    // Multipler
+    // Multiplier
     .mult_en_i                  ( mult_en_ex            ),
     .div_en_i                   ( div_en_ex             ),
     .multdiv_signed_mode_i      ( multdiv_signed_mode_ex),
