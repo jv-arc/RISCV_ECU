@@ -9,23 +9,7 @@
    categories="System" />
  <parameter name="bonusData"><![CDATA[bonusData 
 {
-   element DEBUG
-   {
-      datum _sortIndex
-      {
-         value = "11";
-         type = "int";
-      }
-   }
-   element DEBUG.s1
-   {
-      datum baseAddress
-      {
-         value = "3145728";
-         type = "String";
-      }
-   }
-   element GPIO_0
+   element GPIO_A_R
    {
       datum _sortIndex
       {
@@ -33,15 +17,31 @@
          type = "int";
       }
    }
-   element GPIO_1
+   element GPIO_A_S
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "7";
          type = "int";
       }
    }
-   element GPIO_EXTRA
+   element GPIO_A_W
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+   }
+   element GPIO_B_R
+   {
+      datum _sortIndex
+      {
+         value = "11";
+         type = "int";
+      }
+   }
+   element GPIO_B_S
    {
       datum _sortIndex
       {
@@ -49,12 +49,44 @@
          type = "int";
       }
    }
-   element GPIO_EXTRA.reset
+   element GPIO_B_W
    {
-      datum _tags
+      datum _sortIndex
       {
-         value = "";
-         type = "String";
+         value = "9";
+         type = "int";
+      }
+   }
+   element GPIO_C0_W
+   {
+      datum _sortIndex
+      {
+         value = "12";
+         type = "int";
+      }
+   }
+   element GPIO_C1_W
+   {
+      datum _sortIndex
+      {
+         value = "13";
+         type = "int";
+      }
+   }
+   element GPIO_C2_W
+   {
+      datum _sortIndex
+      {
+         value = "15";
+         type = "int";
+      }
+   }
+   element GPIO_C_R
+   {
+      datum _sortIndex
+      {
+         value = "14";
+         type = "int";
       }
    }
    element clk_0
@@ -69,7 +101,7 @@
    {
       datum _sortIndex
       {
-         value = "5";
+         value = "4";
          type = "int";
       }
    }
@@ -128,43 +160,6 @@
          type = "String";
       }
    }
-   element pio_in
-   {
-      datum _sortIndex
-      {
-         value = "6";
-         type = "int";
-      }
-   }
-   element pio_in.s1
-   {
-      datum baseAddress
-      {
-         value = "2097184";
-         type = "String";
-      }
-   }
-   element pio_out
-   {
-      datum _sortIndex
-      {
-         value = "4";
-         type = "int";
-      }
-   }
-   element pio_out.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "1048576";
-         type = "String";
-      }
-   }
    element pulpino_0
    {
       datum _sortIndex
@@ -185,7 +180,7 @@
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "5";
          type = "int";
       }
    }
@@ -212,23 +207,53 @@
  <instanceScript></instanceScript>
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
  <interface
-   name="debug_external_connection"
-   internal="DEBUG.external_connection"
+   name="gpio_a_r_external_connection"
+   internal="GPIO_A_R.external_connection"
    type="conduit"
    dir="end" />
  <interface
-   name="gpio_0_external_connection"
-   internal="GPIO_0.external_connection"
+   name="gpio_a_s_external_connection"
+   internal="GPIO_A_S.external_connection"
    type="conduit"
    dir="end" />
  <interface
-   name="gpio_1_external_connection"
-   internal="GPIO_1.external_connection"
+   name="gpio_a_w_external_connection"
+   internal="GPIO_A_W.external_connection"
    type="conduit"
    dir="end" />
  <interface
-   name="gpio_extra_external_connection"
-   internal="GPIO_EXTRA.external_connection"
+   name="gpio_b_r_external_connection"
+   internal="GPIO_B_R.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="gpio_b_s_external_connection"
+   internal="GPIO_B_S.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="gpio_b_w_external_connection"
+   internal="GPIO_B_W.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="gpio_c0_w_external_connection"
+   internal="GPIO_C0_W.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="gpio_c1_w_external_connection"
+   internal="GPIO_C1_W.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="gpio_c2_w_external_connection"
+   internal="GPIO_C2_W.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="gpio_c_r_external_connection"
+   internal="GPIO_C_R.external_connection"
    type="conduit"
    dir="end" />
  <interface
@@ -237,25 +262,29 @@
    type="reset"
    dir="start" />
  <interface
-   name="pio_in_external_connection"
-   internal="pio_in.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
-   name="pio_out_external_connection"
-   internal="pio_out.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
    name="pulpino_0_config"
    internal="pulpino_0.config"
    type="conduit"
    dir="end" />
  <interface name="pulpino_0_jtag" internal="pulpino_0.jtag" />
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
- <module name="DEBUG" kind="altera_avalon_pio" version="24.1" enabled="1">
+ <module name="GPIO_A_R" kind="altera_avalon_pio" version="24.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="true" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="true" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="true" />
+  <parameter name="irqType" value="EDGE" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+ </module>
+ <module name="GPIO_A_S" kind="altera_avalon_pio" version="24.1" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="true" />
+  <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
   <parameter name="clockRate" value="50000000" />
   <parameter name="direction" value="Output" />
@@ -267,12 +296,26 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="32" />
  </module>
- <module name="GPIO_0" kind="altera_avalon_pio" version="24.1" enabled="1">
+ <module name="GPIO_A_W" kind="altera_avalon_pio" version="24.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+ </module>
+ <module name="GPIO_B_R" kind="altera_avalon_pio" version="24.1" enabled="1">
   <parameter name="bitClearingEdgeCapReg" value="true" />
-  <parameter name="bitModifyingOutReg" value="true" />
+  <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="true" />
   <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Bidir" />
+  <parameter name="direction" value="Input" />
   <parameter name="edgeType" value="RISING" />
   <parameter name="generateIRQ" value="true" />
   <parameter name="irqType" value="EDGE" />
@@ -281,33 +324,89 @@
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="32" />
  </module>
- <module name="GPIO_1" kind="altera_avalon_pio" version="24.1" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="true" />
-  <parameter name="bitModifyingOutReg" value="true" />
-  <parameter name="captureEdge" value="true" />
+ <module name="GPIO_B_S" kind="altera_avalon_pio" version="24.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
   <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Bidir" />
+  <parameter name="direction" value="Output" />
   <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="true" />
-  <parameter name="irqType" value="EDGE" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
   <parameter name="resetValue" value="0" />
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
   <parameter name="width" value="32" />
  </module>
- <module name="GPIO_EXTRA" kind="altera_avalon_pio" version="24.1" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="true" />
-  <parameter name="bitModifyingOutReg" value="true" />
-  <parameter name="captureEdge" value="true" />
+ <module name="GPIO_B_W" kind="altera_avalon_pio" version="24.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
   <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Bidir" />
+  <parameter name="direction" value="Output" />
   <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="true" />
-  <parameter name="irqType" value="EDGE" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
   <parameter name="resetValue" value="0" />
   <parameter name="simDoTestBenchWiring" value="false" />
   <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="8" />
+  <parameter name="width" value="32" />
+ </module>
+ <module name="GPIO_C0_W" kind="altera_avalon_pio" version="24.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+ </module>
+ <module name="GPIO_C1_W" kind="altera_avalon_pio" version="24.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+ </module>
+ <module name="GPIO_C2_W" kind="altera_avalon_pio" version="24.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+ </module>
+ <module name="GPIO_C_R" kind="altera_avalon_pio" version="24.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="true" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="true" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="true" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
  </module>
  <module name="clk_0" kind="clock_source" version="24.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
@@ -381,36 +480,8 @@
   <parameter name="useShallowMemBlocks" value="false" />
   <parameter name="writable" value="true" />
  </module>
- <module name="pio_in" kind="altera_avalon_pio" version="24.1" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="true" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Input" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="true" />
-  <parameter name="irqType" value="EDGE" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="32" />
- </module>
- <module name="pio_out" kind="altera_avalon_pio" version="24.1" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="50000000" />
-  <parameter name="direction" value="Output" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="32" />
- </module>
  <module name="pulpino_0" kind="pulpino" version="1.0" enabled="1">
-  <parameter name="AUTO_INTERRUPT_RECEIVER_INTERRUPTS_USED" value="63" />
+  <parameter name="AUTO_INTERRUPT_RECEIVER_INTERRUPTS_USED" value="31" />
   <parameter name="AXI_ADDR_WIDTH" value="32" />
   <parameter name="AXI_DATA_WIDTH" value="32" />
   <parameter name="AXI_ID_MASTER_WIDTH" value="10" />
@@ -455,24 +526,6 @@
    kind="avalon"
    version="24.1"
    start="pulpino_0.avalon_master_lsu"
-   end="pio_out.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00200000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="24.1"
-   start="pulpino_0.avalon_master_lsu"
-   end="pio_in.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00200020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="24.1"
-   start="pulpino_0.avalon_master_lsu"
    end="timer_0.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x002000a0" />
@@ -482,36 +535,90 @@
    kind="avalon"
    version="24.1"
    start="pulpino_0.avalon_master_lsu"
-   end="GPIO_0.s1">
+   end="GPIO_A_R.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00200040" />
+  <parameter name="baseAddress" value="0x03000000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
    kind="avalon"
    version="24.1"
    start="pulpino_0.avalon_master_lsu"
-   end="GPIO_1.s1">
+   end="GPIO_A_W.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00200060" />
+  <parameter name="baseAddress" value="0x03000010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
    kind="avalon"
    version="24.1"
    start="pulpino_0.avalon_master_lsu"
-   end="GPIO_EXTRA.s1">
+   end="GPIO_B_W.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00200080" />
+  <parameter name="baseAddress" value="0x03000040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
    kind="avalon"
    version="24.1"
    start="pulpino_0.avalon_master_lsu"
-   end="DEBUG.s1">
+   end="GPIO_B_S.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x00300000" />
+  <parameter name="baseAddress" value="0x03000050" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="24.1"
+   start="pulpino_0.avalon_master_lsu"
+   end="GPIO_B_R.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x03000030" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="24.1"
+   start="pulpino_0.avalon_master_lsu"
+   end="GPIO_C0_W.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x03000070" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="24.1"
+   start="pulpino_0.avalon_master_lsu"
+   end="GPIO_C1_W.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x03000080" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="24.1"
+   start="pulpino_0.avalon_master_lsu"
+   end="GPIO_C_R.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x03000060" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="24.1"
+   start="pulpino_0.avalon_master_lsu"
+   end="GPIO_C2_W.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x03000090" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="24.1"
+   start="pulpino_0.avalon_master_lsu"
+   end="GPIO_A_S.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x03000020" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -542,14 +649,18 @@
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection kind="clock" version="24.1" start="clk_0.clk" end="master_0.clk" />
- <connection kind="clock" version="24.1" start="clk_0.clk" end="pio_out.clk" />
  <connection kind="clock" version="24.1" start="clk_0.clk" end="jtag_uart_0.clk" />
- <connection kind="clock" version="24.1" start="clk_0.clk" end="pio_in.clk" />
  <connection kind="clock" version="24.1" start="clk_0.clk" end="timer_0.clk" />
- <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_0.clk" />
- <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_1.clk" />
- <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_EXTRA.clk" />
- <connection kind="clock" version="24.1" start="clk_0.clk" end="DEBUG.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_A_W.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_A_S.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_A_R.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_B_W.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_B_S.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_B_R.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_C0_W.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_C1_W.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_C_R.clk" />
+ <connection kind="clock" version="24.1" start="clk_0.clk" end="GPIO_C2_W.clk" />
  <connection
    kind="clock"
    version="24.1"
@@ -571,36 +682,29 @@
    kind="interrupt"
    version="24.1"
    start="pulpino_0.interrupt_receiver"
-   end="pio_in.irq">
+   end="timer_0.irq">
   <parameter name="irqNumber" value="1" />
  </connection>
  <connection
    kind="interrupt"
    version="24.1"
    start="pulpino_0.interrupt_receiver"
-   end="timer_0.irq">
+   end="GPIO_A_R.irq">
   <parameter name="irqNumber" value="2" />
  </connection>
  <connection
    kind="interrupt"
    version="24.1"
    start="pulpino_0.interrupt_receiver"
-   end="GPIO_0.irq">
+   end="GPIO_B_R.irq">
   <parameter name="irqNumber" value="3" />
  </connection>
  <connection
    kind="interrupt"
    version="24.1"
    start="pulpino_0.interrupt_receiver"
-   end="GPIO_1.irq">
+   end="GPIO_C_R.irq">
   <parameter name="irqNumber" value="4" />
- </connection>
- <connection
-   kind="interrupt"
-   version="24.1"
-   start="pulpino_0.interrupt_receiver"
-   end="GPIO_EXTRA.irq">
-  <parameter name="irqNumber" value="5" />
  </connection>
  <connection
    kind="reset"
@@ -611,17 +715,7 @@
    kind="reset"
    version="24.1"
    start="clk_0.clk_reset"
-   end="pio_out.reset" />
- <connection
-   kind="reset"
-   version="24.1"
-   start="clk_0.clk_reset"
    end="jtag_uart_0.reset" />
- <connection
-   kind="reset"
-   version="24.1"
-   start="clk_0.clk_reset"
-   end="pio_in.reset" />
  <connection
    kind="reset"
    version="24.1"
@@ -631,18 +725,52 @@
    kind="reset"
    version="24.1"
    start="clk_0.clk_reset"
-   end="GPIO_0.reset" />
+   end="GPIO_A_W.reset" />
  <connection
    kind="reset"
    version="24.1"
    start="clk_0.clk_reset"
-   end="GPIO_1.reset" />
+   end="GPIO_A_S.reset" />
  <connection
    kind="reset"
    version="24.1"
    start="clk_0.clk_reset"
-   end="GPIO_EXTRA.reset" />
- <connection kind="reset" version="24.1" start="clk_0.clk_reset" end="DEBUG.reset" />
+   end="GPIO_A_R.reset" />
+ <connection
+   kind="reset"
+   version="24.1"
+   start="clk_0.clk_reset"
+   end="GPIO_B_W.reset" />
+ <connection
+   kind="reset"
+   version="24.1"
+   start="clk_0.clk_reset"
+   end="GPIO_B_S.reset" />
+ <connection
+   kind="reset"
+   version="24.1"
+   start="clk_0.clk_reset"
+   end="GPIO_B_R.reset" />
+ <connection
+   kind="reset"
+   version="24.1"
+   start="clk_0.clk_reset"
+   end="GPIO_C0_W.reset" />
+ <connection
+   kind="reset"
+   version="24.1"
+   start="clk_0.clk_reset"
+   end="GPIO_C1_W.reset" />
+ <connection
+   kind="reset"
+   version="24.1"
+   start="clk_0.clk_reset"
+   end="GPIO_C_R.reset" />
+ <connection
+   kind="reset"
+   version="24.1"
+   start="clk_0.clk_reset"
+   end="GPIO_C2_W.reset" />
  <connection
    kind="reset"
    version="24.1"

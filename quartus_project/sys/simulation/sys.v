@@ -4,19 +4,23 @@
 
 `timescale 1 ps / 1 ps
 module sys (
-		input  wire        clk_clk,                               //                            clk.clk
-		output wire [31:0] debug_external_connection_export,      //      debug_external_connection.export
-		inout  wire [31:0] gpio_0_external_connection_export,     //     gpio_0_external_connection.export
-		inout  wire [31:0] gpio_1_external_connection_export,     //     gpio_1_external_connection.export
-		inout  wire [7:0]  gpio_extra_external_connection_export, // gpio_extra_external_connection.export
-		output wire        master_0_master_reset_reset,           //          master_0_master_reset.reset
-		input  wire [31:0] pio_in_external_connection_export,     //     pio_in_external_connection.export
-		output wire [31:0] pio_out_external_connection_export,    //    pio_out_external_connection.export
-		input  wire        pulpino_0_config_testmode_i,           //               pulpino_0_config.testmode_i
-		input  wire        pulpino_0_config_fetch_enable_i,       //                               .fetch_enable_i
-		input  wire        pulpino_0_config_clock_gating_i,       //                               .clock_gating_i
-		input  wire [31:0] pulpino_0_config_boot_addr_i,          //                               .boot_addr_i
-		input  wire        reset_reset_n                          //                          reset.reset_n
+		input  wire        clk_clk,                              //                           clk.clk
+		input  wire [31:0] gpio_a_r_external_connection_export,  //  gpio_a_r_external_connection.export
+		output wire [31:0] gpio_a_s_external_connection_export,  //  gpio_a_s_external_connection.export
+		output wire [31:0] gpio_a_w_external_connection_export,  //  gpio_a_w_external_connection.export
+		input  wire [31:0] gpio_b_r_external_connection_export,  //  gpio_b_r_external_connection.export
+		output wire [31:0] gpio_b_s_external_connection_export,  //  gpio_b_s_external_connection.export
+		output wire [31:0] gpio_b_w_external_connection_export,  //  gpio_b_w_external_connection.export
+		output wire [31:0] gpio_c0_w_external_connection_export, // gpio_c0_w_external_connection.export
+		output wire [31:0] gpio_c1_w_external_connection_export, // gpio_c1_w_external_connection.export
+		output wire [31:0] gpio_c2_w_external_connection_export, // gpio_c2_w_external_connection.export
+		input  wire [31:0] gpio_c_r_external_connection_export,  //  gpio_c_r_external_connection.export
+		output wire        master_0_master_reset_reset,          //         master_0_master_reset.reset
+		input  wire        pulpino_0_config_testmode_i,          //              pulpino_0_config.testmode_i
+		input  wire        pulpino_0_config_fetch_enable_i,      //                              .fetch_enable_i
+		input  wire        pulpino_0_config_clock_gating_i,      //                              .clock_gating_i
+		input  wire [31:0] pulpino_0_config_boot_addr_i,         //                              .boot_addr_i
+		input  wire        reset_reset_n                         //                         reset.reset_n
 	);
 
 	wire  [31:0] pulpino_0_avalon_master_instr_readdata;                       // mm_interconnect_0:pulpino_0_avalon_master_instr_readdata -> pulpino_0:instr_rdata
@@ -56,41 +60,61 @@ module sys (
 	wire         mm_interconnect_1_jtag_uart_0_avalon_jtag_slave_read;         // mm_interconnect_1:jtag_uart_0_avalon_jtag_slave_read -> jtag_uart_0:av_read_n
 	wire         mm_interconnect_1_jtag_uart_0_avalon_jtag_slave_write;        // mm_interconnect_1:jtag_uart_0_avalon_jtag_slave_write -> jtag_uart_0:av_write_n
 	wire  [31:0] mm_interconnect_1_jtag_uart_0_avalon_jtag_slave_writedata;    // mm_interconnect_1:jtag_uart_0_avalon_jtag_slave_writedata -> jtag_uart_0:av_writedata
-	wire         mm_interconnect_1_pio_out_s1_chipselect;                      // mm_interconnect_1:pio_out_s1_chipselect -> pio_out:chipselect
-	wire  [31:0] mm_interconnect_1_pio_out_s1_readdata;                        // pio_out:readdata -> mm_interconnect_1:pio_out_s1_readdata
-	wire   [1:0] mm_interconnect_1_pio_out_s1_address;                         // mm_interconnect_1:pio_out_s1_address -> pio_out:address
-	wire         mm_interconnect_1_pio_out_s1_write;                           // mm_interconnect_1:pio_out_s1_write -> pio_out:write_n
-	wire  [31:0] mm_interconnect_1_pio_out_s1_writedata;                       // mm_interconnect_1:pio_out_s1_writedata -> pio_out:writedata
-	wire         mm_interconnect_1_pio_in_s1_chipselect;                       // mm_interconnect_1:pio_in_s1_chipselect -> pio_in:chipselect
-	wire  [31:0] mm_interconnect_1_pio_in_s1_readdata;                         // pio_in:readdata -> mm_interconnect_1:pio_in_s1_readdata
-	wire   [1:0] mm_interconnect_1_pio_in_s1_address;                          // mm_interconnect_1:pio_in_s1_address -> pio_in:address
-	wire         mm_interconnect_1_pio_in_s1_write;                            // mm_interconnect_1:pio_in_s1_write -> pio_in:write_n
-	wire  [31:0] mm_interconnect_1_pio_in_s1_writedata;                        // mm_interconnect_1:pio_in_s1_writedata -> pio_in:writedata
 	wire         mm_interconnect_1_timer_0_s1_chipselect;                      // mm_interconnect_1:timer_0_s1_chipselect -> timer_0:chipselect
 	wire  [15:0] mm_interconnect_1_timer_0_s1_readdata;                        // timer_0:readdata -> mm_interconnect_1:timer_0_s1_readdata
 	wire   [2:0] mm_interconnect_1_timer_0_s1_address;                         // mm_interconnect_1:timer_0_s1_address -> timer_0:address
 	wire         mm_interconnect_1_timer_0_s1_write;                           // mm_interconnect_1:timer_0_s1_write -> timer_0:write_n
 	wire  [15:0] mm_interconnect_1_timer_0_s1_writedata;                       // mm_interconnect_1:timer_0_s1_writedata -> timer_0:writedata
-	wire         mm_interconnect_1_gpio_0_s1_chipselect;                       // mm_interconnect_1:GPIO_0_s1_chipselect -> GPIO_0:chipselect
-	wire  [31:0] mm_interconnect_1_gpio_0_s1_readdata;                         // GPIO_0:readdata -> mm_interconnect_1:GPIO_0_s1_readdata
-	wire   [2:0] mm_interconnect_1_gpio_0_s1_address;                          // mm_interconnect_1:GPIO_0_s1_address -> GPIO_0:address
-	wire         mm_interconnect_1_gpio_0_s1_write;                            // mm_interconnect_1:GPIO_0_s1_write -> GPIO_0:write_n
-	wire  [31:0] mm_interconnect_1_gpio_0_s1_writedata;                        // mm_interconnect_1:GPIO_0_s1_writedata -> GPIO_0:writedata
-	wire         mm_interconnect_1_gpio_1_s1_chipselect;                       // mm_interconnect_1:GPIO_1_s1_chipselect -> GPIO_1:chipselect
-	wire  [31:0] mm_interconnect_1_gpio_1_s1_readdata;                         // GPIO_1:readdata -> mm_interconnect_1:GPIO_1_s1_readdata
-	wire   [2:0] mm_interconnect_1_gpio_1_s1_address;                          // mm_interconnect_1:GPIO_1_s1_address -> GPIO_1:address
-	wire         mm_interconnect_1_gpio_1_s1_write;                            // mm_interconnect_1:GPIO_1_s1_write -> GPIO_1:write_n
-	wire  [31:0] mm_interconnect_1_gpio_1_s1_writedata;                        // mm_interconnect_1:GPIO_1_s1_writedata -> GPIO_1:writedata
-	wire         mm_interconnect_1_gpio_extra_s1_chipselect;                   // mm_interconnect_1:GPIO_EXTRA_s1_chipselect -> GPIO_EXTRA:chipselect
-	wire  [31:0] mm_interconnect_1_gpio_extra_s1_readdata;                     // GPIO_EXTRA:readdata -> mm_interconnect_1:GPIO_EXTRA_s1_readdata
-	wire   [2:0] mm_interconnect_1_gpio_extra_s1_address;                      // mm_interconnect_1:GPIO_EXTRA_s1_address -> GPIO_EXTRA:address
-	wire         mm_interconnect_1_gpio_extra_s1_write;                        // mm_interconnect_1:GPIO_EXTRA_s1_write -> GPIO_EXTRA:write_n
-	wire  [31:0] mm_interconnect_1_gpio_extra_s1_writedata;                    // mm_interconnect_1:GPIO_EXTRA_s1_writedata -> GPIO_EXTRA:writedata
-	wire         mm_interconnect_1_debug_s1_chipselect;                        // mm_interconnect_1:DEBUG_s1_chipselect -> DEBUG:chipselect
-	wire  [31:0] mm_interconnect_1_debug_s1_readdata;                          // DEBUG:readdata -> mm_interconnect_1:DEBUG_s1_readdata
-	wire   [2:0] mm_interconnect_1_debug_s1_address;                           // mm_interconnect_1:DEBUG_s1_address -> DEBUG:address
-	wire         mm_interconnect_1_debug_s1_write;                             // mm_interconnect_1:DEBUG_s1_write -> DEBUG:write_n
-	wire  [31:0] mm_interconnect_1_debug_s1_writedata;                         // mm_interconnect_1:DEBUG_s1_writedata -> DEBUG:writedata
+	wire         mm_interconnect_1_gpio_a_r_s1_chipselect;                     // mm_interconnect_1:GPIO_A_R_s1_chipselect -> GPIO_A_R:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_a_r_s1_readdata;                       // GPIO_A_R:readdata -> mm_interconnect_1:GPIO_A_R_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_a_r_s1_address;                        // mm_interconnect_1:GPIO_A_R_s1_address -> GPIO_A_R:address
+	wire         mm_interconnect_1_gpio_a_r_s1_write;                          // mm_interconnect_1:GPIO_A_R_s1_write -> GPIO_A_R:write_n
+	wire  [31:0] mm_interconnect_1_gpio_a_r_s1_writedata;                      // mm_interconnect_1:GPIO_A_R_s1_writedata -> GPIO_A_R:writedata
+	wire         mm_interconnect_1_gpio_a_w_s1_chipselect;                     // mm_interconnect_1:GPIO_A_W_s1_chipselect -> GPIO_A_W:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_a_w_s1_readdata;                       // GPIO_A_W:readdata -> mm_interconnect_1:GPIO_A_W_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_a_w_s1_address;                        // mm_interconnect_1:GPIO_A_W_s1_address -> GPIO_A_W:address
+	wire         mm_interconnect_1_gpio_a_w_s1_write;                          // mm_interconnect_1:GPIO_A_W_s1_write -> GPIO_A_W:write_n
+	wire  [31:0] mm_interconnect_1_gpio_a_w_s1_writedata;                      // mm_interconnect_1:GPIO_A_W_s1_writedata -> GPIO_A_W:writedata
+	wire         mm_interconnect_1_gpio_b_w_s1_chipselect;                     // mm_interconnect_1:GPIO_B_W_s1_chipselect -> GPIO_B_W:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_b_w_s1_readdata;                       // GPIO_B_W:readdata -> mm_interconnect_1:GPIO_B_W_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_b_w_s1_address;                        // mm_interconnect_1:GPIO_B_W_s1_address -> GPIO_B_W:address
+	wire         mm_interconnect_1_gpio_b_w_s1_write;                          // mm_interconnect_1:GPIO_B_W_s1_write -> GPIO_B_W:write_n
+	wire  [31:0] mm_interconnect_1_gpio_b_w_s1_writedata;                      // mm_interconnect_1:GPIO_B_W_s1_writedata -> GPIO_B_W:writedata
+	wire         mm_interconnect_1_gpio_b_s_s1_chipselect;                     // mm_interconnect_1:GPIO_B_S_s1_chipselect -> GPIO_B_S:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_b_s_s1_readdata;                       // GPIO_B_S:readdata -> mm_interconnect_1:GPIO_B_S_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_b_s_s1_address;                        // mm_interconnect_1:GPIO_B_S_s1_address -> GPIO_B_S:address
+	wire         mm_interconnect_1_gpio_b_s_s1_write;                          // mm_interconnect_1:GPIO_B_S_s1_write -> GPIO_B_S:write_n
+	wire  [31:0] mm_interconnect_1_gpio_b_s_s1_writedata;                      // mm_interconnect_1:GPIO_B_S_s1_writedata -> GPIO_B_S:writedata
+	wire         mm_interconnect_1_gpio_b_r_s1_chipselect;                     // mm_interconnect_1:GPIO_B_R_s1_chipselect -> GPIO_B_R:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_b_r_s1_readdata;                       // GPIO_B_R:readdata -> mm_interconnect_1:GPIO_B_R_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_b_r_s1_address;                        // mm_interconnect_1:GPIO_B_R_s1_address -> GPIO_B_R:address
+	wire         mm_interconnect_1_gpio_b_r_s1_write;                          // mm_interconnect_1:GPIO_B_R_s1_write -> GPIO_B_R:write_n
+	wire  [31:0] mm_interconnect_1_gpio_b_r_s1_writedata;                      // mm_interconnect_1:GPIO_B_R_s1_writedata -> GPIO_B_R:writedata
+	wire         mm_interconnect_1_gpio_c0_w_s1_chipselect;                    // mm_interconnect_1:GPIO_C0_W_s1_chipselect -> GPIO_C0_W:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_c0_w_s1_readdata;                      // GPIO_C0_W:readdata -> mm_interconnect_1:GPIO_C0_W_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_c0_w_s1_address;                       // mm_interconnect_1:GPIO_C0_W_s1_address -> GPIO_C0_W:address
+	wire         mm_interconnect_1_gpio_c0_w_s1_write;                         // mm_interconnect_1:GPIO_C0_W_s1_write -> GPIO_C0_W:write_n
+	wire  [31:0] mm_interconnect_1_gpio_c0_w_s1_writedata;                     // mm_interconnect_1:GPIO_C0_W_s1_writedata -> GPIO_C0_W:writedata
+	wire         mm_interconnect_1_gpio_c1_w_s1_chipselect;                    // mm_interconnect_1:GPIO_C1_W_s1_chipselect -> GPIO_C1_W:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_c1_w_s1_readdata;                      // GPIO_C1_W:readdata -> mm_interconnect_1:GPIO_C1_W_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_c1_w_s1_address;                       // mm_interconnect_1:GPIO_C1_W_s1_address -> GPIO_C1_W:address
+	wire         mm_interconnect_1_gpio_c1_w_s1_write;                         // mm_interconnect_1:GPIO_C1_W_s1_write -> GPIO_C1_W:write_n
+	wire  [31:0] mm_interconnect_1_gpio_c1_w_s1_writedata;                     // mm_interconnect_1:GPIO_C1_W_s1_writedata -> GPIO_C1_W:writedata
+	wire         mm_interconnect_1_gpio_c_r_s1_chipselect;                     // mm_interconnect_1:GPIO_C_R_s1_chipselect -> GPIO_C_R:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_c_r_s1_readdata;                       // GPIO_C_R:readdata -> mm_interconnect_1:GPIO_C_R_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_c_r_s1_address;                        // mm_interconnect_1:GPIO_C_R_s1_address -> GPIO_C_R:address
+	wire         mm_interconnect_1_gpio_c_r_s1_write;                          // mm_interconnect_1:GPIO_C_R_s1_write -> GPIO_C_R:write_n
+	wire  [31:0] mm_interconnect_1_gpio_c_r_s1_writedata;                      // mm_interconnect_1:GPIO_C_R_s1_writedata -> GPIO_C_R:writedata
+	wire         mm_interconnect_1_gpio_c2_w_s1_chipselect;                    // mm_interconnect_1:GPIO_C2_W_s1_chipselect -> GPIO_C2_W:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_c2_w_s1_readdata;                      // GPIO_C2_W:readdata -> mm_interconnect_1:GPIO_C2_W_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_c2_w_s1_address;                       // mm_interconnect_1:GPIO_C2_W_s1_address -> GPIO_C2_W:address
+	wire         mm_interconnect_1_gpio_c2_w_s1_write;                         // mm_interconnect_1:GPIO_C2_W_s1_write -> GPIO_C2_W:write_n
+	wire  [31:0] mm_interconnect_1_gpio_c2_w_s1_writedata;                     // mm_interconnect_1:GPIO_C2_W_s1_writedata -> GPIO_C2_W:writedata
+	wire         mm_interconnect_1_gpio_a_s_s1_chipselect;                     // mm_interconnect_1:GPIO_A_S_s1_chipselect -> GPIO_A_S:chipselect
+	wire  [31:0] mm_interconnect_1_gpio_a_s_s1_readdata;                       // GPIO_A_S:readdata -> mm_interconnect_1:GPIO_A_S_s1_readdata
+	wire   [1:0] mm_interconnect_1_gpio_a_s_s1_address;                        // mm_interconnect_1:GPIO_A_S_s1_address -> GPIO_A_S:address
+	wire         mm_interconnect_1_gpio_a_s_s1_write;                          // mm_interconnect_1:GPIO_A_S_s1_write -> GPIO_A_S:write_n
+	wire  [31:0] mm_interconnect_1_gpio_a_s_s1_writedata;                      // mm_interconnect_1:GPIO_A_S_s1_writedata -> GPIO_A_S:writedata
 	wire         mm_interconnect_1_onchip_memory2_0_s2_chipselect;             // mm_interconnect_1:onchip_memory2_0_s2_chipselect -> onchip_memory2_0:chipselect2
 	wire  [31:0] mm_interconnect_1_onchip_memory2_0_s2_readdata;               // onchip_memory2_0:readdata2 -> mm_interconnect_1:onchip_memory2_0_s2_readdata
 	wire  [12:0] mm_interconnect_1_onchip_memory2_0_s2_address;                // mm_interconnect_1:onchip_memory2_0_s2_address -> onchip_memory2_0:address2
@@ -106,60 +130,125 @@ module sys (
 	wire         mm_interconnect_1_pulpino_0_avalon_slave_debug_write;         // mm_interconnect_1:pulpino_0_avalon_slave_debug_write -> pulpino_0:debug_write
 	wire  [31:0] mm_interconnect_1_pulpino_0_avalon_slave_debug_writedata;     // mm_interconnect_1:pulpino_0_avalon_slave_debug_writedata -> pulpino_0:debug_wdata
 	wire         irq_mapper_receiver0_irq;                                     // jtag_uart_0:av_irq -> irq_mapper:receiver0_irq
-	wire         irq_mapper_receiver1_irq;                                     // pio_in:irq -> irq_mapper:receiver1_irq
-	wire         irq_mapper_receiver2_irq;                                     // timer_0:irq -> irq_mapper:receiver2_irq
-	wire         irq_mapper_receiver3_irq;                                     // GPIO_0:irq -> irq_mapper:receiver3_irq
-	wire         irq_mapper_receiver4_irq;                                     // GPIO_1:irq -> irq_mapper:receiver4_irq
-	wire         irq_mapper_receiver5_irq;                                     // GPIO_EXTRA:irq -> irq_mapper:receiver5_irq
+	wire         irq_mapper_receiver1_irq;                                     // timer_0:irq -> irq_mapper:receiver1_irq
+	wire         irq_mapper_receiver2_irq;                                     // GPIO_A_R:irq -> irq_mapper:receiver2_irq
+	wire         irq_mapper_receiver3_irq;                                     // GPIO_B_R:irq -> irq_mapper:receiver3_irq
+	wire         irq_mapper_receiver4_irq;                                     // GPIO_C_R:irq -> irq_mapper:receiver4_irq
 	wire  [31:0] pulpino_0_interrupt_receiver_irq;                             // irq_mapper:sender_irq -> pulpino_0:irq_i
-	wire         rst_controller_reset_out_reset;                               // rst_controller:reset_out -> [DEBUG:reset_n, GPIO_0:reset_n, GPIO_1:reset_n, GPIO_EXTRA:reset_n, irq_mapper:reset, jtag_uart_0:rst_n, mm_interconnect_0:pulpino_0_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_1:master_0_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_1:pulpino_0_reset_sink_reset_bridge_in_reset_reset, onchip_memory2_0:reset, pio_in:reset_n, pio_out:reset_n, pulpino_0:rst_n, rst_translator:in_reset, timer_0:reset_n]
+	wire         rst_controller_reset_out_reset;                               // rst_controller:reset_out -> [GPIO_A_R:reset_n, GPIO_A_S:reset_n, GPIO_A_W:reset_n, GPIO_B_R:reset_n, GPIO_B_S:reset_n, GPIO_B_W:reset_n, GPIO_C0_W:reset_n, GPIO_C1_W:reset_n, GPIO_C2_W:reset_n, GPIO_C_R:reset_n, irq_mapper:reset, jtag_uart_0:rst_n, mm_interconnect_0:pulpino_0_reset_sink_reset_bridge_in_reset_reset, mm_interconnect_1:master_0_clk_reset_reset_bridge_in_reset_reset, mm_interconnect_1:pulpino_0_reset_sink_reset_bridge_in_reset_reset, onchip_memory2_0:reset, pulpino_0:rst_n, rst_translator:in_reset, timer_0:reset_n]
 	wire         rst_controller_reset_out_reset_req;                           // rst_controller:reset_req -> [onchip_memory2_0:reset_req, rst_translator:reset_req_in]
 
-	sys_DEBUG debug (
-		.clk        (clk_clk),                               //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),       //               reset.reset_n
-		.address    (mm_interconnect_1_debug_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_1_debug_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_1_debug_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_1_debug_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_1_debug_s1_readdata),   //                    .readdata
-		.out_port   (debug_external_connection_export)       // external_connection.export
+	sys_GPIO_A_R gpio_a_r (
+		.clk        (clk_clk),                                  //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),          //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_a_r_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_a_r_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_a_r_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_a_r_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_a_r_s1_readdata),   //                    .readdata
+		.in_port    (gpio_a_r_external_connection_export),      // external_connection.export
+		.irq        (irq_mapper_receiver2_irq)                  //                 irq.irq
 	);
 
-	sys_GPIO_0 gpio_0 (
-		.clk        (clk_clk),                                //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),        //               reset.reset_n
-		.address    (mm_interconnect_1_gpio_0_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_1_gpio_0_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_1_gpio_0_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_1_gpio_0_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_1_gpio_0_s1_readdata),   //                    .readdata
-		.bidir_port (gpio_0_external_connection_export),      // external_connection.export
-		.irq        (irq_mapper_receiver3_irq)                //                 irq.irq
+	sys_GPIO_A_S gpio_a_s (
+		.clk        (clk_clk),                                  //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),          //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_a_s_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_a_s_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_a_s_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_a_s_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_a_s_s1_readdata),   //                    .readdata
+		.out_port   (gpio_a_s_external_connection_export)       // external_connection.export
 	);
 
-	sys_GPIO_0 gpio_1 (
-		.clk        (clk_clk),                                //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),        //               reset.reset_n
-		.address    (mm_interconnect_1_gpio_1_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_1_gpio_1_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_1_gpio_1_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_1_gpio_1_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_1_gpio_1_s1_readdata),   //                    .readdata
-		.bidir_port (gpio_1_external_connection_export),      // external_connection.export
-		.irq        (irq_mapper_receiver4_irq)                //                 irq.irq
+	sys_GPIO_A_S gpio_a_w (
+		.clk        (clk_clk),                                  //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),          //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_a_w_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_a_w_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_a_w_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_a_w_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_a_w_s1_readdata),   //                    .readdata
+		.out_port   (gpio_a_w_external_connection_export)       // external_connection.export
 	);
 
-	sys_GPIO_EXTRA gpio_extra (
-		.clk        (clk_clk),                                    //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),            //               reset.reset_n
-		.address    (mm_interconnect_1_gpio_extra_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_1_gpio_extra_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_1_gpio_extra_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_1_gpio_extra_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_1_gpio_extra_s1_readdata),   //                    .readdata
-		.bidir_port (gpio_extra_external_connection_export),      // external_connection.export
-		.irq        (irq_mapper_receiver5_irq)                    //                 irq.irq
+	sys_GPIO_A_R gpio_b_r (
+		.clk        (clk_clk),                                  //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),          //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_b_r_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_b_r_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_b_r_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_b_r_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_b_r_s1_readdata),   //                    .readdata
+		.in_port    (gpio_b_r_external_connection_export),      // external_connection.export
+		.irq        (irq_mapper_receiver3_irq)                  //                 irq.irq
+	);
+
+	sys_GPIO_A_S gpio_b_s (
+		.clk        (clk_clk),                                  //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),          //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_b_s_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_b_s_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_b_s_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_b_s_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_b_s_s1_readdata),   //                    .readdata
+		.out_port   (gpio_b_s_external_connection_export)       // external_connection.export
+	);
+
+	sys_GPIO_A_S gpio_b_w (
+		.clk        (clk_clk),                                  //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),          //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_b_w_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_b_w_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_b_w_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_b_w_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_b_w_s1_readdata),   //                    .readdata
+		.out_port   (gpio_b_w_external_connection_export)       // external_connection.export
+	);
+
+	sys_GPIO_A_S gpio_c0_w (
+		.clk        (clk_clk),                                   //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_c0_w_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_c0_w_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_c0_w_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_c0_w_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_c0_w_s1_readdata),   //                    .readdata
+		.out_port   (gpio_c0_w_external_connection_export)       // external_connection.export
+	);
+
+	sys_GPIO_A_S gpio_c1_w (
+		.clk        (clk_clk),                                   //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_c1_w_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_c1_w_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_c1_w_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_c1_w_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_c1_w_s1_readdata),   //                    .readdata
+		.out_port   (gpio_c1_w_external_connection_export)       // external_connection.export
+	);
+
+	sys_GPIO_A_S gpio_c2_w (
+		.clk        (clk_clk),                                   //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),           //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_c2_w_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_c2_w_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_c2_w_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_c2_w_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_c2_w_s1_readdata),   //                    .readdata
+		.out_port   (gpio_c2_w_external_connection_export)       // external_connection.export
+	);
+
+	sys_GPIO_C_R gpio_c_r (
+		.clk        (clk_clk),                                  //                 clk.clk
+		.reset_n    (~rst_controller_reset_out_reset),          //               reset.reset_n
+		.address    (mm_interconnect_1_gpio_c_r_s1_address),    //                  s1.address
+		.write_n    (~mm_interconnect_1_gpio_c_r_s1_write),     //                    .write_n
+		.writedata  (mm_interconnect_1_gpio_c_r_s1_writedata),  //                    .writedata
+		.chipselect (mm_interconnect_1_gpio_c_r_s1_chipselect), //                    .chipselect
+		.readdata   (mm_interconnect_1_gpio_c_r_s1_readdata),   //                    .readdata
+		.in_port    (gpio_c_r_external_connection_export),      // external_connection.export
+		.irq        (irq_mapper_receiver4_irq)                  //                 irq.irq
 	);
 
 	altera_avalon_jtag_uart #(
@@ -230,29 +319,6 @@ module sys (
 		.freeze      (1'b0)                                              // (terminated)
 	);
 
-	sys_pio_in pio_in (
-		.clk        (clk_clk),                                //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),        //               reset.reset_n
-		.address    (mm_interconnect_1_pio_in_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_1_pio_in_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_1_pio_in_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_1_pio_in_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_1_pio_in_s1_readdata),   //                    .readdata
-		.in_port    (pio_in_external_connection_export),      // external_connection.export
-		.irq        (irq_mapper_receiver1_irq)                //                 irq.irq
-	);
-
-	sys_pio_out pio_out (
-		.clk        (clk_clk),                                 //                 clk.clk
-		.reset_n    (~rst_controller_reset_out_reset),         //               reset.reset_n
-		.address    (mm_interconnect_1_pio_out_s1_address),    //                  s1.address
-		.write_n    (~mm_interconnect_1_pio_out_s1_write),     //                    .write_n
-		.writedata  (mm_interconnect_1_pio_out_s1_writedata),  //                    .writedata
-		.chipselect (mm_interconnect_1_pio_out_s1_chipselect), //                    .chipselect
-		.readdata   (mm_interconnect_1_pio_out_s1_readdata),   //                    .readdata
-		.out_port   (pio_out_external_connection_export)       // external_connection.export
-	);
-
 	core_top #(
 		.AXI_ADDR_WIDTH      (32),
 		.AXI_DATA_WIDTH      (32),
@@ -303,7 +369,7 @@ module sys (
 		.readdata   (mm_interconnect_1_timer_0_s1_readdata),   //      .readdata
 		.chipselect (mm_interconnect_1_timer_0_s1_chipselect), //      .chipselect
 		.write_n    (~mm_interconnect_1_timer_0_s1_write),     //      .write_n
-		.irq        (irq_mapper_receiver2_irq)                 //   irq.irq
+		.irq        (irq_mapper_receiver1_irq)                 //   irq.irq
 	);
 
 	sys_mm_interconnect_0 mm_interconnect_0 (
@@ -345,26 +411,56 @@ module sys (
 		.pulpino_0_avalon_master_lsu_writedata            (pulpino_0_avalon_master_lsu_writedata),                        //                                           .writedata
 		.pulpino_0_avalon_master_lsu_response             (pulpino_0_avalon_master_lsu_response),                         //                                           .response
 		.pulpino_0_avalon_master_lsu_writeresponsevalid   (pulpino_0_avalon_master_lsu_writeresponsevalid),               //                                           .writeresponsevalid
-		.DEBUG_s1_address                                 (mm_interconnect_1_debug_s1_address),                           //                                   DEBUG_s1.address
-		.DEBUG_s1_write                                   (mm_interconnect_1_debug_s1_write),                             //                                           .write
-		.DEBUG_s1_readdata                                (mm_interconnect_1_debug_s1_readdata),                          //                                           .readdata
-		.DEBUG_s1_writedata                               (mm_interconnect_1_debug_s1_writedata),                         //                                           .writedata
-		.DEBUG_s1_chipselect                              (mm_interconnect_1_debug_s1_chipselect),                        //                                           .chipselect
-		.GPIO_0_s1_address                                (mm_interconnect_1_gpio_0_s1_address),                          //                                  GPIO_0_s1.address
-		.GPIO_0_s1_write                                  (mm_interconnect_1_gpio_0_s1_write),                            //                                           .write
-		.GPIO_0_s1_readdata                               (mm_interconnect_1_gpio_0_s1_readdata),                         //                                           .readdata
-		.GPIO_0_s1_writedata                              (mm_interconnect_1_gpio_0_s1_writedata),                        //                                           .writedata
-		.GPIO_0_s1_chipselect                             (mm_interconnect_1_gpio_0_s1_chipselect),                       //                                           .chipselect
-		.GPIO_1_s1_address                                (mm_interconnect_1_gpio_1_s1_address),                          //                                  GPIO_1_s1.address
-		.GPIO_1_s1_write                                  (mm_interconnect_1_gpio_1_s1_write),                            //                                           .write
-		.GPIO_1_s1_readdata                               (mm_interconnect_1_gpio_1_s1_readdata),                         //                                           .readdata
-		.GPIO_1_s1_writedata                              (mm_interconnect_1_gpio_1_s1_writedata),                        //                                           .writedata
-		.GPIO_1_s1_chipselect                             (mm_interconnect_1_gpio_1_s1_chipselect),                       //                                           .chipselect
-		.GPIO_EXTRA_s1_address                            (mm_interconnect_1_gpio_extra_s1_address),                      //                              GPIO_EXTRA_s1.address
-		.GPIO_EXTRA_s1_write                              (mm_interconnect_1_gpio_extra_s1_write),                        //                                           .write
-		.GPIO_EXTRA_s1_readdata                           (mm_interconnect_1_gpio_extra_s1_readdata),                     //                                           .readdata
-		.GPIO_EXTRA_s1_writedata                          (mm_interconnect_1_gpio_extra_s1_writedata),                    //                                           .writedata
-		.GPIO_EXTRA_s1_chipselect                         (mm_interconnect_1_gpio_extra_s1_chipselect),                   //                                           .chipselect
+		.GPIO_A_R_s1_address                              (mm_interconnect_1_gpio_a_r_s1_address),                        //                                GPIO_A_R_s1.address
+		.GPIO_A_R_s1_write                                (mm_interconnect_1_gpio_a_r_s1_write),                          //                                           .write
+		.GPIO_A_R_s1_readdata                             (mm_interconnect_1_gpio_a_r_s1_readdata),                       //                                           .readdata
+		.GPIO_A_R_s1_writedata                            (mm_interconnect_1_gpio_a_r_s1_writedata),                      //                                           .writedata
+		.GPIO_A_R_s1_chipselect                           (mm_interconnect_1_gpio_a_r_s1_chipselect),                     //                                           .chipselect
+		.GPIO_A_S_s1_address                              (mm_interconnect_1_gpio_a_s_s1_address),                        //                                GPIO_A_S_s1.address
+		.GPIO_A_S_s1_write                                (mm_interconnect_1_gpio_a_s_s1_write),                          //                                           .write
+		.GPIO_A_S_s1_readdata                             (mm_interconnect_1_gpio_a_s_s1_readdata),                       //                                           .readdata
+		.GPIO_A_S_s1_writedata                            (mm_interconnect_1_gpio_a_s_s1_writedata),                      //                                           .writedata
+		.GPIO_A_S_s1_chipselect                           (mm_interconnect_1_gpio_a_s_s1_chipselect),                     //                                           .chipselect
+		.GPIO_A_W_s1_address                              (mm_interconnect_1_gpio_a_w_s1_address),                        //                                GPIO_A_W_s1.address
+		.GPIO_A_W_s1_write                                (mm_interconnect_1_gpio_a_w_s1_write),                          //                                           .write
+		.GPIO_A_W_s1_readdata                             (mm_interconnect_1_gpio_a_w_s1_readdata),                       //                                           .readdata
+		.GPIO_A_W_s1_writedata                            (mm_interconnect_1_gpio_a_w_s1_writedata),                      //                                           .writedata
+		.GPIO_A_W_s1_chipselect                           (mm_interconnect_1_gpio_a_w_s1_chipselect),                     //                                           .chipselect
+		.GPIO_B_R_s1_address                              (mm_interconnect_1_gpio_b_r_s1_address),                        //                                GPIO_B_R_s1.address
+		.GPIO_B_R_s1_write                                (mm_interconnect_1_gpio_b_r_s1_write),                          //                                           .write
+		.GPIO_B_R_s1_readdata                             (mm_interconnect_1_gpio_b_r_s1_readdata),                       //                                           .readdata
+		.GPIO_B_R_s1_writedata                            (mm_interconnect_1_gpio_b_r_s1_writedata),                      //                                           .writedata
+		.GPIO_B_R_s1_chipselect                           (mm_interconnect_1_gpio_b_r_s1_chipselect),                     //                                           .chipselect
+		.GPIO_B_S_s1_address                              (mm_interconnect_1_gpio_b_s_s1_address),                        //                                GPIO_B_S_s1.address
+		.GPIO_B_S_s1_write                                (mm_interconnect_1_gpio_b_s_s1_write),                          //                                           .write
+		.GPIO_B_S_s1_readdata                             (mm_interconnect_1_gpio_b_s_s1_readdata),                       //                                           .readdata
+		.GPIO_B_S_s1_writedata                            (mm_interconnect_1_gpio_b_s_s1_writedata),                      //                                           .writedata
+		.GPIO_B_S_s1_chipselect                           (mm_interconnect_1_gpio_b_s_s1_chipselect),                     //                                           .chipselect
+		.GPIO_B_W_s1_address                              (mm_interconnect_1_gpio_b_w_s1_address),                        //                                GPIO_B_W_s1.address
+		.GPIO_B_W_s1_write                                (mm_interconnect_1_gpio_b_w_s1_write),                          //                                           .write
+		.GPIO_B_W_s1_readdata                             (mm_interconnect_1_gpio_b_w_s1_readdata),                       //                                           .readdata
+		.GPIO_B_W_s1_writedata                            (mm_interconnect_1_gpio_b_w_s1_writedata),                      //                                           .writedata
+		.GPIO_B_W_s1_chipselect                           (mm_interconnect_1_gpio_b_w_s1_chipselect),                     //                                           .chipselect
+		.GPIO_C0_W_s1_address                             (mm_interconnect_1_gpio_c0_w_s1_address),                       //                               GPIO_C0_W_s1.address
+		.GPIO_C0_W_s1_write                               (mm_interconnect_1_gpio_c0_w_s1_write),                         //                                           .write
+		.GPIO_C0_W_s1_readdata                            (mm_interconnect_1_gpio_c0_w_s1_readdata),                      //                                           .readdata
+		.GPIO_C0_W_s1_writedata                           (mm_interconnect_1_gpio_c0_w_s1_writedata),                     //                                           .writedata
+		.GPIO_C0_W_s1_chipselect                          (mm_interconnect_1_gpio_c0_w_s1_chipselect),                    //                                           .chipselect
+		.GPIO_C1_W_s1_address                             (mm_interconnect_1_gpio_c1_w_s1_address),                       //                               GPIO_C1_W_s1.address
+		.GPIO_C1_W_s1_write                               (mm_interconnect_1_gpio_c1_w_s1_write),                         //                                           .write
+		.GPIO_C1_W_s1_readdata                            (mm_interconnect_1_gpio_c1_w_s1_readdata),                      //                                           .readdata
+		.GPIO_C1_W_s1_writedata                           (mm_interconnect_1_gpio_c1_w_s1_writedata),                     //                                           .writedata
+		.GPIO_C1_W_s1_chipselect                          (mm_interconnect_1_gpio_c1_w_s1_chipselect),                    //                                           .chipselect
+		.GPIO_C2_W_s1_address                             (mm_interconnect_1_gpio_c2_w_s1_address),                       //                               GPIO_C2_W_s1.address
+		.GPIO_C2_W_s1_write                               (mm_interconnect_1_gpio_c2_w_s1_write),                         //                                           .write
+		.GPIO_C2_W_s1_readdata                            (mm_interconnect_1_gpio_c2_w_s1_readdata),                      //                                           .readdata
+		.GPIO_C2_W_s1_writedata                           (mm_interconnect_1_gpio_c2_w_s1_writedata),                     //                                           .writedata
+		.GPIO_C2_W_s1_chipselect                          (mm_interconnect_1_gpio_c2_w_s1_chipselect),                    //                                           .chipselect
+		.GPIO_C_R_s1_address                              (mm_interconnect_1_gpio_c_r_s1_address),                        //                                GPIO_C_R_s1.address
+		.GPIO_C_R_s1_write                                (mm_interconnect_1_gpio_c_r_s1_write),                          //                                           .write
+		.GPIO_C_R_s1_readdata                             (mm_interconnect_1_gpio_c_r_s1_readdata),                       //                                           .readdata
+		.GPIO_C_R_s1_writedata                            (mm_interconnect_1_gpio_c_r_s1_writedata),                      //                                           .writedata
+		.GPIO_C_R_s1_chipselect                           (mm_interconnect_1_gpio_c_r_s1_chipselect),                     //                                           .chipselect
 		.jtag_uart_0_avalon_jtag_slave_address            (mm_interconnect_1_jtag_uart_0_avalon_jtag_slave_address),      //              jtag_uart_0_avalon_jtag_slave.address
 		.jtag_uart_0_avalon_jtag_slave_write              (mm_interconnect_1_jtag_uart_0_avalon_jtag_slave_write),        //                                           .write
 		.jtag_uart_0_avalon_jtag_slave_read               (mm_interconnect_1_jtag_uart_0_avalon_jtag_slave_read),         //                                           .read
@@ -379,16 +475,6 @@ module sys (
 		.onchip_memory2_0_s2_byteenable                   (mm_interconnect_1_onchip_memory2_0_s2_byteenable),             //                                           .byteenable
 		.onchip_memory2_0_s2_chipselect                   (mm_interconnect_1_onchip_memory2_0_s2_chipselect),             //                                           .chipselect
 		.onchip_memory2_0_s2_clken                        (mm_interconnect_1_onchip_memory2_0_s2_clken),                  //                                           .clken
-		.pio_in_s1_address                                (mm_interconnect_1_pio_in_s1_address),                          //                                  pio_in_s1.address
-		.pio_in_s1_write                                  (mm_interconnect_1_pio_in_s1_write),                            //                                           .write
-		.pio_in_s1_readdata                               (mm_interconnect_1_pio_in_s1_readdata),                         //                                           .readdata
-		.pio_in_s1_writedata                              (mm_interconnect_1_pio_in_s1_writedata),                        //                                           .writedata
-		.pio_in_s1_chipselect                             (mm_interconnect_1_pio_in_s1_chipselect),                       //                                           .chipselect
-		.pio_out_s1_address                               (mm_interconnect_1_pio_out_s1_address),                         //                                 pio_out_s1.address
-		.pio_out_s1_write                                 (mm_interconnect_1_pio_out_s1_write),                           //                                           .write
-		.pio_out_s1_readdata                              (mm_interconnect_1_pio_out_s1_readdata),                        //                                           .readdata
-		.pio_out_s1_writedata                             (mm_interconnect_1_pio_out_s1_writedata),                       //                                           .writedata
-		.pio_out_s1_chipselect                            (mm_interconnect_1_pio_out_s1_chipselect),                      //                                           .chipselect
 		.pulpino_0_avalon_slave_debug_address             (mm_interconnect_1_pulpino_0_avalon_slave_debug_address),       //               pulpino_0_avalon_slave_debug.address
 		.pulpino_0_avalon_slave_debug_write               (mm_interconnect_1_pulpino_0_avalon_slave_debug_write),         //                                           .write
 		.pulpino_0_avalon_slave_debug_read                (mm_interconnect_1_pulpino_0_avalon_slave_debug_read),          //                                           .read
@@ -411,7 +497,6 @@ module sys (
 		.receiver2_irq (irq_mapper_receiver2_irq),         // receiver2.irq
 		.receiver3_irq (irq_mapper_receiver3_irq),         // receiver3.irq
 		.receiver4_irq (irq_mapper_receiver4_irq),         // receiver4.irq
-		.receiver5_irq (irq_mapper_receiver5_irq),         // receiver5.irq
 		.sender_irq    (pulpino_0_interrupt_receiver_irq)  //    sender.irq
 	);
 

@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 24.1 1077 linux 2025.11.14.13:21:20
+# ACDS 24.1 1077 linux 2025.11.19.09:41:03
 
 # ----------------------------------------
 # vcs - auto-generated simulation script
@@ -94,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 24.1 1077 linux 2025.11.14.13:21:20
+# ACDS 24.1 1077 linux 2025.11.19.09:41:03
 # ----------------------------------------
 # initialize variables
 TOP_LEVEL_NAME="sys"
@@ -151,9 +151,9 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $ELAB_OPT
   $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_rsp_mux_001.sv \
   $QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv \
   $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_rsp_mux.sv \
-  $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_rsp_demux_008.sv \
+  $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_rsp_demux_012.sv \
   $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_rsp_demux.sv \
-  $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_cmd_mux_008.sv \
+  $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_cmd_mux_012.sv \
   $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_cmd_mux.sv \
   $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_cmd_demux_001.sv \
   $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_cmd_demux.sv \
@@ -161,8 +161,8 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $ELAB_OPT
   $QSYS_SIMDIR/submodules/altera_merlin_reorder_memory.sv \
   $QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v \
   $QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v \
-  $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_011.sv \
-  $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_010.sv \
+  $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_015.sv \
+  $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_014.sv \
   $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_002.sv \
   $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_001.sv \
   $QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router.sv \
@@ -220,8 +220,6 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $ELAB_OPT
   $QSYS_SIMDIR/submodules/zeroriscy_prefetch_buffer.sv \
   $QSYS_SIMDIR/submodules/zeroriscy_register_file_ff.sv \
   $QSYS_SIMDIR/submodules/core_top.sv \
-  $QSYS_SIMDIR/submodules/sys_pio_out.v \
-  $QSYS_SIMDIR/submodules/sys_pio_in.v \
   $QSYS_SIMDIR/submodules/sys_onchip_memory2_0.v \
   $QSYS_SIMDIR/submodules/sys_master_0.v \
   $QSYS_SIMDIR/submodules/altera_avalon_jtag_uart.sv \
@@ -230,9 +228,9 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $ELAB_OPT
   $QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_scfifo_w.sv \
   $QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_sim_scfifo_r.sv \
   $QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv \
-  $QSYS_SIMDIR/submodules/sys_GPIO_EXTRA.v \
-  $QSYS_SIMDIR/submodules/sys_GPIO_0.v \
-  $QSYS_SIMDIR/submodules/sys_DEBUG.v \
+  $QSYS_SIMDIR/submodules/sys_GPIO_C_R.v \
+  $QSYS_SIMDIR/submodules/sys_GPIO_A_S.v \
+  $QSYS_SIMDIR/submodules/sys_GPIO_A_R.v \
   $QSYS_SIMDIR/sys.v \
   -top $TOP_LEVEL_NAME
 # ----------------------------------------
