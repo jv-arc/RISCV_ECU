@@ -25,21 +25,21 @@
    type="SYSTEM_VERILOG"
    library="rsp_mux" />
  <file
-   path="simulation/submodules/sys_mm_interconnect_1_rsp_demux_008.sv"
+   path="simulation/submodules/sys_mm_interconnect_1_rsp_demux_010.sv"
    type="SYSTEM_VERILOG"
-   library="rsp_demux_008" />
+   library="rsp_demux_010" />
  <file
    path="simulation/submodules/sys_mm_interconnect_1_rsp_demux.sv"
    type="SYSTEM_VERILOG"
    library="rsp_demux" />
  <file
-   path="simulation/submodules/sys_mm_interconnect_1_cmd_mux_008.sv"
+   path="simulation/submodules/sys_mm_interconnect_1_cmd_mux_010.sv"
    type="SYSTEM_VERILOG"
-   library="cmd_mux_008" />
+   library="cmd_mux_010" />
  <file
    path="simulation/submodules/altera_merlin_arbitrator.sv"
    type="SYSTEM_VERILOG"
-   library="cmd_mux_008" />
+   library="cmd_mux_010" />
  <file
    path="simulation/submodules/sys_mm_interconnect_1_cmd_mux.sv"
    type="SYSTEM_VERILOG"
@@ -73,13 +73,13 @@
    type="SYSTEM_VERILOG"
    library="pulpino_0_avalon_master_lsu_limiter" />
  <file
-   path="simulation/submodules/sys_mm_interconnect_1_router_011.sv"
+   path="simulation/submodules/sys_mm_interconnect_1_router_013.sv"
    type="SYSTEM_VERILOG"
-   library="router_011" />
+   library="router_013" />
  <file
-   path="simulation/submodules/sys_mm_interconnect_1_router_010.sv"
+   path="simulation/submodules/sys_mm_interconnect_1_router_012.sv"
    type="SYSTEM_VERILOG"
-   library="router_010" />
+   library="router_012" />
  <file
    path="simulation/submodules/sys_mm_interconnect_1_router_002.sv"
    type="SYSTEM_VERILOG"
@@ -209,10 +209,6 @@
    type="VERILOG"
    library="mm_interconnect_0" />
  <file
-   path="simulation/submodules/sys_timer_0.v"
-   type="VERILOG"
-   library="timer_0" />
- <file
    path="simulation/submodules/adbg_config.sv"
    type="SYSTEM_VERILOG"
    library="pulpino_0" />
@@ -325,14 +321,6 @@
    type="SYSTEM_VERILOG"
    library="pulpino_0" />
  <file
-   path="simulation/submodules/sys_pio_out.v"
-   type="VERILOG"
-   library="pio_out" />
- <file
-   path="simulation/submodules/sys_pio_in.v"
-   type="VERILOG"
-   library="pio_in" />
- <file
    path="simulation/submodules/sys_onchip_memory2_0.hex"
    type="HEX"
    library="onchip_memory2_0" />
@@ -369,17 +357,13 @@
    type="SYSTEM_VERILOG"
    library="jtag_uart_0" />
  <file
-   path="simulation/submodules/sys_GPIO_EXTRA.v"
+   path="simulation/submodules/sys_GPIO_A_R.v"
    type="VERILOG"
-   library="GPIO_EXTRA" />
+   library="GPIO_A_R" />
  <file
-   path="simulation/submodules/sys_GPIO_0.v"
+   path="simulation/submodules/sys_GPIO_A_DIR.v"
    type="VERILOG"
-   library="GPIO_0" />
- <file
-   path="simulation/submodules/sys_DEBUG.v"
-   type="VERILOG"
-   library="DEBUG" />
+   library="GPIO_A_DIR" />
  <file path="simulation/sys.v" type="VERILOG" />
  <topLevel name="sys" />
  <deviceFamily name="cyclonev" />
