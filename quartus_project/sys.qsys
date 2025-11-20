@@ -13,64 +13,104 @@
    {
       datum _sortIndex
       {
-         value = "8";
+         value = "6";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element GPIO_A_S
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "8";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element GPIO_A_W
    {
       datum _sortIndex
       {
-         value = "6";
+         value = "7";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element GPIO_B_R
    {
       datum _sortIndex
       {
-         value = "11";
+         value = "9";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element GPIO_B_S
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "11";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element GPIO_B_W
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "10";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element GPIO_C0_W
    {
       datum _sortIndex
       {
-         value = "12";
+         value = "13";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element GPIO_C1_W
    {
       datum _sortIndex
       {
-         value = "13";
+         value = "14";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element GPIO_C2_W
@@ -80,13 +120,23 @@
          value = "15";
          type = "int";
       }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
    }
    element GPIO_C_R
    {
       datum _sortIndex
       {
-         value = "14";
+         value = "12";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element clk_0

@@ -16,12 +16,12 @@ module tbench;
 
 
 
-	//==================================================
-	//                 BASIC SETUP
-	//==================================================
+ // ╭─────────────╮
+ // │ BASIC SETUP │
+ // ╰─────────────╯
 
 	// fixed during simulation
-	parameter BOOT_ADDR = 32'h00008000;
+	parameter BOOT_ADDR  = 32'h00008000;
 	parameter clk_period = 20; // 50MHz
 	parameter cpu_period = clk_period*2;
 	
@@ -29,15 +29,15 @@ module tbench;
 	wire fetch_enable;
 	wire clock_gating;
 	
-	assign test_mode = 1'b0;
+	assign test_mode    = 1'b0;
 	assign fetch_enable = 1'b1;
 	assign clock_gating = 1'b0;
 	
 	// changing during the simulation
-	reg  tb_clk;
-	reg  jtag_reset;
-	reg  key_reset; //KEY[0]
-	reg  [2:0] KEY_r; //remaining KEY[*]
+	reg        tb_clk;
+	reg        jtag_reset;
+	reg        key_reset; //KEY[0]
+	reg  [2:0] KEY_r;     //remaining KEY[*]
 	reg  [9:0] sw_in;
 	wire [9:0] ledr_out;
 
@@ -98,7 +98,7 @@ module tbench;
 	// The expression (2**pinout_size)-1) creates a  word of 1 that is
 	// pinout_size long, multiplying it by 2*offset move the word to the
 	// correct position
-	integer adc_pinout_mask = (((2**pinout_size)-1)*(2**(offset)));
+	integer adc_pinout_mask  = (((2**pinout_size)-1)*(2**(offset)));
 	integer adc_trigger_mask = (2**(offset+pinout_size));
 
 
@@ -138,12 +138,7 @@ module tbench;
 
 	);
 
-	
-	// wire [7:0] debug1;
-	// wire [7:0] debug0;
-	// wire [7:0] debug2;
-	// wire [7:0] debug3;
-	// assign {debug0, debug1, debug2, debug3} = dut.pulpino_qsys_test.debug_wire;
+
 	
 	wire [31:0] debug_wire;
 	assign debug_wire = dut.pulpino_qsys_test.debug_wire;
@@ -153,15 +148,6 @@ module tbench;
 	wire [4:0] irq_id;
 	assign irq_id = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.id_stage_i.irq_id_i;
 	
-	// wire [31:0] pc_id;
-	// assign pc_if = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.if_stage_i.pc_if;
-	//
-	// wire [31:0] jump_target;
-	// assign jump_target = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.jump_target_ex;
-	//
-	// wire branch_decision;
-	// assign jump_decidion = dut.pulpino_qsys_test.u0.pulpino_0.RISCV_CORE.branch_decision;
-
 
 	wire [data_size-1:0] memory_value;
 	assign memory_value = adc.fake_adc_data.ADDR;

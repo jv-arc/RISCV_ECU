@@ -4,22 +4,45 @@
 *============================================
 */
 
+// ╭─────────╮
+// │ HELPERS │
+// ╰─────────╯
 
-// Qsys Defined
-#define JTAG_BASE               0x00100010
-#define PIO_OUT_BASE            0x00200000
-#define PIO_IN_BASE             0x00200020
-#define GPIO_0_BASE             0x00200040
-#define GPIO_1_BASE             0x00200060
-#define GPIO_E_BASE             0x00200080
-#define TIMER_BASE              0x002000A0
+#define gpio_offset(B,SA,SB)    ((B)+(((3*(SB))+(SA)) * 0x10))
 
 
-// Defined by me :3
-#define VARIABLES               0x02000000
 
 
-// Pulpino fixed
-#define PULPINO_BASE            0x10000000
-#define SOC_PERIPHERALS_BASE  ( 0x0A100000 + PULPINO_BASE )
-#define EVENT_UNIT_BASE       ( 0X00004000 + SOC_PERIPHERALS_BASE )
+
+// ╭──────────────╮
+// │ QSYS DEFINED │
+// ╰──────────────╯
+
+#define JTAG_BASE         (0x00100010)
+#define TIMER_BASE        (0x002000A0)
+
+#define gpio_base         (0x00300000)
+
+#define GPIO_A_R          (gpio_offset(gpio_base, 0, 0))
+#define GPIO_A_W          (gpio_offset(gpio_base, 0, 1))
+#define GPIO_A_S          (gpio_offset(gpio_base, 0, 2))
+
+#define GPIO_B_R          (gpio_offset(gpio_base, 1, 0))
+#define GPIO_B_W          (gpio_offset(gpio_base, 1, 1))
+#define GPIO_B_S          (gpio_offset(gpio_base, 1, 2))
+
+#define GPIO_C_R          (gpio_offset(gpio_base, 2, 0))
+#define GPIO_C_0          (gpio_offset(gpio_base, 2, 1))
+#define GPIO_C_1          (gpio_offset(gpio_base, 2, 2))
+#define GPIO_C_2          (gpio_offset(gpio_base, 2, 3))
+
+
+
+
+
+// ╭───────╮
+// │ OTHER │
+// ╰───────╯
+
+#define VARIABLES               (0x02000000)
+

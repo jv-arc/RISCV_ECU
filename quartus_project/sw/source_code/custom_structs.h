@@ -53,6 +53,8 @@
 	*/
 
 
+
+
 	
 	//=================BASIC DEFINITIONS==================
 
@@ -60,10 +62,13 @@
 	#include <stdint.h>
 
 	// Simple address to uin32_t casting as a "register"
-	#define REG_T(addr)      ( *((volatile uint32_t*) (addr)) )
+	#define REG_T(addr)      (*((volatile uint32_t*) (addr)))
 
 	// Casts any "register" to a uin32_t pointer
-  #define REG_P(REG)       ( (volatile uint32_t*) (&(REG)) )
+  #define REG_P(REG)       ((volatile uint32_t*) (&(REG)))
+
+
+
 
 
 
@@ -85,20 +90,26 @@
 	
 	// The data, and 2 addresses, for the beginning and the end
 	typedef struct{
-		volatile uint8_t DATA[BUFFER_SIZE]; //not struct size!
+		volatile uint8_t  DATA[BUFFER_SIZE]; //not struct size!
 		volatile uint32_t HEAD;
 		volatile uint32_t TAIL;
 	} buffer_t;
 
+
 	// Casts addr to buffer_t struct
-	#define BUFFER_T(addr)    ( *((volatile buffer_t*) (addr)) )
+	#define BUFFER_T(addr)         (*((volatile buffer_t*) (addr)))
 
 	// Returns the address of a buffer
-	#define BUFFER_P(BUFFER)  ( (volatile buffer_t*) (&(BUFFER)) )
+	#define BUFFER_P(BUFFER)       ((volatile buffer_t*) (&(BUFFER)))
 
 	// Get memory addresses for any amount of buffers
-	#define BUFFER_OVERHEAD         ( ((BUFFER_SIZE)*(1)) + (4)*(2) )
-	#define BUFFER_OFFSET(base, n)  ( (base)+((BUFFER_OVERHEAD)*(n)) )
+	#define BUFFER_OVERHEAD        (((BUFFER_SIZE)*(1)) + (4)*(2))
+	#define BUFFER_OFFSET(base,n)  ((base)+((BUFFER_OVERHEAD)*(n)))
+
+
+
+
+
 
 
 
@@ -145,11 +156,11 @@
 		sleep_controller_t SLEEP;
 	} event_unit_t;
 
-	// Casts address to event_unit struct
-	#define EVENT_UNIT_T(addr)       ( *((volatile event_unit_t*) (addr)) )
-	
-	// Get's a "pointer" to a event_unit struct
-	#define EVENT_UNIT_P(EVENT_UNIT) ( (volatile event_unit_t*) (&(EVENT_UNIT)) )
+	#define EVENT_UNIT_T(addr)       (*((volatile event_unit_t*) (addr)))
+	#define EVENT_UNIT_P(EVENT_UNIT) ((volatile event_unit_t*) (&(EVENT_UNIT)))
+
+
+
 
 
 
@@ -180,14 +191,46 @@
 		volatile uint32_t EDGE_CAPTURE;
 		volatile uint32_t OUT_SET;
 		volatile uint32_t OUT_CLEAR;
-	} pio_t;
+	} pio_max_t;
 
-	// Casts addr to pio_t struct
-	#define PIO_T(addr) ( *((volatile pio_t*) (addr)) )
+	#define PIO_MAX_T(addr) ( *((volatile pio_max_t*) (addr)) )
+	#define PIO_MAX_P(PIO) ( (volatile pio_max_t*) (&(PIO)) )
 
-	// Get's a "pointer"
-	#define PIO_P(PIO) ( (volatile pio_t*) (&(PIO)) )
 
+
+
+
+	//=================PIO MINIMAL DEFINITION==================
+
+	typedef struct{
+		volatile uint32_t DATA;
+		volatile uint32_t DIRECTION;
+		volatile uint32_t INT_MASK;
+		volatile uint32_t EDGE_CAPTURE;
+	} pio_min_t;
+
+	#define PIO_MIN_T(addr) (*((volatile pio_min_t*) (addr)))
+	#define PIO_MIN_P(PIO)  ((volatile pio_min_t*) (&(PIO)))
+
+
+
+	
+
+	//=================GPIO_BANK==================
+
+	typedef struct{
+		volatile uint32_t READ;
+		volatile uint32_t _unused0;
+		volatile uint32_t INT_MASK;
+		volatile uint32_t EDGE_CAPTURE;
+		volatile uint32_t WRITE;
+		volatile uint32_t _unused1[3];
+		volatile uint32_t DIRECTION;
+		volatile uint32_t _unused2[3];
+	} gpio_t;
+
+	#define GPIO_T(addr)  (*((volatile gpio_t*) (addr)))
+	#define GPIO_P(GPIO)  ((volatile gpio_t*) (&(GPIO)))
 
 
 
@@ -198,11 +241,10 @@
 		volatile uint32_t CONTROL;
 	} jtag_uart_t;
 
-	// Casts addr to jtag_uart_t struct
-	#define JTAG_UART_T(addr)       ( *((volatile jtag_uart_t*) (addr)) )
+	#define JTAG_UART_T(addr)       (*((volatile jtag_uart_t*) (addr)))
+	#define JTAG_UART_P(JTAG_UART)  ((volatile jtag_uart_t*) (&(JTAG_UART)))
 
-	// Get's a "pointer" to the jtag_uart_t struct
-	#define JTAG_UART_P(JTAG_UART) ( (volatile jtag_uart_t*) (&(JTAG_UART)) )
+
 
 
 
@@ -221,10 +263,10 @@
 	} timer32_t;
 
 	// Casts addr to timer32_t struct
-	#define TIMER32_T(addr)    ( *((volatile timer32_t*) (addr)) )
+	#define TIMER32_T(addr)    (*((volatile timer32_t*) (addr)))
 
 	// Get's a "pointer" to a timer32_t struct
-	#define TIMER32_P(TIMER32) ( (volatile timer32_t*) (&(TIMER32)) )
+	#define TIMER32_P(TIMER32) ((volatile timer32_t*) (&(TIMER32)))
 
 
 
@@ -243,10 +285,10 @@
 	} timer64_t;
 
 	// Casts addr to timer64_t struct
-	#define TIMER64_T(addr)    ( *((volatile timer64_t*) (addr)) )
+	#define TIMER64_T(addr)    (*((volatile timer64_t*) (addr)))
 
 	// Get's a "pointer" to a timer64 struct
-	#define TIMER64_P(TIMER64) ( (volatile timer64_t*) (&(TIMER64)) )
+	#define TIMER64_P(TIMER64) ((volatile timer64_t*) (&(TIMER64)))
 
 
 

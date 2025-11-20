@@ -18,7 +18,7 @@ module pulpino_qsys_test (
 	input  [9:0]  SW,
 	output [9:0]  LEDR,
 	inout  [35:0] GPIO_0,
-	inout  [35:0] GPIO_1,
+	inout  [35:0] GPIO_1
 );
 
 
@@ -166,51 +166,20 @@ assign gpio_s = {gpio_a_s, gpio_b_s, gpio_c_s};
 
 
 
+// ╭────────────────╮
+// │ GPIO TRI-STATE │
+// ╰────────────────╯
 
-
-
-
-// ╭─────────────────────╮
-// │ TRISTATE GPIO LOGIC │
-// ╰─────────────────────╯
-
-wire [PIN_NUMBER-1:0] gpio_shared;
-wire [PIN_NUMBER-1:0] gpio_drive;
-wire [PIN_NUMBER-1:0] gpio_connect;
-
-
-// Generation of the per wire tristate behavior
+// Generation of granular per wire tristate control
 genvar i;
 generate
-	for(i=0; i < PIN_NUMBER; i ++) begin
-		assign gpio_shared[i] = gpio_connect[i] ? gpio_drive[i] : 1'bz;
-		assign f_gpio[i] = gpio_shared[i];
+	for(i=0; i < PIN_NUMBER; i++) begin : gen_tstate_block
+		assign f_gpio[i] = (gpio_s[i] == 1'b0) ? gpio_w[i] : 1'bz;
 	end
 endgenerate
 
-
-// Per wire selection behavior
-always @(*) begin
-	for(genvar j=0; j < PIN_NUMBER ; j++) begin
-		case(gpio_s[j])
-
-			1'b1: begin
-				gpio_drive[j] = gpio_r[j];
-				gpio_connect[j] = 1'b1;
-			end
-
-			1'b0: begin
-				gpio_drive[j] = gpio_w[j];
-				gpio_connect[j] = 1'b1;
-			end
-
-			default: gpio_connect[j] = 1'b0;
-
-		endcase
-	end
-end
-
-
+// Reading from port happens when f_gpio[i] = 1'bz
+assign gpio_r = f_gpio;
 
 
 
@@ -299,7 +268,6 @@ wire [7:0] flag2;
 wire [7:0] flag3;
 
 assign db_output = {flag3, flag2, flag1, flag0};
-
 
 
 
