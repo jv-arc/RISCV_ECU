@@ -239,7 +239,7 @@ module sys (
 		.out_port   (gpio_c2_w_external_connection_export)       // external_connection.export
 	);
 
-	sys_GPIO_C_R gpio_c_r (
+	sys_GPIO_A_R gpio_c_r (
 		.clk        (clk_clk),                                  //                 clk.clk
 		.reset_n    (~rst_controller_reset_out_reset),          //               reset.reset_n
 		.address    (mm_interconnect_1_gpio_c_r_s1_address),    //                  s1.address

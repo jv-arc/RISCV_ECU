@@ -40,7 +40,10 @@ gate-sim: $(RELOAD_STAMP) $(TB_COMPILE_STAMP)
 	quartus_eda --simulation --tool=questa_oem --format=verilog $(PROJECT_NAME) -c $(PROJECT_NAME) && \
 	vsim -c -do "source $(gate_sim_file); run -all"
 
-
+tcl-debug:
+	export PROJECT_DIR=$(Q_DIR) && \
+	export SIM_DIR=$(SIM_DIR) && \
+	tclsh $(SIM_DIR)/rtl_sim_base.tcl
 
 
 compile-testbench: $(TB_COMPILE_STAMP)
@@ -127,24 +130,8 @@ archive:
 	cd $(Q_DIR) && quartus_sh --archive $(PROJECT_NAME)
 
 
-
-clean-altera-full: clean-project clean-synthesis clean-qsys clean-simulation clean-hardware-stamps
-
-
-clean-project:
-	cd $(Q_DIR) && quartus_sh --clean $(PROJECT_NAME)
-
-
-list-devices:
-	jtagconfig
-	quartus_pgm --auto
-
-
-$(MEM_STAMP): $(MEM).hex
-	touch $@
-
 # Intel/Altera tools are a pain in the ass
-clean-altera: clean-hardware-stamps
+clean-altera-full: clean-hardware-stamps
 	rm -rf $(Q_DIR)/db
 	rm -rf $(Q_DIR)/incremental_db
 	rm -rf $(Q_DIR)/*.rpt
@@ -160,6 +147,17 @@ clean-altera: clean-hardware-stamps
 	rm -rf $(Q_DIR)/*.done
 	rm -rf $(Q_DIR)/sys/
 
+clean-project:
+	cd $(Q_DIR) && quartus_sh --clean $(PROJECT_NAME)
+
+
+list-devices:
+	jtagconfig
+	quartus_pgm --auto
+
+
+$(MEM_STAMP): $(MEM).hex
+	touch $@
 
 clean-hardware-stamps:
 	rm -f $(DESIGN_COMPILE_STAMP) $(MEM_STAMP) $(RELOAD_STAMP) $(TB_COMPILE_STAMP) $(SYNTHESIS_STAMP) $(FITTING_STAMP) $(ASSEMBLY_STAMP)

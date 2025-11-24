@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="sys" kind="system" version="24.1" fabric="QSYS">
  <!-- Format version 24.1 1077 (Future versions may contain additional information.) -->
- <!-- 2025.11.19.15:27:46 -->
+ <!-- 2025.11.22.11:14:44 -->
  <!-- A collection of modules and connections -->
  <parameter name="clockCrossingAdapter">
   <type>com.altera.sopcmodel.ensemble.EClockAdapter</type>
@@ -53,7 +53,7 @@
  </parameter>
  <parameter name="generationId">
   <type>int</type>
-  <value>1763576861</value>
+  <value>1763820880</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>true</visible>
@@ -7396,7 +7396,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.IRQ_TYPE</name>
-   <value>LEVEL</value>
+   <value>EDGE</value>
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.RESET_VALUE</name>
@@ -7420,15 +7420,19 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.altr,interrupt-type</name>
-   <value>4</value>
+   <value>1</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.altr,interrupt_type</name>
-   <value>4</value>
+   <value>1</value>
+  </assignment>
+  <assignment>
+   <name>embeddedsw.dts.params.edge_type</name>
+   <value>0</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.level_trigger</name>
-   <value>1</value>
+   <value>0</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.resetvalue</name>
@@ -7488,7 +7492,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="irqType">
    <type>java.lang.String</type>
-   <value>LEVEL</value>
+   <value>EDGE</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -7586,7 +7590,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="derived_irq_type">
    <type>java.lang.String</type>
-   <value>LEVEL</value>
+   <value>EDGE</value>
    <derived>true</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -8138,7 +8142,7 @@ particular module parameters. Connection points and their
 parameters are a RESULT of the module parameters. -->
    <assignment>
     <name>embeddedsw.dts.irq.tx_type</name>
-    <value>ACTIVE_HIGH</value>
+    <value>RISING_EDGE</value>
    </assignment>
    <parameter name="associatedAddressablePoint">
     <type>com.altera.entityinterfaces.IConnectionPoint</type>
@@ -23745,5 +23749,5 @@ parameters are a RESULT of the module parameters. -->
   <version>24.1</version>
  </plugin>
  <reportVersion>24.1 1077</reportVersion>
- <uniqueIdentifier>16338B9716110000019A9D5F584F</uniqueIdentifier>
+ <uniqueIdentifier>B671B43433D90000019AABEAC87C</uniqueIdentifier>
 </EnsembleReport>

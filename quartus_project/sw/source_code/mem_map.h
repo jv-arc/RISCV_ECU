@@ -8,9 +8,13 @@
 // │ HELPERS │
 // ╰─────────╯
 
-#define gpio_offset(B,SA,SB)    ((B)+(((3*(SB))+(SA)) * 0x10))
+#define offset(B, S, X) ((B)+((S)*(X)))
+#define gpios         (0x00300000)
 
-
+#define byte          (4)
+#define word          (4*byte)
+#define pin           (4*word)
+#define gpio          (3*pin)
 
 
 
@@ -20,21 +24,23 @@
 
 #define JTAG_BASE         (0x00100010)
 #define TIMER_BASE        (0x002000A0)
+//#define PWM               ()
 
-#define gpio_base         (0x00300000)
 
-#define GPIO_A_R          (gpio_offset(gpio_base, 0, 0))
-#define GPIO_A_W          (gpio_offset(gpio_base, 0, 1))
-#define GPIO_A_S          (gpio_offset(gpio_base, 0, 2))
+#define BANK_A            (offset(gpios, gpio, 0))
+#define PINS_A_R          (offset(BANK_A,pin,0))
+#define PINS_A_W          (offset(BANK_A,pin,1))
+#define PINS_A_S          (offset(BANK_A,pin,2))
 
-#define GPIO_B_R          (gpio_offset(gpio_base, 1, 0))
-#define GPIO_B_W          (gpio_offset(gpio_base, 1, 1))
-#define GPIO_B_S          (gpio_offset(gpio_base, 1, 2))
+#define BANK_B            (offset(gpios, gpio, 1))
+#define PINS_B_R          (offset(BANK_B,pin,0))
+#define PINS_B_W          (offset(BANK_B,pin,1))
+#define PINS_B_S          (offset(BANK_B,pin,2))
 
-#define GPIO_C_R          (gpio_offset(gpio_base, 2, 0))
-#define GPIO_C_0          (gpio_offset(gpio_base, 2, 1))
-#define GPIO_C_1          (gpio_offset(gpio_base, 2, 2))
-#define GPIO_C_2          (gpio_offset(gpio_base, 2, 3))
+#define BANK_C            (offset(gpios, gpio, 2))
+#define PINS_C_R          (offset(BANK_C,pin,0))
+#define PINS_C_0          (offset(BANK_C,pin,1))
+#define PINS_C_1          (offset(BANK_C,pin,2))
 
 
 

@@ -90,6 +90,5 @@ set_global_assignment -library "lib_sys" -name MISC_FILE [file join $::quartus(s
 set_global_assignment -library "lib_sys" -name MISC_FILE [file join $::quartus(sip_path) "submodules/altera_avalon_jtag_uart_scfifo_w.sv"]
 set_global_assignment -library "lib_sys" -name MISC_FILE [file join $::quartus(sip_path) "submodules/altera_avalon_jtag_uart_sim_scfifo_r.sv"]
 set_global_assignment -library "lib_sys" -name MISC_FILE [file join $::quartus(sip_path) "submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv"]
-set_global_assignment -library "lib_sys" -name MISC_FILE [file join $::quartus(sip_path) "submodules/sys_GPIO_C_R.v"]
 set_global_assignment -library "lib_sys" -name MISC_FILE [file join $::quartus(sip_path) "submodules/sys_GPIO_A_S.v"]
 set_global_assignment -library "lib_sys" -name MISC_FILE [file join $::quartus(sip_path) "submodules/sys_GPIO_A_R.v"]

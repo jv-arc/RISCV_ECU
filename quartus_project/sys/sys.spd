@@ -361,10 +361,6 @@
    type="SYSTEM_VERILOG"
    library="jtag_uart_0" />
  <file
-   path="simulation/submodules/sys_GPIO_C_R.v"
-   type="VERILOG"
-   library="GPIO_C_R" />
- <file
    path="simulation/submodules/sys_GPIO_A_S.v"
    type="VERILOG"
    library="GPIO_A_S" />

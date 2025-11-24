@@ -79,8 +79,6 @@ assign clock_gating = 1'b0;
 
 
 
-
-
 // ╭─────────────────╮
 // │ SYNCHRONIZATION │
 // ╰─────────────────╯
@@ -104,12 +102,9 @@ assign reset_n = KEY[0] & ~jtag_reset;
 
 
 
-
-
-
-//   ╭─────────────────────────────╮
-//   │ GENERAL GPIO REPRESENTATION │
-//   ╰─────────────────────────────╯
+//  ╭─────────────────────────────╮
+//  │ GENERAL GPIO REPRESENTATION │
+//  ╰─────────────────────────────╯
 
 // ┌                                                          ┐
 // │ Instead of using "input", "output" etc. to name these    │
@@ -166,9 +161,9 @@ assign gpio_s = {gpio_a_s, gpio_b_s, gpio_c_s};
 
 
 
-// ╭────────────────╮
-// │ GPIO TRI-STATE │
-// ╰────────────────╯
+//  ╭────────────────╮
+//  │ GPIO TRI-STATE │
+//  ╰────────────────╯
 
 // Generation of granular per wire tristate control
 genvar i;
@@ -240,9 +235,9 @@ assign pio_1_w = {r_1_w, db_mode};
 
 
 
-//   ╭───────────╮
-//   │ DEBUGGING │
-//   ╰───────────╯
+//  ╭───────────╮
+//  │ DEBUGGING │
+//  ╰───────────╯
 
 // ┌                                                  ┐
 // │ This is only meant for development, I just think │
@@ -268,7 +263,6 @@ wire [7:0] flag2;
 wire [7:0] flag3;
 
 assign db_output = {flag3, flag2, flag1, flag0};
-
 
 
 

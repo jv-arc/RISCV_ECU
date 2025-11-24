@@ -141,38 +141,33 @@ main_entry:
 
 
   // Interruption number: 1
-	// Origin: PIO_IN (Board's keys and switches)
+	// Origin: TIMER32 (32bit IP timer)
   .org 0x04
-  jal x0, board_input_handler
+  jal x0, timer_finished_handler
 
 
   // Interruption number: 2
-	// Origin: TIMER32 (32bit IP timer)
+	// Origin: GPIO_BANK_A
   .org 0x08
-  jal x0, timer_finished_handler
+  jal x0, pins_a_r
  
  
   // Interruption number: 3
-	// Origin: GPIO_0 (the first 32 bits of the first bank)
+	// Origin: GPIO_BANK_B
 	.org 0x0C
-  jal x0, gpio_zero_handler
+  jal x0, pins_b_r
 
 
   // Interruption number: 4
-	// Origin: GPIO_1 (the first 32 bits of the second bank)
+	// Origin: shared (bank_c, keys and switches);
   .org 0x10
-  jal x0, gpio_one_handler
+  jal x0, pins_c_r
 
-
-  // Interruption number: 5
-	// Origin: GPIO_EXTRA (the 8 remaining gpio pins, 4 from each bank)
-  .org 0x14
-  jal x0, gpio_extra_handler
 
 
 	// A series of "nop" so anything in between
 	// ends up in the default_exec_handler as a fallback
-  .rept 19
+  .rept 20
   nop
   .endr
   jal x0, default_exc_handler
@@ -184,8 +179,6 @@ main_entry:
 	// of the setup program in the beginning of this file
   .org 0x80
   jal x0, reset_handler
-
-
 
 	// These 2 also use default_exec_handler for now
   .org 0x84 //illegal instruction INT 21

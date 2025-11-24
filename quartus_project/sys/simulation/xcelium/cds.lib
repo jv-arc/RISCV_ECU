@@ -46,7 +46,6 @@ DEFINE pulpino_0                                ./libraries/pulpino_0/
 DEFINE onchip_memory2_0                         ./libraries/onchip_memory2_0/                        
 DEFINE master_0                                 ./libraries/master_0/                                
 DEFINE jtag_uart_0                              ./libraries/jtag_uart_0/                             
-DEFINE GPIO_C_R                                 ./libraries/GPIO_C_R/                                
 DEFINE GPIO_A_S                                 ./libraries/GPIO_A_S/                                
 DEFINE GPIO_A_R                                 ./libraries/GPIO_A_R/                                
 DEFINE altera_ver                               ./libraries/altera_ver/                              

@@ -8,25 +8,25 @@ z2
 !i10e 25
 !i10f 100
 cModel Technology
-d/home/jvctr/0/POLIno_qsys/quartus_project/simulation/questa
+Z0 d/home/jvctr/0/POLIno_qsys/quartus_project/simulation/questa
 vsys_master_0
 2/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_master_0.v
-!s110 1763409350
+!s110 1764000938
 !i10b 1
 !s100 cEBIQm9aS]Ji43nT[]jO<0
 IVjJWG5dVnARd3ZXo]72?j3
-d/home/jvctr/0/POLIno_qsys/quartus_project/tcl_scripts/build
-w1763137277
+R0
+w1763820877
 8/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_master_0.v
 F/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_master_0.v
-!i122 75
+!i122 0
 L0 9 346
 VDg1SIo80bB@j0V0VzS_@n1
 OL;L;2024.3;79
 r1
 !s85 0
 31
-!s108 1763409350.000000
+!s108 1764000938.000000
 !s107 /home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_master_0.v|
 !s90 -reportprogress|300|/home/jvctr/0/POLIno_qsys/quartus_project/sys/simulation/submodules/sys_master_0.v|-work|master_0|
 !i113 0

@@ -39,7 +39,6 @@ pulpino_0:                                ./libraries/pulpino_0/
 onchip_memory2_0:                         ./libraries/onchip_memory2_0/                        
 master_0:                                 ./libraries/master_0/                                
 jtag_uart_0:                              ./libraries/jtag_uart_0/                             
-GPIO_C_R:                                 ./libraries/GPIO_C_R/                                
 GPIO_A_S:                                 ./libraries/GPIO_A_S/                                
 GPIO_A_R:                                 ./libraries/GPIO_A_R/                                
 altera_ver:                               ./libraries/altera_ver/                              

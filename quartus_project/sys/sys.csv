@@ -1,18 +1,17 @@
-# system info sys on 2025.11.19.15:27:40
+# system info sys on 2025.11.22.11:14:39
 system_info:
 name,value
 DEVICE,5CSEMA5F31C6
 DEVICE_FAMILY,Cyclone V
-GENERATION_ID,1763576855
+GENERATION_ID,1763820874
 #
 #
-# Files generated for sys on 2025.11.19.15:27:40
+# Files generated for sys on 2025.11.22.11:14:39
 files:
 filepath,kind,attributes,module,is_top
 simulation/sys.v,VERILOG,,sys,true
 simulation/submodules/sys_GPIO_A_R.v,VERILOG,,sys_GPIO_A_R,false
 simulation/submodules/sys_GPIO_A_S.v,VERILOG,,sys_GPIO_A_S,false
-simulation/submodules/sys_GPIO_C_R.v,VERILOG,,sys_GPIO_C_R,false
 simulation/submodules/altera_avalon_jtag_uart.sv,SYSTEM_VERILOG,,altera_avalon_jtag_uart,false
 simulation/submodules/altera_avalon_jtag_uart_log_module.sv,SYSTEM_VERILOG,,altera_avalon_jtag_uart,false
 simulation/submodules/altera_avalon_jtag_uart_scfifo_r.sv,SYSTEM_VERILOG,,altera_avalon_jtag_uart,false
@@ -109,6 +108,7 @@ instances:
 instancePath,module
 sys.GPIO_A_R,sys_GPIO_A_R
 sys.GPIO_B_R,sys_GPIO_A_R
+sys.GPIO_C_R,sys_GPIO_A_R
 sys.GPIO_A_S,sys_GPIO_A_S
 sys.GPIO_A_W,sys_GPIO_A_S
 sys.GPIO_B_S,sys_GPIO_A_S
@@ -116,7 +116,6 @@ sys.GPIO_B_W,sys_GPIO_A_S
 sys.GPIO_C0_W,sys_GPIO_A_S
 sys.GPIO_C1_W,sys_GPIO_A_S
 sys.GPIO_C2_W,sys_GPIO_A_S
-sys.GPIO_C_R,sys_GPIO_C_R
 sys.jtag_uart_0,altera_avalon_jtag_uart
 sys.master_0,sys_master_0
 sys.master_0.jtag_phy_embedded_in_jtag_master,altera_avalon_st_jtag_interface

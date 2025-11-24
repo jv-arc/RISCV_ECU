@@ -6,13 +6,13 @@
    <connections preferredWidth="143" />
    <irq preferredWidth="34" />
    <name preferredWidth="96" />
-   <description preferredWidth="30" />
-   <export preferredWidth="30" />
+   <description preferredWidth="263" />
+   <export preferredWidth="332" />
    <inputclock preferredWidth="30" />
   </columns>
  </systemtable>
  <library expandedCategories="Project,Library" />
- <window width="1359" height="870" x="296" y="101" />
+ <window width="1359" height="870" x="228" y="59" />
  <hdlexample language="VERILOG" />
  <generation simulation="VERILOG" greybox="0" />
 </preferences>

@@ -1,5 +1,5 @@
 Flow report for pulpino_qsys_test
-Wed Nov 19 17:53:24 2025
+Mon Nov 24 13:22:49 2025
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -41,15 +41,15 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Wed Nov 19 17:53:24 2025           ;
+; Flow Status                     ; Successful - Mon Nov 24 13:22:49 2025           ;
 ; Quartus Prime Version           ; 24.1std.0 Build 1077 03/04/2025 SC Lite Edition ;
 ; Revision Name                   ; pulpino_qsys_test                               ;
 ; Top-level Entity Name           ; pulpino_qsys_test                               ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSEMA5F31C6                                    ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 3,384 / 32,070 ( 11 % )                         ;
-; Total registers                 ; 4630                                            ;
+; Logic utilization (in ALMs)     ; 3,380 / 32,070 ( 11 % )                         ;
+; Total registers                 ; 4623                                            ;
 ; Total pins                      ; 97 / 457 ( 21 % )                               ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 262,656 / 4,065,280 ( 6 % )                     ;
@@ -68,7 +68,7 @@ on the Quartus Prime software download page.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 11/19/2025 17:51:09 ;
+; Start date & time ; 11/24/2025 13:20:17 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; pulpino_qsys_test   ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ on the Quartus Prime software download page.
 +--------------------------------------+--------------------------------------------------------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                      ; Value                                                                                ; Default Value ; Entity Name ; Section Id     ;
 +--------------------------------------+--------------------------------------------------------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID                ; 246488365936491.176358546921106                                                      ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID                ; 246488365936491.176400121734582                                                      ; --            ; --          ; --             ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                                                                   ; --            ; --          ; tbench         ;
 ; EDA_NATIVELINK_SIMULATION_TEST_BENCH ; tbench                                                                               ; --            ; --          ; eda_simulation ;
 ; EDA_OUTPUT_DATA_FORMAT               ; Verilog Hdl                                                                          ; --            ; --          ; eda_simulation ;
@@ -179,7 +179,6 @@ on the Quartus Prime software download page.
 ; MISC_FILE                            ; sys/simulation/submodules/altera_avalon_jtag_uart_scfifo_w.sv                        ; --            ; --          ; --             ;
 ; MISC_FILE                            ; sys/simulation/submodules/altera_avalon_jtag_uart_sim_scfifo_r.sv                    ; --            ; --          ; --             ;
 ; MISC_FILE                            ; sys/simulation/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv                    ; --            ; --          ; --             ;
-; MISC_FILE                            ; sys/simulation/submodules/sys_GPIO_C_R.v                                             ; --            ; --          ; --             ;
 ; MISC_FILE                            ; sys/simulation/submodules/sys_GPIO_A_S.v                                             ; --            ; --          ; --             ;
 ; MISC_FILE                            ; sys/simulation/submodules/sys_GPIO_A_R.v                                             ; --            ; --          ; --             ;
 ; MISC_FILE                            ; sys/synthesis/../sys.cmp                                                             ; --            ; --          ; --             ;
@@ -195,7 +194,7 @@ on the Quartus Prime software download page.
 ; SEARCH_PATH                          ; sw/mem_init/                                                                         ; --            ; --          ; --             ;
 ; SLD_FILE                             ; sys/synthesis/sys.regmap                                                             ; --            ; --          ; --             ;
 ; SLD_FILE                             ; sys/synthesis/sys.debuginfo                                                          ; --            ; --          ; --             ;
-; SLD_INFO                             ; QSYS_NAME sys HAS_SOPCINFO 1 GENERATION_ID 1763576861                                ; --            ; sys         ; --             ;
+; SLD_INFO                             ; QSYS_NAME sys HAS_SOPCINFO 1 GENERATION_ID 1763820880                                ; --            ; sys         ; --             ;
 ; SOPCINFO_FILE                        ; sys/synthesis/../../sys.sopcinfo                                                     ; --            ; --          ; --             ;
 ; SPD_FILE                             ; sys/simulation/../sys.spd                                                            ; --            ; --          ; --             ;
 ; SPD_FILE                             ; sw/mem_init/meminit.spd                                                              ; --            ; --          ; --             ;
@@ -212,12 +211,13 @@ on the Quartus Prime software download page.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:42     ; 1.0                     ; 661 MB              ; 00:01:13                           ;
-; Fitter               ; 00:01:06     ; 1.4                     ; 2014 MB             ; 00:02:36                           ;
-; Assembler            ; 00:00:05     ; 1.0                     ; 568 MB              ; 00:00:05                           ;
-; Timing Analyzer      ; 00:00:12     ; 2.5                     ; 1042 MB             ; 00:00:28                           ;
-; EDA Netlist Writer   ; 00:00:02     ; 1.0                     ; 837 MB              ; 00:00:03                           ;
-; Total                ; 00:02:07     ; --                      ; --                  ; 00:04:25                           ;
+; Analysis & Synthesis ; 00:00:45     ; 1.0                     ; 661 MB              ; 00:01:18                           ;
+; Fitter               ; 00:01:13     ; 1.4                     ; 2046 MB             ; 00:02:52                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 571 MB              ; 00:00:05                           ;
+; Timing Analyzer      ; 00:00:12     ; 2.5                     ; 1024 MB             ; 00:00:29                           ;
+; EDA Netlist Writer   ; 00:00:03     ; 1.0                     ; 845 MB              ; 00:00:03                           ;
+; Assembler            ; 00:00:06     ; 1.0                     ; 570 MB              ; 00:00:05                           ;
+; Total                ; 00:02:25     ; --                      ; --                  ; 00:04:52                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
@@ -231,6 +231,7 @@ on the Quartus Prime software download page.
 ; Assembler            ; manjaro          ; Manjaro Linux ; Manjaro Linux ; x86_64         ;
 ; Timing Analyzer      ; manjaro          ; Manjaro Linux ; Manjaro Linux ; x86_64         ;
 ; EDA Netlist Writer   ; manjaro          ; Manjaro Linux ; Manjaro Linux ; x86_64         ;
+; Assembler            ; manjaro          ; Manjaro Linux ; Manjaro Linux ; x86_64         ;
 +----------------------+------------------+---------------+---------------+----------------+
 
 
@@ -242,6 +243,7 @@ quartus_fit --read_settings_files=off --write_settings_files=off pulpino_qsys_te
 quartus_asm --read_settings_files=off --write_settings_files=off pulpino_qsys_test -c pulpino_qsys_test
 quartus_sta pulpino_qsys_test -c pulpino_qsys_test
 quartus_eda --read_settings_files=off --write_settings_files=off pulpino_qsys_test -c pulpino_qsys_test
+quartus_asm pulpino_qsys_test -c pulpino_qsys_test
 
 
 
