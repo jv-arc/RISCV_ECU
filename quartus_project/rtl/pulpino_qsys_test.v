@@ -1,13 +1,3 @@
-// ╔═══════════════════════════════════════════════════╗
-// ║                                                   ║
-// ║  ██████╗  ██████╗ ██╗     ██╗███╗   ██╗ ██████╗   ║
-// ║  ██╔══██╗██╔═══██╗██║     ██║████╗  ██║██╔═══██╗  ║
-// ║  ██████╔╝██║   ██║██║     ██║██╔██╗ ██║██║   ██║  ║
-// ║  ██╔═══╝ ██║   ██║██║     ██║██║╚██╗██║██║   ██║  ║
-// ║  ██║     ╚██████╔╝███████╗██║██║ ╚████║╚██████╔╝  ║
-// ║  ╚═╝      ╚═════╝ ╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝   ║
-// ║                                                   ║
-// ╚═══════════════════════════════════════════════════╝
 
 
 // These match the DE1-SoC names precisely
@@ -20,40 +10,6 @@ module pulpino_qsys_test (
 	inout  [35:0] GPIO_0,
 	inout  [35:0] GPIO_1
 );
-
-
-
-
-
-// ╭───────────────────────────╮
-// │ MAIN SYSTEM INSTANTIATION │
-// ╰───────────────────────────╯
-
-sys u0 (
-	// Basic pins
-	.clk_clk                                  (clk25),
-	.reset_reset_n                            (reset_n),
-	.master_0_master_reset_reset              (jtag_reset),
-
-	// Main config
-	.pulpino_0_config_fetch_enable_i          (fetch_enable),
-	.pulpino_0_config_clock_gating_i          (clock_gating),
-	.pulpino_0_config_boot_addr_i             (BOOT_ADDR),
-	.pulpino_0_config_testmode_i              (test_mode),
-
-	// Peripherals
-	.gpio_a_r_external_connection_export      (gpio_a_r),
-	.gpio_a_w_external_connection_export      (gpio_a_w),
-	.gpio_a_s_external_connection_export      (gpio_a_s),
-	.gpio_b_r_external_connection_export      (gpio_b_r),
-	.gpio_b_w_external_connection_export      (gpio_b_w),
-	.gpio_b_s_external_connection_export      (gpio_b_s),
-	.gpio_c_r_external_connection_export      ({gpio_c_r, pio_r}),
-	.gpio_c0_w_external_connection_export     ({gpio_c_w, pio_0_w}),
-	.gpio_c1_w_external_connection_export     ({gpio_c_s, pio_1_w}),
-	.gpio_c2_w_external_connection_export     ({flag3, flag2, flag1, flag0})
-);
-
 
 
 
@@ -83,6 +39,12 @@ assign clock_gating = 1'b0;
 // │ SYNCHRONIZATION │
 // ╰─────────────────╯
 
+// Supporting wires
+wire clk25;
+wire jtag_reset;
+wire reset_n;
+assign reset_n = KEY[0] & ~jtag_reset;
+
 // PLL Instantiation
 pll clock_conversion(
 	.refclk   (CLOCK_50),
@@ -90,11 +52,6 @@ pll clock_conversion(
 	.outclk_0 (clk25)
 );
 
-// Supporting wires
-wire clk25;
-wire jtag_reset;
-wire reset_n;
-assign reset_n = KEY[0] & ~jtag_reset;
 
 
 
@@ -102,9 +59,9 @@ assign reset_n = KEY[0] & ~jtag_reset;
 
 
 
-//  ╭─────────────────────────────╮
-//  │ GENERAL GPIO REPRESENTATION │
-//  ╰─────────────────────────────╯
+// ╭─────────────────────────────╮
+// │ GENERAL GPIO REPRESENTATION │
+// ╰─────────────────────────────╯
 
 // ┌                                                          ┐
 // │ Instead of using "input", "output" etc. to name these    │
@@ -161,6 +118,7 @@ assign gpio_s = {gpio_a_s, gpio_b_s, gpio_c_s};
 
 
 
+
 //  ╭────────────────╮
 //  │ GPIO TRI-STATE │
 //  ╰────────────────╯
@@ -175,6 +133,41 @@ endgenerate
 
 // Reading from port happens when f_gpio[i] = 1'bz
 assign gpio_r = f_gpio;
+
+
+
+
+
+
+//  ╭───────────╮
+//  │ DEBUGGING │
+//  ╰───────────╯
+
+// ┌                                                  ┐
+// │ This is only meant for development, I just think │
+// │ it's easier to debug simple behavior in the wave │
+// │ forms and asserts in verilog than always using   │
+// │ JTAG, so this are peripherals only for the CPU   │
+// │ to write to and check on the testbench           │
+// └                                                  ┘
+
+// Shows if the wire is for flags or if it is for 
+// readding 32 bit words
+wire db_mode;
+
+
+// the flag* signals are the same as db_output
+// they are just separated in the same way I
+// do on the C code
+wire [31:0] db_output;
+
+wire [7:0] flag0;
+wire [7:0] flag1;
+wire [7:0] flag2;
+wire [7:0] flag3;
+
+assign db_output = {flag3, flag2, flag1, flag0};
+
 
 
 
@@ -235,35 +228,39 @@ assign pio_1_w = {r_1_w, db_mode};
 
 
 
-//  ╭───────────╮
-//  │ DEBUGGING │
-//  ╰───────────╯
-
-// ┌                                                  ┐
-// │ This is only meant for development, I just think │
-// │ it's easier to debug simple behavior in the wave │
-// │ forms and asserts in verilog than always using   │
-// │ JTAG, so this are peripherals only for the CPU   │
-// │ to write to and check on the testbench           │
-// └                                                  ┘
-
-// Shows if the wire is for flags or if it is for 
-// readding 32 bit words
-wire db_mode;
 
 
-// the flag* signals are the same as db_output
-// they are just separated in the same way I
-// do on the C code
-wire [31:0] db_output;
 
-wire [7:0] flag0;
-wire [7:0] flag1;
-wire [7:0] flag2;
-wire [7:0] flag3;
 
-assign db_output = {flag3, flag2, flag1, flag0};
 
+// ╭───────────────────────────╮
+// │ MAIN SYSTEM INSTANTIATION │
+// ╰───────────────────────────╯
+
+sys u0 (
+	// Basic pins
+	.clk_clk                                  (clk25),
+	.reset_reset_n                            (reset_n),
+	.master_0_master_reset_reset              (jtag_reset),
+
+	// Main config
+	.pulpino_0_config_fetch_enable_i          (fetch_enable),
+	.pulpino_0_config_clock_gating_i          (clock_gating),
+	.pulpino_0_config_boot_addr_i             (BOOT_ADDR),
+	.pulpino_0_config_testmode_i              (test_mode),
+
+	// Peripherals
+	.gpio_a_r_external_connection_export      (gpio_a_r),
+	.gpio_a_w_external_connection_export      (gpio_a_w),
+	.gpio_a_s_external_connection_export      (gpio_a_s),
+	.gpio_b_r_external_connection_export      (gpio_b_r),
+	.gpio_b_w_external_connection_export      (gpio_b_w),
+	.gpio_b_s_external_connection_export      (gpio_b_s),
+	.gpio_c_r_external_connection_export      ({gpio_c_r, pio_r}),
+	.gpio_c0_w_external_connection_export     ({gpio_c_w, pio_0_w}),
+	.gpio_c1_w_external_connection_export     ({gpio_c_s, pio_1_w}),
+	.gpio_c2_w_external_connection_export     ({flag3, flag2, flag1, flag0})
+);
 
 
 

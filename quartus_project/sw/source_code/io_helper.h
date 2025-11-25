@@ -3,33 +3,44 @@
 #define STRUCTS_GUARD
 
 
-	/*
-	*=======================================================
-	*                     CONVENTIONS
-	*------------------------------------------------------
-	*  - Structs and C related custom types use lowercase
-	*  name in snake case with a trailing '_t', '<type>_t'
-	*
-	*  - Macros for casting addresses to these types
-	*  follow the same patter but with uppercase letters
-	*  followed by '_T', like: '<TYPE>_T>'
-	*
-	*  - Macros for getting a 'pointer' to a specific type
-	*  use the type's name in upper case followed by '_P'
-	*  like '<TYPE>_P'
-	*
-	*  Example:
-	*    type:    timer32_t
-	*    casting: TIMER32_T
-	*    pointer: TIMER32_P
-	*/
+
+// ╭─────────────╮
+// │ CONVENTIONS │
+// ╰─────────────╯
+
+// ┌                                                    ┐
+// │ - Structs and C related custom types use lowercase │
+// │ name in snake case with a trailing '_t', '<type>_t'│
+// │                                                    │
+// │ - Macros for casting addresses to these types      │
+// │ follow the same patter but with uppercase letters  │
+// │ followed by '_T', like: '<TYPE>_T>'                │
+// │                                                    │
+// │ - Macros for getting a 'pointer' to a specific type│
+// │ use the type's name in upper case followed by '_P' │
+// │ like '<TYPE>_P'                                    │
+// │                                                    │
+// │ Example:                                           │
+// │ type:    timer32_t                                 │
+// │ casting: TIMER32_T                                 │
+// │ pointer: TIMER32_P                                 │
+// │                                                    │
+// │ The only exceptions are the safety ones            │
+// └                                                    ┘
 
 
 
 
+
+// ╔═════════════════════════════════════╗
+// ║ ██████╗  █████╗ ███████╗██╗ ██████╗ ║
+// ║ ██╔══██╗██╔══██╗██╔════╝██║██╔════╝ ║
+// ║ ██████╔╝███████║███████╗██║██║      ║
+// ║ ██╔══██╗██╔══██║╚════██║██║██║      ║
+// ║ ██████╔╝██║  ██║███████║██║╚██████╗ ║
+// ║ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝ ╚═════╝ ║
+// ╚═════════════════════════════════════╝
 	
-	//=================BASIC DEFINITIONS==================
-
 	// Standard Libraries have their own guards
 	#include <stdint.h>
 
@@ -46,13 +57,18 @@
 
 
 
-	//==================CHARACTER BUFFER===================
-	// Basically to avoid writing blocking code for the 
-	// JTAG peripheral, we just write and read from the
-	// buffer and we let JTAG work based on it's ISR.
+  // ╭──────────────────╮
+  // │ CHARACTER BUFFER │
+  // ╰──────────────────╯
+
+  // ┌                                                  ┐
+  // │ Basically to avoid writing blocking code for the │
+  // │ JTAG peripheral, we just write and read from the │
+  // │ buffer and we let JTAG work based on it's ISR.   │
+  // └                                                  ┘
 
 
-	// allows defining a different buffer_size on the code
+	//Allows defining a different buffer_size on the code
 	#ifndef BUFFER_SIZE
 		#define BUFFER_SIZE 128
 	#endif
@@ -75,12 +91,17 @@
 
 
 
-
-
-
-// ╭──────────────────────────╮
-// │ INTERRUPT AND EVENT UNIT │
-// ╰──────────────────────────╯
+  // ╭──────────────────────────╮
+  // │ INTERRUPT AND EVENT UNIT │
+  // ╰──────────────────────────╯
+ 
+  // ┌                                                  ┐
+  // │ I created these because I thought it was being   │
+  // │ used on the current pulpino configuration, it is │
+  // │ not being used...                                │
+  // │                                                  │
+  // │ I'm leaving here if we need to use in the future │
+  // └                                                  ┘
 
 	// Sleep struct
 	typedef struct{
@@ -241,16 +262,32 @@
 
 
 
-//   ╭────────────────╮
-//   │ SAFETY HELPERS │
-//   ╰────────────────╯
 
-// ┌                                                      ┐
-// │ Since some GPIOs share memory space with peripherals │
-// │ there are some abstraction functions to access these │
-// │ peripherals safely                                   │
-// └                                                      ┘
 
+
+
+
+//    ╔══════════════════════════════════╗
+//    ║ ███████╗ █████╗ ███████╗███████╗ ║
+//    ║ ██╔════╝██╔══██╗██╔════╝██╔════╝ ║
+//    ║ ███████╗███████║█████╗  █████╗   ║
+//    ║ ╚════██║██╔══██║██╔══╝  ██╔══╝   ║
+//    ║ ███████║██║  ██║██║     ███████╗ ║
+//    ║ ╚══════╝╚═╝  ╚═╝╚═╝     ╚══════╝ ║
+//    ╚══════════════════════════════════╝
+
+// ┌                                                       ┐
+// │ These are structs and functions to safelly access     │
+// │ peripherals, since some GPIOs share memory space      │
+// │ with peripherals there are some abstraction functions │
+// │ to access these peripherals safely                    │
+// └                                                       ┘
+
+
+
+  // ╭─────────╮
+  // │ STRUCTS │
+  // ╰─────────╯
 
 	// GPIO
 	typedef struct {
@@ -258,55 +295,12 @@
 		uint32_t mask;
 	} s_gpio_t;
 
-	//
-	// static inline void gpio_write(const s_gpio_t*, uint32_t);
-	// static inline void gpio_int_mask(const s_gpio_t*, uint32_t);
-	// static inline void gpio_direction(const s_gpio_t*, uint32_t);
-	// static inline void gpio_edge_clear(const s_gpio_t*, uint32_t);
-	//
-	// static inline void gpio_intconfig_set(const s_gpio_t*, uint32_t);
-	// static inline void gpio_intconfig_clr(const s_gpio_t*, uint32_t);
-	// static inline void gpio_set_int(const s_gpio_t*, uint32_t);
-	//
-	// static inline void gpio_set_input(const s_gpio_t*, uint32_t);
-	// static inline void gpio_set_output(const s_gpio_t*, uint32_t);
-	//
-	// static inline uint32_t gpio_read(const s_gpio_t*);
-	// static inline uint32_t gpio_edge_read(const s_gpio_t*);
-	//
-	// // typedef struct {
-	// 	void (*write)(s_gpio_t*, uint32_t);
-	// 	void (*int_mask)(s_gpio_t*, uint32_t);
-	// 	void (*direction)(s_gpio_t*, uint32_t);
-	// 	void (*edge_clear)(s_gpio_t*, uint32_t);
-	// 	uint32_t (*read)(s_gpio_t*);
-	// 	uint32_t (*edge_read)(s_gpio_t*);
-	// } gpio;
-	//
-
 	//Input
 	typedef struct{
 		volatile in_t* regs;
 		uint32_t mask;
 		uint32_t offset;
 	} s_in_t;
-	//
-	// static inline void io_int_mask(const s_in_t*, uint32_t);
-	// static inline void io_edge_clear(const s_in_t*);
-	// static inline void io_intconfig_set(const s_in_t*, uint32_t);
-	// static inline void io_intconfig_clr(const s_in_t*, uint32_t);
-	//
-	// static inline uint32_t io_read(const s_in_t*);
-	// static inline uint32_t io_edge_read(const s_in_t*);
-	//
-	//
-	// typedef struct {
-	// 	void (*int_mask)(s_gpio_t*, uint32_t);
-	// 	void (*edge_clear)(s_gpio_t*);
-	// 	uint32_t (*read)(s_gpio_t*);
-	// 	uint32_t (*edge_read)(s_gpio_t*);
-	// } input;
-	//
 	
 
 	//Output
@@ -317,11 +311,6 @@
 	} s_out_t;
 
 
-	// static inline void io_write(const s_out_t*, uint32_t);
-	
-	// typedef struct{
-	// 	void (*write)(const s_out_t*, uint32_t);
-	// } output;
 
 
 
@@ -412,7 +401,6 @@ static inline void io_intconfig_clr(const s_in_t* bank, uint32_t pattern){
 	uint32_t masked_pattern = (bank->mask & (pattern<<bank->offset));
 	bank->regs->INT_MASK &= ~masked_pattern;
 }
-
 
 static inline void io_write(const s_out_t* bank, uint32_t value){
 	uint32_t old_masked_value = (bank->regs->DATA & ~(bank->mask));
