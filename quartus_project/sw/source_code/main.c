@@ -144,9 +144,10 @@ s_out_t *leds = &(s_out_t){
 // Task helpers
 #define CHECK(task)        ((TASKS_REG) & (task))
 
-
 //Task masks
 #define ADC_TASK           (0x00000001)
+
+
 
 
 
@@ -192,25 +193,12 @@ s_out_t *leds = &(s_out_t){
 //  ╰────────────────╯
 
 void jtag_put_char(char c){
-	STATE(NORMAL,FUNC,0x00,0x00);
-
-	// Needs to go before the loop so we avoid
-	// extra writing
-	STATE(NORMAL,WHILE,0x01,0x00);
-
 	while((JTAG.CONTROL >> 16) == 0){};
 	JTAG.DATA = c;
-
-	STATE(NORMAL,FUNC,0x00,0x01);
 }
-char jtag_get_char(){
-	STATE(NORMAL,FUNC,0x01,0x00);
 
-	STATE(NORMAL,WHILE,0x02,0x00);
+char jtag_get_char(void){
 	while(((JTAG.DATA >> 15) & 1) == 1){};
-
-	// Before to not be cut by return
-	STATE(NORMAL,FUNC,0x01,0x01);
   return (char)(JTAG.DATA & 0xFF);
 }
 
@@ -283,11 +271,16 @@ void enable_irq(){
 // ╰─────────────────────────╯
 
 void __attribute__((interrupt)) jtag_interrupt_handler(void){
-	STATE(NORMAL,ISR,0x00,0x00);
-	
-	// nothing, for now
+	if(get_jtag_ri(&JTAG){
+		while(get_jtag_ravalid){};
+		result = get
+			
+		}
 
-	STATE(NORMAL,ISR,0x00,0x01);
+	}
+
+	if(get_jtag_wi(&JTAG){
+	}
 }
 
 
@@ -385,7 +378,7 @@ void __attribute__((interrupt)) pins_b_r(void){
 // ╭────────────────────────────────╮
 // │ PINS_C_R INT                   │
 // │ INTERRUPTION_NUMBER = 4        │
-// │   ────────────────────────     │
+// │ ────────────────────────────── │
 // │ Shared: bank_C, keys, switches │
 // ╰────────────────────────────────╯
 
@@ -395,7 +388,7 @@ void __attribute__((interrupt)) pins_c_r(void){
 	uint32_t test = gpio_edge_read(bank_c);
 	if(test){
 		gpio_edge_clear(bank_c, test);
-		//bank_c_handler(test);	
+		//bank_c_handler(test);
 	}
 
 	test = io_edge_read(keys);
@@ -467,10 +460,13 @@ void trigger_adc(){
 int event_loop(){
 	STATE(NORMAL,FUNC,0x0F,0x00);
 	while (1){
-		STATE(NORMAL,WHILE,0x00,0x00);
+		if(JTAG_DEBUG_MODE){
+		} else {
+			STATE(NORMAL,WHILE,0x00,0x00);
 
-		if(CHECK(ADC_TASK)){
-    	trigger_adc();
+			if(CHECK(ADC_TASK)){
+    		trigger_adc();
+			}
 		}
 	}
 	return 1;

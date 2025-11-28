@@ -62,8 +62,8 @@
 			.offset = 0
 		};
 		
-		#define ON_VALUE             io_write(&debug_mode_bit, 0);
-		#define OFF_VALUE            io_write(&debug_mode_bit, 1);
+		#define ON_VALUE             io_write(&debug_mode_bit, 1);
+		#define OFF_VALUE            io_write(&debug_mode_bit, 0);
 		#define write_debug_wire(n)  io_write(&debug_register, n);
 
 

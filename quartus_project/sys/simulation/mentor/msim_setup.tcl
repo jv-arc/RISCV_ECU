@@ -94,7 +94,7 @@
 # within the Quartus project, and generate a unified
 # script which supports all the Altera IP within the design.
 # ----------------------------------------
-# ACDS 24.1 1077 linux 2025.11.22.11:14:40
+# ACDS 24.1 1077 linux 2025.12.02.11:39:29
 
 # ----------------------------------------
 # Initialize variables
@@ -142,6 +142,7 @@ if ![ string match "*-64 vsim*" [ vsim -version ] ] {
 alias file_copy {
   echo "\[exec\] file_copy"
   file copy -force $QSYS_SIMDIR/submodules/sys_onchip_memory2_0.hex ./
+  file copy -force $QSYS_SIMDIR/submodules/sys_i2c_shared_buffer.hex ./
 }
 
 # ----------------------------------------
@@ -169,84 +170,92 @@ if ![ string match "*Intel*FPGA*" [ vsim -version ] ] {
   ensure_lib                       ./libraries/cyclonev_pcie_hip_ver/
   vmap       cyclonev_pcie_hip_ver ./libraries/cyclonev_pcie_hip_ver/
 }
-ensure_lib                                          ./libraries/error_adapter_0/                         
-vmap       error_adapter_0                          ./libraries/error_adapter_0/                         
-ensure_lib                                          ./libraries/avalon_st_adapter/                       
-vmap       avalon_st_adapter                        ./libraries/avalon_st_adapter/                       
-ensure_lib                                          ./libraries/rsp_mux_001/                             
-vmap       rsp_mux_001                              ./libraries/rsp_mux_001/                             
-ensure_lib                                          ./libraries/rsp_mux/                                 
-vmap       rsp_mux                                  ./libraries/rsp_mux/                                 
-ensure_lib                                          ./libraries/rsp_demux_012/                           
-vmap       rsp_demux_012                            ./libraries/rsp_demux_012/                           
-ensure_lib                                          ./libraries/rsp_demux/                               
-vmap       rsp_demux                                ./libraries/rsp_demux/                               
-ensure_lib                                          ./libraries/cmd_mux_012/                             
-vmap       cmd_mux_012                              ./libraries/cmd_mux_012/                             
-ensure_lib                                          ./libraries/cmd_mux/                                 
-vmap       cmd_mux                                  ./libraries/cmd_mux/                                 
-ensure_lib                                          ./libraries/cmd_demux_001/                           
-vmap       cmd_demux_001                            ./libraries/cmd_demux_001/                           
-ensure_lib                                          ./libraries/cmd_demux/                               
-vmap       cmd_demux                                ./libraries/cmd_demux/                               
-ensure_lib                                          ./libraries/pulpino_0_avalon_master_lsu_limiter/     
-vmap       pulpino_0_avalon_master_lsu_limiter      ./libraries/pulpino_0_avalon_master_lsu_limiter/     
-ensure_lib                                          ./libraries/router_015/                              
-vmap       router_015                               ./libraries/router_015/                              
-ensure_lib                                          ./libraries/router_014/                              
-vmap       router_014                               ./libraries/router_014/                              
-ensure_lib                                          ./libraries/router_002/                              
-vmap       router_002                               ./libraries/router_002/                              
-ensure_lib                                          ./libraries/router_001/                              
-vmap       router_001                               ./libraries/router_001/                              
-ensure_lib                                          ./libraries/router/                                  
-vmap       router                                   ./libraries/router/                                  
-ensure_lib                                          ./libraries/jtag_uart_0_avalon_jtag_slave_agent/     
-vmap       jtag_uart_0_avalon_jtag_slave_agent      ./libraries/jtag_uart_0_avalon_jtag_slave_agent/     
-ensure_lib                                          ./libraries/pulpino_0_avalon_master_lsu_agent/       
-vmap       pulpino_0_avalon_master_lsu_agent        ./libraries/pulpino_0_avalon_master_lsu_agent/       
-ensure_lib                                          ./libraries/onchip_memory2_0_s1_translator/          
-vmap       onchip_memory2_0_s1_translator           ./libraries/onchip_memory2_0_s1_translator/          
-ensure_lib                                          ./libraries/pulpino_0_avalon_master_instr_translator/
-vmap       pulpino_0_avalon_master_instr_translator ./libraries/pulpino_0_avalon_master_instr_translator/
-ensure_lib                                          ./libraries/p2b_adapter/                             
-vmap       p2b_adapter                              ./libraries/p2b_adapter/                             
-ensure_lib                                          ./libraries/b2p_adapter/                             
-vmap       b2p_adapter                              ./libraries/b2p_adapter/                             
-ensure_lib                                          ./libraries/transacto/                               
-vmap       transacto                                ./libraries/transacto/                               
-ensure_lib                                          ./libraries/p2b/                                     
-vmap       p2b                                      ./libraries/p2b/                                     
-ensure_lib                                          ./libraries/b2p/                                     
-vmap       b2p                                      ./libraries/b2p/                                     
-ensure_lib                                          ./libraries/fifo/                                    
-vmap       fifo                                     ./libraries/fifo/                                    
-ensure_lib                                          ./libraries/timing_adt/                              
-vmap       timing_adt                               ./libraries/timing_adt/                              
-ensure_lib                                          ./libraries/jtag_phy_embedded_in_jtag_master/        
-vmap       jtag_phy_embedded_in_jtag_master         ./libraries/jtag_phy_embedded_in_jtag_master/        
-ensure_lib                                          ./libraries/rst_controller/                          
-vmap       rst_controller                           ./libraries/rst_controller/                          
-ensure_lib                                          ./libraries/irq_mapper/                              
-vmap       irq_mapper                               ./libraries/irq_mapper/                              
-ensure_lib                                          ./libraries/mm_interconnect_1/                       
-vmap       mm_interconnect_1                        ./libraries/mm_interconnect_1/                       
-ensure_lib                                          ./libraries/mm_interconnect_0/                       
-vmap       mm_interconnect_0                        ./libraries/mm_interconnect_0/                       
-ensure_lib                                          ./libraries/timer_0/                                 
-vmap       timer_0                                  ./libraries/timer_0/                                 
-ensure_lib                                          ./libraries/pulpino_0/                               
-vmap       pulpino_0                                ./libraries/pulpino_0/                               
-ensure_lib                                          ./libraries/onchip_memory2_0/                        
-vmap       onchip_memory2_0                         ./libraries/onchip_memory2_0/                        
-ensure_lib                                          ./libraries/master_0/                                
-vmap       master_0                                 ./libraries/master_0/                                
-ensure_lib                                          ./libraries/jtag_uart_0/                             
-vmap       jtag_uart_0                              ./libraries/jtag_uart_0/                             
-ensure_lib                                          ./libraries/GPIO_A_S/                                
-vmap       GPIO_A_S                                 ./libraries/GPIO_A_S/                                
-ensure_lib                                          ./libraries/GPIO_A_R/                                
-vmap       GPIO_A_R                                 ./libraries/GPIO_A_R/                                
+ensure_lib                                                     ./libraries/error_adapter_0/                                    
+vmap       error_adapter_0                                     ./libraries/error_adapter_0/                                    
+ensure_lib                                                     ./libraries/rsp_mux_001/                                        
+vmap       rsp_mux_001                                         ./libraries/rsp_mux_001/                                        
+ensure_lib                                                     ./libraries/rsp_mux/                                            
+vmap       rsp_mux                                             ./libraries/rsp_mux/                                            
+ensure_lib                                                     ./libraries/rsp_demux_013/                                      
+vmap       rsp_demux_013                                       ./libraries/rsp_demux_013/                                      
+ensure_lib                                                     ./libraries/rsp_demux/                                          
+vmap       rsp_demux                                           ./libraries/rsp_demux/                                          
+ensure_lib                                                     ./libraries/cmd_mux_013/                                        
+vmap       cmd_mux_013                                         ./libraries/cmd_mux_013/                                        
+ensure_lib                                                     ./libraries/cmd_mux/                                            
+vmap       cmd_mux                                             ./libraries/cmd_mux/                                            
+ensure_lib                                                     ./libraries/cmd_demux_001/                                      
+vmap       cmd_demux_001                                       ./libraries/cmd_demux_001/                                      
+ensure_lib                                                     ./libraries/cmd_demux/                                          
+vmap       cmd_demux                                           ./libraries/cmd_demux/                                          
+ensure_lib                                                     ./libraries/router_016/                                         
+vmap       router_016                                          ./libraries/router_016/                                         
+ensure_lib                                                     ./libraries/router_015/                                         
+vmap       router_015                                          ./libraries/router_015/                                         
+ensure_lib                                                     ./libraries/router_002/                                         
+vmap       router_002                                          ./libraries/router_002/                                         
+ensure_lib                                                     ./libraries/router_001/                                         
+vmap       router_001                                          ./libraries/router_001/                                         
+ensure_lib                                                     ./libraries/router/                                             
+vmap       router                                              ./libraries/router/                                             
+ensure_lib                                                     ./libraries/avalon_st_adapter/                                  
+vmap       avalon_st_adapter                                   ./libraries/avalon_st_adapter/                                  
+ensure_lib                                                     ./libraries/i2cslave_to_avlmm_bridge_0_avalon_master_limiter/   
+vmap       i2cslave_to_avlmm_bridge_0_avalon_master_limiter    ./libraries/i2cslave_to_avlmm_bridge_0_avalon_master_limiter/   
+ensure_lib                                                     ./libraries/mailbox_simple_0_avmm_msg_receiver_agent/           
+vmap       mailbox_simple_0_avmm_msg_receiver_agent            ./libraries/mailbox_simple_0_avmm_msg_receiver_agent/           
+ensure_lib                                                     ./libraries/i2cslave_to_avlmm_bridge_0_avalon_master_agent/     
+vmap       i2cslave_to_avlmm_bridge_0_avalon_master_agent      ./libraries/i2cslave_to_avlmm_bridge_0_avalon_master_agent/     
+ensure_lib                                                     ./libraries/mailbox_simple_0_avmm_msg_receiver_translator/      
+vmap       mailbox_simple_0_avmm_msg_receiver_translator       ./libraries/mailbox_simple_0_avmm_msg_receiver_translator/      
+ensure_lib                                                     ./libraries/i2cslave_to_avlmm_bridge_0_avalon_master_translator/
+vmap       i2cslave_to_avlmm_bridge_0_avalon_master_translator ./libraries/i2cslave_to_avlmm_bridge_0_avalon_master_translator/
+ensure_lib                                                     ./libraries/p2b_adapter/                                        
+vmap       p2b_adapter                                         ./libraries/p2b_adapter/                                        
+ensure_lib                                                     ./libraries/b2p_adapter/                                        
+vmap       b2p_adapter                                         ./libraries/b2p_adapter/                                        
+ensure_lib                                                     ./libraries/transacto/                                          
+vmap       transacto                                           ./libraries/transacto/                                          
+ensure_lib                                                     ./libraries/p2b/                                                
+vmap       p2b                                                 ./libraries/p2b/                                                
+ensure_lib                                                     ./libraries/b2p/                                                
+vmap       b2p                                                 ./libraries/b2p/                                                
+ensure_lib                                                     ./libraries/fifo/                                               
+vmap       fifo                                                ./libraries/fifo/                                               
+ensure_lib                                                     ./libraries/timing_adt/                                         
+vmap       timing_adt                                          ./libraries/timing_adt/                                         
+ensure_lib                                                     ./libraries/jtag_phy_embedded_in_jtag_master/                   
+vmap       jtag_phy_embedded_in_jtag_master                    ./libraries/jtag_phy_embedded_in_jtag_master/                   
+ensure_lib                                                     ./libraries/rst_controller/                                     
+vmap       rst_controller                                      ./libraries/rst_controller/                                     
+ensure_lib                                                     ./libraries/irq_mapper/                                         
+vmap       irq_mapper                                          ./libraries/irq_mapper/                                         
+ensure_lib                                                     ./libraries/mm_interconnect_2/                                  
+vmap       mm_interconnect_2                                   ./libraries/mm_interconnect_2/                                  
+ensure_lib                                                     ./libraries/mm_interconnect_1/                                  
+vmap       mm_interconnect_1                                   ./libraries/mm_interconnect_1/                                  
+ensure_lib                                                     ./libraries/mm_interconnect_0/                                  
+vmap       mm_interconnect_0                                   ./libraries/mm_interconnect_0/                                  
+ensure_lib                                                     ./libraries/timer_0/                                            
+vmap       timer_0                                             ./libraries/timer_0/                                            
+ensure_lib                                                     ./libraries/pulpino_0/                                          
+vmap       pulpino_0                                           ./libraries/pulpino_0/                                          
+ensure_lib                                                     ./libraries/onchip_memory2_0/                                   
+vmap       onchip_memory2_0                                    ./libraries/onchip_memory2_0/                                   
+ensure_lib                                                     ./libraries/master_0/                                           
+vmap       master_0                                            ./libraries/master_0/                                           
+ensure_lib                                                     ./libraries/mailbox_simple_0/                                   
+vmap       mailbox_simple_0                                    ./libraries/mailbox_simple_0/                                   
+ensure_lib                                                     ./libraries/jtag_uart_0/                                        
+vmap       jtag_uart_0                                         ./libraries/jtag_uart_0/                                        
+ensure_lib                                                     ./libraries/i2cslave_to_avlmm_bridge_0/                         
+vmap       i2cslave_to_avlmm_bridge_0                          ./libraries/i2cslave_to_avlmm_bridge_0/                         
+ensure_lib                                                     ./libraries/i2c_shared_buffer/                                  
+vmap       i2c_shared_buffer                                   ./libraries/i2c_shared_buffer/                                  
+ensure_lib                                                     ./libraries/GPIO_A_S/                                           
+vmap       GPIO_A_S                                            ./libraries/GPIO_A_S/                                           
+ensure_lib                                                     ./libraries/GPIO_A_R/                                           
+vmap       GPIO_A_R                                            ./libraries/GPIO_A_R/                                           
 
 # ----------------------------------------
 # Compile device library files
@@ -272,110 +281,131 @@ alias dev_com {
 # Compile the design files in correct order
 alias com {
   echo "\[exec\] com"
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_avalon_st_adapter_error_adapter_0.sv" -work error_adapter_0                         
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_avalon_st_adapter.v"                  -work avalon_st_adapter                       
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_rsp_mux_001.sv"                       -work rsp_mux_001                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux_001                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_rsp_mux.sv"                           -work rsp_mux                                 
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux                                 
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_rsp_demux_012.sv"                     -work rsp_demux_012                           
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_rsp_demux.sv"                         -work rsp_demux                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_cmd_mux_012.sv"                       -work cmd_mux_012                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux_012                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_cmd_mux.sv"                           -work cmd_mux                                 
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux                                 
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_cmd_demux_001.sv"                     -work cmd_demux_001                           
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_cmd_demux.sv"                         -work cmd_demux                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_traffic_limiter.sv"                           -work pulpino_0_avalon_master_lsu_limiter     
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_reorder_memory.sv"                            -work pulpino_0_avalon_master_lsu_limiter     
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                    -work pulpino_0_avalon_master_lsu_limiter     
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                           -work pulpino_0_avalon_master_lsu_limiter     
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_015.sv"                        -work router_015                              
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_014.sv"                        -work router_014                              
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_002.sv"                        -work router_002                              
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router_001.sv"                        -work router_001                              
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1_router.sv"                            -work router                                  
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv"                               -work jtag_uart_0_avalon_jtag_slave_agent     
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv"                        -work jtag_uart_0_avalon_jtag_slave_agent     
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_master_agent.sv"                              -work pulpino_0_avalon_master_lsu_agent       
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv"                          -work onchip_memory2_0_s1_translator          
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_master_translator.sv"                         -work pulpino_0_avalon_master_instr_translator
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_master_0_p2b_adapter.sv"                                -work p2b_adapter                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_master_0_b2p_adapter.sv"                                -work b2p_adapter                             
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_packets_to_master.v"                          -work transacto                               
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_packets_to_bytes.v"                        -work p2b                                     
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_bytes_to_packets.v"                        -work b2p                                     
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                    -work fifo                                    
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_master_0_timing_adt.sv"                                 -work timing_adt                              
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_jtag_interface.v"                          -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_jtag_dc_streaming.v"                                 -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_jtag_sld_node.v"                                     -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_jtag_streaming.v"                                    -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_clock_crosser.v"                           -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_std_synchronizer_nocut.v"                            -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                           -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_idle_remover.v"                            -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_idle_inserter.v"                           -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_stage.sv"                         -work jtag_phy_embedded_in_jtag_master        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                                  -work rst_controller                          
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                                -work rst_controller                          
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_irq_mapper.sv"                                          -work irq_mapper                              
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1.v"                                    -work mm_interconnect_1                       
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0.v"                                    -work mm_interconnect_0                       
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_timer_0.v"                                              -work timer_0                                 
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/adbg_config.sv"                                             -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/config.sv"                                                  -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_config.sv"                                        -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/apb_bus.sv"                                                 -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/axi_bus.sv"                                                 -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/debug_bus.sv"                                               -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cluster_clock_gating.sv"                                    -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cluster_clock_inverter.sv"                                  -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cluster_clock_mux2.sv"                                      -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_defines.sv"                                       -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_alu.sv"                                           -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_compressed_decoder.sv"                            -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_controller.sv"                                    -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_core.sv"                                          -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_cs_registers.sv"                                  -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_debug_unit.sv"                                    -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_decoder.sv"                                       -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_ex_block.sv"                                      -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_fetch_fifo.sv"                                    -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_id_stage.sv"                                      -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_if_stage.sv"                                      -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_int_controller.sv"                                -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_load_store_unit.sv"                               -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_multdiv_fast.sv"                                  -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_multdiv_slow.sv"                                  -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_prefetch_buffer.sv"                               -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_register_file_ff.sv"                              -work pulpino_0                               
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/core_top.sv"                                                -work pulpino_0                               
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_onchip_memory2_0.v"                                     -work onchip_memory2_0                        
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_master_0.v"                                             -work master_0                                
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart.sv"                                 -work jtag_uart_0                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_log_module.sv"                      -work jtag_uart_0                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_scfifo_r.sv"                        -work jtag_uart_0                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_scfifo_w.sv"                        -work jtag_uart_0                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_sim_scfifo_r.sv"                    -work jtag_uart_0                             
-  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv"                    -work jtag_uart_0                             
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_GPIO_A_S.v"                                             -work GPIO_A_S                                
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_GPIO_A_R.v"                                             -work GPIO_A_R                                
-  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/sys.v"                                                                                                               
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv" -work error_adapter_0                                    
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_rsp_mux_001.sv"                       -work rsp_mux_001                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux_001                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_rsp_mux.sv"                           -work rsp_mux                                            
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux                                            
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_rsp_demux_013.sv"                     -work rsp_demux_013                                      
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_rsp_demux.sv"                         -work rsp_demux                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_cmd_mux_013.sv"                       -work cmd_mux_013                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux_013                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_cmd_mux.sv"                           -work cmd_mux                                            
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux                                            
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_cmd_demux_001.sv"                     -work cmd_demux_001                                      
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_cmd_demux.sv"                         -work cmd_demux                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_router_016.sv"                        -work router_016                                         
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_router_015.sv"                        -work router_015                                         
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_router_002.sv"                        -work router_002                                         
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_router_001.sv"                        -work router_001                                         
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2_router.sv"                            -work router                                             
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0_avalon_st_adapter.v"                  -work avalon_st_adapter                                  
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0_rsp_mux.sv"                           -work rsp_mux                                            
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work rsp_mux                                            
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0_rsp_demux.sv"                         -work rsp_demux                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0_cmd_mux.sv"                           -work cmd_mux                                            
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_arbitrator.sv"                                -work cmd_mux                                            
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0_cmd_demux.sv"                         -work cmd_demux                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_traffic_limiter.sv"                           -work i2cslave_to_avlmm_bridge_0_avalon_master_limiter   
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_reorder_memory.sv"                            -work i2cslave_to_avlmm_bridge_0_avalon_master_limiter   
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                    -work i2cslave_to_avlmm_bridge_0_avalon_master_limiter   
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                           -work i2cslave_to_avlmm_bridge_0_avalon_master_limiter   
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0_router_001.sv"                        -work router_001                                         
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0_router.sv"                            -work router                                             
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv"                               -work mailbox_simple_0_avmm_msg_receiver_agent           
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv"                        -work mailbox_simple_0_avmm_msg_receiver_agent           
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_master_agent.sv"                              -work i2cslave_to_avlmm_bridge_0_avalon_master_agent     
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv"                          -work mailbox_simple_0_avmm_msg_receiver_translator      
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_merlin_master_translator.sv"                         -work i2cslave_to_avlmm_bridge_0_avalon_master_translator
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_master_0_p2b_adapter.sv"                                -work p2b_adapter                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_master_0_b2p_adapter.sv"                                -work b2p_adapter                                        
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_packets_to_master.v"                          -work transacto                                          
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_packets_to_bytes.v"                        -work p2b                                                
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_bytes_to_packets.v"                        -work b2p                                                
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                                    -work fifo                                               
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_master_0_timing_adt.sv"                                 -work timing_adt                                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_jtag_interface.v"                          -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_jtag_dc_streaming.v"                                 -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_jtag_sld_node.v"                                     -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_jtag_streaming.v"                                    -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_clock_crosser.v"                           -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_std_synchronizer_nocut.v"                            -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                           -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_idle_remover.v"                            -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_st_idle_inserter.v"                           -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_stage.sv"                         -work jtag_phy_embedded_in_jtag_master                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                                  -work rst_controller                                     
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                                -work rst_controller                                     
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/sys_irq_mapper.sv"                                          -work irq_mapper                                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_mm_interconnect_2.v"                                    -work mm_interconnect_2                                  
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_mm_interconnect_1.v"                                    -work mm_interconnect_1                                  
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_mm_interconnect_0.v"                                    -work mm_interconnect_0                                  
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_timer_0.v"                                              -work timer_0                                            
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/adbg_config.sv"                                             -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/config.sv"                                                  -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_config.sv"                                        -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/apb_bus.sv"                                                 -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/axi_bus.sv"                                                 -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/debug_bus.sv"                                               -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cluster_clock_gating.sv"                                    -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cluster_clock_inverter.sv"                                  -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/cluster_clock_mux2.sv"                                      -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_defines.sv"                                       -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_alu.sv"                                           -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_compressed_decoder.sv"                            -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_controller.sv"                                    -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_core.sv"                                          -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_cs_registers.sv"                                  -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_debug_unit.sv"                                    -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_decoder.sv"                                       -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_ex_block.sv"                                      -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_fetch_fifo.sv"                                    -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_id_stage.sv"                                      -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_if_stage.sv"                                      -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_int_controller.sv"                                -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_load_store_unit.sv"                               -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_multdiv_fast.sv"                                  -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_multdiv_slow.sv"                                  -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_prefetch_buffer.sv"                               -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/zeroriscy_register_file_ff.sv"                              -work pulpino_0                                          
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/core_top.sv"                                                -work pulpino_0                                          
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_onchip_memory2_0.v"                                     -work onchip_memory2_0                                   
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_master_0.v"                                             -work master_0                                           
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_avalon_mailbox.v"                                    -work mailbox_simple_0                                   
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart.sv"                                 -work jtag_uart_0                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_log_module.sv"                      -work jtag_uart_0                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_scfifo_r.sv"                        -work jtag_uart_0                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_scfifo_w.sv"                        -work jtag_uart_0                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_sim_scfifo_r.sv"                    -work jtag_uart_0                                        
+  eval  vlog -sv $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS "$QSYS_SIMDIR/submodules/altera_avalon_jtag_uart_sim_scfifo_w.sv"                    -work jtag_uart_0                                        
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altera_i2cslave_to_avlmm_bridge.v"                          -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altr_i2c_avl_mst_intf_gen.v"                                -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altr_i2c_clk_cnt.v"                                         -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altr_i2c_condt_det.v"                                       -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altr_i2c_databuffer.v"                                      -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altr_i2c_rxshifter.v"                                       -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altr_i2c_slvfsm.v"                                          -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altr_i2c_spksupp.v"                                         -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altr_i2c_txout.v"                                           -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/altr_i2c_txshifter.v"                                       -work i2cslave_to_avlmm_bridge_0                         
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_i2c_shared_buffer.v"                                    -work i2c_shared_buffer                                  
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_GPIO_A_S.v"                                             -work GPIO_A_S                                           
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/submodules/sys_GPIO_A_R.v"                                             -work GPIO_A_R                                           
+  eval  vlog $USER_DEFINED_VERILOG_COMPILE_OPTIONS $USER_DEFINED_COMPILE_OPTIONS     "$QSYS_SIMDIR/sys.v"                                                                                                                          
 }
 
 # ----------------------------------------
 # Elaborate top level design
 alias elab {
   echo "\[exec\] elab"
-  eval vsim -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L avalon_st_adapter -L rsp_mux_001 -L rsp_mux -L rsp_demux_012 -L rsp_demux -L cmd_mux_012 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L pulpino_0_avalon_master_lsu_limiter -L router_015 -L router_014 -L router_002 -L router_001 -L router -L jtag_uart_0_avalon_jtag_slave_agent -L pulpino_0_avalon_master_lsu_agent -L onchip_memory2_0_s1_translator -L pulpino_0_avalon_master_instr_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_1 -L mm_interconnect_0 -L timer_0 -L pulpino_0 -L onchip_memory2_0 -L master_0 -L jtag_uart_0 -L GPIO_A_S -L GPIO_A_R -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver $TOP_LEVEL_NAME
+  eval vsim -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L rsp_mux_001 -L rsp_mux -L rsp_demux_013 -L rsp_demux -L cmd_mux_013 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L router_016 -L router_015 -L router_002 -L router_001 -L router -L avalon_st_adapter -L i2cslave_to_avlmm_bridge_0_avalon_master_limiter -L mailbox_simple_0_avmm_msg_receiver_agent -L i2cslave_to_avlmm_bridge_0_avalon_master_agent -L mailbox_simple_0_avmm_msg_receiver_translator -L i2cslave_to_avlmm_bridge_0_avalon_master_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_2 -L mm_interconnect_1 -L mm_interconnect_0 -L timer_0 -L pulpino_0 -L onchip_memory2_0 -L master_0 -L mailbox_simple_0 -L jtag_uart_0 -L i2cslave_to_avlmm_bridge_0 -L i2c_shared_buffer -L GPIO_A_S -L GPIO_A_R -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------
 # Elaborate the top level design with -voptargs=+acc option
 alias elab_debug {
   echo "\[exec\] elab_debug"
-  eval vsim -voptargs=+acc -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L avalon_st_adapter -L rsp_mux_001 -L rsp_mux -L rsp_demux_012 -L rsp_demux -L cmd_mux_012 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L pulpino_0_avalon_master_lsu_limiter -L router_015 -L router_014 -L router_002 -L router_001 -L router -L jtag_uart_0_avalon_jtag_slave_agent -L pulpino_0_avalon_master_lsu_agent -L onchip_memory2_0_s1_translator -L pulpino_0_avalon_master_instr_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_1 -L mm_interconnect_0 -L timer_0 -L pulpino_0 -L onchip_memory2_0 -L master_0 -L jtag_uart_0 -L GPIO_A_S -L GPIO_A_R -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver $TOP_LEVEL_NAME
+  eval vsim -voptargs=+acc -t ps $ELAB_OPTIONS $USER_DEFINED_ELAB_OPTIONS -L work -L work_lib -L error_adapter_0 -L rsp_mux_001 -L rsp_mux -L rsp_demux_013 -L rsp_demux -L cmd_mux_013 -L cmd_mux -L cmd_demux_001 -L cmd_demux -L router_016 -L router_015 -L router_002 -L router_001 -L router -L avalon_st_adapter -L i2cslave_to_avlmm_bridge_0_avalon_master_limiter -L mailbox_simple_0_avmm_msg_receiver_agent -L i2cslave_to_avlmm_bridge_0_avalon_master_agent -L mailbox_simple_0_avmm_msg_receiver_translator -L i2cslave_to_avlmm_bridge_0_avalon_master_translator -L p2b_adapter -L b2p_adapter -L transacto -L p2b -L b2p -L fifo -L timing_adt -L jtag_phy_embedded_in_jtag_master -L rst_controller -L irq_mapper -L mm_interconnect_2 -L mm_interconnect_1 -L mm_interconnect_0 -L timer_0 -L pulpino_0 -L onchip_memory2_0 -L master_0 -L mailbox_simple_0 -L jtag_uart_0 -L i2cslave_to_avlmm_bridge_0 -L i2c_shared_buffer -L GPIO_A_S -L GPIO_A_R -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------

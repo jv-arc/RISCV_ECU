@@ -16,7 +16,11 @@ module sys (
 	pulpino_0_config_fetch_enable_i,
 	pulpino_0_config_clock_gating_i,
 	pulpino_0_config_boot_addr_i,
-	reset_reset_n);	
+	reset_reset_n,
+	i2cslave_to_avlmm_bridge_0_conduit_end_conduit_data_in,
+	i2cslave_to_avlmm_bridge_0_conduit_end_conduit_clk_in,
+	i2cslave_to_avlmm_bridge_0_conduit_end_conduit_data_oe,
+	i2cslave_to_avlmm_bridge_0_conduit_end_conduit_clk_oe);	
 
 	input		clk_clk;
 	input	[31:0]	gpio_a_r_external_connection_export;
@@ -35,4 +39,8 @@ module sys (
 	input		pulpino_0_config_clock_gating_i;
 	input	[31:0]	pulpino_0_config_boot_addr_i;
 	input		reset_reset_n;
+	input		i2cslave_to_avlmm_bridge_0_conduit_end_conduit_data_in;
+	input		i2cslave_to_avlmm_bridge_0_conduit_end_conduit_clk_in;
+	output		i2cslave_to_avlmm_bridge_0_conduit_end_conduit_data_oe;
+	output		i2cslave_to_avlmm_bridge_0_conduit_end_conduit_clk_oe;
 endmodule

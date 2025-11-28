@@ -1,0 +1,15 @@
+BEGIN 1:zeroriscy_id_stage:fast:pulpino_0
+    irq_id_i :  1:tbench:fast:work
+    irq_i :  1:tbench:fast:work
+    pc_id_i :  1:zeroriscy_controller:fast:pulpino_0
+END 
+BEGIN 1:pulpino_qsys_test:fast:work
+    db_output :  1:tbench:fast:work
+    pio_1_w :  1:tbench:fast:work
+END 
+BEGIN 1:zeroriscy_core:fast:pulpino_0
+    core_id_i :  1:zeroriscy_controller:fast:pulpino_0
+END 
+BEGIN 1:simple_rom:fast:work
+    ADDR :  1:tbench:fast:work
+END 

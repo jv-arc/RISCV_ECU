@@ -24,7 +24,6 @@
 
 #define JTAG_BASE         (0x00100010)
 #define TIMER_BASE        (0x002000A0)
-//#define PWM               ()
 
 
 #define BANK_A            (offset(gpios, gpio, 0))

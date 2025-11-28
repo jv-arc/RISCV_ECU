@@ -3,16 +3,17 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces">
   <columns>
-   <connections preferredWidth="143" />
+   <connections preferredWidth="159" />
    <irq preferredWidth="34" />
-   <name preferredWidth="96" />
+   <name preferredWidth="279" />
    <description preferredWidth="263" />
    <export preferredWidth="332" />
    <inputclock preferredWidth="30" />
   </columns>
  </systemtable>
- <library expandedCategories="Project,Library" />
- <window width="1359" height="870" x="228" y="59" />
+ <library
+   expandedCategories="Library/Basic Functions,Library,Project,Library/Basic Functions/On Chip Memory" />
+ <window width="1550" height="972" x="181" y="62" />
  <hdlexample language="VERILOG" />
  <generation simulation="VERILOG" greybox="0" />
 </preferences>

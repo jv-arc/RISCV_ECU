@@ -8,10 +8,17 @@ module pulpino_qsys_test (
 	input  [9:0]  SW,
 	output [9:0]  LEDR,
 	inout  [35:0] GPIO_0,
-	inout  [35:0] GPIO_1
+	inout  [35:0] GPIO_1,
+	inout         FPGA_I2C_SCLK,
+	inout         FPGA_I2C_SDAT
 );
 
 
+wire i2c_sdat_oe;
+assign FPGA_I2C_SDAT = (i2c_sdat_oe) ? 1'b0 : 1'bz;
+
+wire i2c_sclk_oe;
+assign FPGA_I2C_SCLK = (i2c_sclk_oe) ? 1'b0 : 1'bz;
 
 
 
@@ -59,9 +66,19 @@ pll clock_conversion(
 
 
 
-// ╭─────────────────────────────╮
-// │ GENERAL GPIO REPRESENTATION │
-// ╰─────────────────────────────╯
+
+
+
+
+
+
+
+
+
+
+//  ╭─────────────────────────────╮
+//  │ GENERAL GPIO REPRESENTATION │
+//  ╰─────────────────────────────╯
 
 // ┌                                                          ┐
 // │ Instead of using "input", "output" etc. to name these    │
@@ -231,13 +248,12 @@ assign pio_1_w = {r_1_w, db_mode};
 
 
 
-
-
 // ╭───────────────────────────╮
 // │ MAIN SYSTEM INSTANTIATION │
 // ╰───────────────────────────╯
 
 sys u0 (
+
 	// Basic pins
 	.clk_clk                                  (clk25),
 	.reset_reset_n                            (reset_n),
@@ -259,7 +275,13 @@ sys u0 (
 	.gpio_c_r_external_connection_export      ({gpio_c_r, pio_r}),
 	.gpio_c0_w_external_connection_export     ({gpio_c_w, pio_0_w}),
 	.gpio_c1_w_external_connection_export     ({gpio_c_s, pio_1_w}),
-	.gpio_c2_w_external_connection_export     ({flag3, flag2, flag1, flag0})
+	.gpio_c2_w_external_connection_export     ({flag3, flag2, flag1, flag0}),
+
+	// I2C protocol connections
+	.i2cslave_to_avlmm_bridge_0_conduit_end_conduit_data_in (FPGA_I2C_SDAT),
+	.i2cslave_to_avlmm_bridge_0_conduit_end_conduit_clk_in  (FPGA_I2C_SCLK),
+	.i2cslave_to_avlmm_bridge_0_conduit_end_conduit_data_oe (i2c_sdata_oe),
+	.i2cslave_to_avlmm_bridge_0_conduit_end_conduit_clk_oe  (i2c_sclk_oe)
 );
 
 

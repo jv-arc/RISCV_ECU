@@ -29,18 +29,6 @@
 // └                                                    ┘
 
 
-
-
-
-// ╔═════════════════════════════════════╗
-// ║ ██████╗  █████╗ ███████╗██╗ ██████╗ ║
-// ║ ██╔══██╗██╔══██╗██╔════╝██║██╔════╝ ║
-// ║ ██████╔╝███████║███████╗██║██║      ║
-// ║ ██╔══██╗██╔══██║╚════██║██║██║      ║
-// ║ ██████╔╝██║  ██║███████║██║╚██████╗ ║
-// ║ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝ ╚═════╝ ║
-// ╚═════════════════════════════════════╝
-	
 	// Standard Libraries have their own guards
 	#include <stdint.h>
 
@@ -55,6 +43,84 @@
 
 
 
+// ╔════════════════════════════════════╗
+// ║      ██╗████████╗ █████╗  ██████╗  ║
+// ║      ██║╚══██╔══╝██╔══██╗██╔════╝  ║
+// ║      ██║   ██║   ███████║██║  ███╗ ║
+// ║ ██   ██║   ██║   ██╔══██║██║   ██║ ║
+// ║ ╚█████╔╝   ██║   ██║  ██║╚██████╔╝ ║
+// ║  ╚════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝  ║
+// ╚════════════════════════════════════╝
+
+
+// ╭───────────╮
+// │ JTAG UART │
+// ╰───────────╯
+
+	typedef struct{
+		volatile uint32_t DATA;
+		volatile uint32_t CONTROL;
+	} jtag_uart_t;
+
+	#define JTAG_UART_T(addr)       (*((jtag_uart_t*) (addr)))
+	#define JTAG_UART_P(JTAG_UART)  ((jtag_uart_t*) (&(JTAG_UART)))
+
+	static inline char get_jtag_data(jtag_uart_t* device){
+		return (device->DATA & 0xFF);
+	}
+
+	static inline void put_jtag_data(jtag_uart_t* device, char char_in){
+		// Everything other than what we are trying to write is read only
+		device->DATA = char_in;
+	}
+
+	static inline uint32_t get_jtag_rvalid(jtag_uart_t* device){
+		return ((device->DATA >> 15) & 1);
+	}
+
+	static inline uint32_t get_jtag_ravail(jtag_uart_t* device){
+		return (device->DATA >> 16);
+	}
+
+	static inline uint32_t get_jtag_re(jtag_uart_t* device){
+		return (device->CONTROL & 0b1);
+	}
+
+	static inline void set_jtag_re_on(jtag_uart_t* device){
+		device->CONTROL |= 0b1;
+	}
+
+	static inline void set_jtag_re_off(jtag_uart_t* device){
+		device->CONTROL &= ~0b1;
+	}
+
+	static inline uint32_t get_jtag_we(jtag_uart_t* device){
+		return (device->CONTROL & 0b10);
+	}
+
+	static inline void set_jtag_we_on(jtag_uart_t* device){
+		device->CONTROL |= 0b10;
+	}
+
+	static inline void set_jtag_we_off(jtag_uart_t* device){
+		device->CONTROL &= ~0b10;
+	}
+
+	static inline uint32_t get_jtag_wspace(jtag_uart_t* device){
+		return (device->CONTROL >> 16);
+	}
+
+	static inline uint32_t get_jtag_ri(jtag_uart_t* device){
+		return (device->CONTROL & (1<<8));
+	}
+
+	static inline uint32_t get_jtag_wi(jtag_uart_t* device){
+		return (device->CONTROL & (1<<9));
+	}
+
+	static inline uint32_t get_jtag_ac(jtag_uart_t* device){
+		return (device->CONTROL & (1<<10));
+	}
 
 
   // ╭──────────────────╮
@@ -80,54 +146,44 @@
 	} buffer_t;
 
 
-	#define BUFFER_T(addr)         (*((volatile buffer_t*) (addr)))
-	#define BUFFER_P(BUFFER)       ((volatile buffer_t*) (&(BUFFER)))
+	#define BUFFER_T(addr)         (*((buffer_t*) (addr)))
+	#define BUFFER_P(BUFFER)       ((buffer_t*) (&(BUFFER)))
 
-	// Size helpers
-	#define BUFFER_OVERHEAD        (((BUFFER_SIZE)*(1)) + (4)*(2))
-	#define BUFFER_OFFSET(base,n)  ((base)+((BUFFER_OVERHEAD)*(n)))
-
+	// #define BUFFER_OVERHEAD        (((BUFFER_SIZE)*(1)) + (4)*(2))
+	// #define BUFFER_OFFSET(base,n)  ((base)+((BUFFER_OVERHEAD)*(n)))
 
 
+	static inline uint32_t write_char_to_buffer(buffer_t* buffer, char c){
+		uint32_t next_tail = (buffer->TAIL +1) % BUFFER_SIZE;
+		if(next_tail == buffer->HEAD){
+			return ~0;
+		}
+		
+		buffer->DATA[buffer->TAIL] = c;
+		buffer->TAIL = next_tail;
+		return 0;
+	}
+
+	//uint32_t to return something that isn't a char in case of error
+	static inline uint32_t read_char_from_buffer(buffer_t* buffer){
+		if(buffer->HEAD == buffer->TAIL){
+			return ~0;
+		}
+
+		uint32_t char_read = buffer->DATA[buffer->HEAD];
+		buffer->HEAD = (buffer->HEAD +1) % BUFFER_SIZE;
+		return (char_read & 0xFF);
+	}
 
 
-  // ╭──────────────────────────╮
-  // │ INTERRUPT AND EVENT UNIT │
-  // ╰──────────────────────────╯
- 
-  // ┌                                                  ┐
-  // │ I created these because I thought it was being   │
-  // │ used on the current pulpino configuration, it is │
-  // │ not being used...                                │
-  // │                                                  │
-  // │ I'm leaving here if we need to use in the future │
-  // └                                                  ┘
+	static inline buffer_t* buffer_init(uint32_t address){
+		buffer_t* newBuffer = ((buffer_t*) (address));
+		newBuffer->HEAD = 0;
+		newBuffer->TAIL = 0;
+		return newBuffer;
+	}
 
-	// Sleep struct
-	typedef struct{
-		volatile uint32_t CONTROL;
-		volatile uint32_t STATUS;
-	} sleep_controller_t;
-
-
-	// Struct for async controller (both interrupt and event controllers)
-	typedef struct{
-		volatile uint32_t ENABLE;
-		volatile uint32_t PENDING_RW;
-		volatile uint32_t PENDING_SET;
-		volatile uint32_t PENDING_CLEAR;
-	} async_controller_t;
-
-
-	// Struct for the complete Event Unit
-	typedef struct {
-		async_controller_t INTER;
-		async_controller_t EVENT;
-		sleep_controller_t SLEEP;
-	} event_unit_t;
-
-	#define EVENT_UNIT_T(addr)       (*((volatile event_unit_t*) (addr)))
-	#define EVENT_UNIT_P(EVENT_UNIT) ((volatile event_unit_t*) (&(EVENT_UNIT)))
+	
 
 
 
@@ -135,7 +191,22 @@
 
 
 
+// ╔═════════════════════╗
+// ║ ██████╗ ██╗ ██████╗ ║
+// ║ ██╔══██╗██║██╔═══██╗║
+// ║ ██████╔╝██║██║   ██║║
+// ║ ██╔═══╝ ██║██║   ██║║
+// ║ ██║     ██║╚██████╔╝║
+// ║ ╚═╝     ╚═╝ ╚═════╝ ║
+// ╚═════════════════════╝
 
+
+// ┌                                                       ┐
+// │ These are structs and functions to safelly access     │
+// │ peripherals, since some GPIOs share memory space      │
+// │ with peripherals there are some abstraction functions │
+// │ to access these peripherals safely                    │
+// └                                                       ┘
 
 // ╭─────────────────╮
 // │ PIO DEFINITIONS │
@@ -153,8 +224,8 @@
 		volatile uint32_t OUT_CLEAR;
 	} pio_t;
 
-	#define PIO_T(addr) ( *((volatile pio_t*) (addr)) )
-	#define PIO_P(PIO) ( (volatile pio_t*) (&(PIO)) )
+	#define PIO_T(addr) ( *((pio_t*) (addr)) )
+	#define PIO_P(PIO) ( (pio_t*) (&(PIO)) )
 
 
 	// Only INPUT
@@ -166,8 +237,8 @@
 		volatile uint32_t EDGE_CAPTURE;
 	} in_t;
 
-	#define INPUT_T(addr) (*((volatile in_t*) (addr)))
-	#define INPUT_P(PIO)  ((volatile in_t*) (&(PIO)))
+	#define INPUT_T(addr) (*((in_t*) (addr)))
+	#define INPUT_P(PIO)  ((in_t*) (&(PIO)))
 
 
 	// Only OUTPUT
@@ -177,8 +248,8 @@
 		volatile uint32_t _unused[3];
 	} out_t;
 
-	#define OUTPUT_T(addr) (*((volatile out_t*) (addr)))
-	#define OUTPUT_P(PIO)  ((volatile out_t*) (&(PIO)))
+	#define OUTPUT_T(addr) (*((out_t*) (addr)))
+	#define OUTPUT_P(PIO)  ((out_t*) (&(PIO)))
 
 
 
@@ -195,99 +266,15 @@
 		volatile uint32_t _unused2[3];
 	} gpio_t;
 
-	#define GPIO_T(addr)  (*((volatile gpio_t*) (addr)))
-	#define GPIO_P(GPIO)  ((volatile gpio_t*) (&(GPIO)))
+	#define GPIO_T(addr)  (*((gpio_t*) (addr)))
+	#define GPIO_P(GPIO)  ((gpio_t*) (&(GPIO)))
 
 
 
 
-
-
-
-
-// ╭───────────╮
-// │ JTAG UART │
-// ╰───────────╯
-
-	typedef struct{
-		volatile uint32_t DATA;
-		volatile uint32_t CONTROL;
-	} jtag_uart_t;
-
-	#define JTAG_UART_T(addr)       (*((volatile jtag_uart_t*) (addr)))
-	#define JTAG_UART_P(JTAG_UART)  ((volatile jtag_uart_t*) (&(JTAG_UART)))
-
-
-
-
-
-// ╭─────────╮
-// │ TIMER32 │
-// ╰─────────╯
-
-	typedef struct {
-		volatile uint32_t STATUS;
-		volatile uint32_t CONTROL;
-		volatile uint32_t PERIOD_L;
-		volatile uint32_t PERIOD_H;
-		volatile uint32_t SNAP_L;
-		volatile uint32_t SNAP_H;
-	} timer32_t;
-
-	#define TIMER32_T(addr)    (*((volatile timer32_t*) (addr)))
-	#define TIMER32_P(TIMER32) ((volatile timer32_t*) (&(TIMER32)))
-
-
-
-
-// ╭─────────╮
-// │ TIMER64 │
-// ╰─────────╯
-
-	typedef struct {
-		volatile uint32_t STATUS;
-		volatile uint32_t CONTROL;
-		volatile uint32_t PERIOD_0;
-		volatile uint32_t PERIOD_1;
-		volatile uint32_t PERIOD_2;
-		volatile uint32_t PERIOD_3;
-		volatile uint32_t SNAP_0;
-		volatile uint32_t SNAP_1;
-	} timer64_t;
-
-	#define TIMER64_T(addr)    (*((volatile timer64_t*) (addr)))
-	#define TIMER64_P(TIMER64) ((volatile timer64_t*) (&(TIMER64)))
-
-
-
-
-
-
-
-
-
-
-//    ╔══════════════════════════════════╗
-//    ║ ███████╗ █████╗ ███████╗███████╗ ║
-//    ║ ██╔════╝██╔══██╗██╔════╝██╔════╝ ║
-//    ║ ███████╗███████║█████╗  █████╗   ║
-//    ║ ╚════██║██╔══██║██╔══╝  ██╔══╝   ║
-//    ║ ███████║██║  ██║██║     ███████╗ ║
-//    ║ ╚══════╝╚═╝  ╚═╝╚═╝     ╚══════╝ ║
-//    ╚══════════════════════════════════╝
-
-// ┌                                                       ┐
-// │ These are structs and functions to safelly access     │
-// │ peripherals, since some GPIOs share memory space      │
-// │ with peripherals there are some abstraction functions │
-// │ to access these peripherals safely                    │
-// └                                                       ┘
-
-
-
-  // ╭─────────╮
-  // │ STRUCTS │
-  // ╰─────────╯
+	// ╭──────────────╮
+	// │ SAFE STRUCTS │
+	// ╰──────────────╯
 
 	// GPIO
 	typedef struct {
@@ -309,10 +296,6 @@
 		uint32_t mask;
 		uint32_t offset;
 	} s_out_t;
-
-
-
-
 
 
 
@@ -364,12 +347,9 @@
 
 
 
-
-
-
-// ╭────────────╮
-// │ GENERAL IO │
-// ╰────────────╯
+// ╭──────────────────────╮
+// │ GENERAL IO FUNCTIONS │
+// ╰──────────────────────╯
 
 static inline void io_int_mask(const s_in_t* bank, uint32_t value){
 	uint32_t old_masked_value = (bank->regs->INT_MASK & ~(bank->mask));
@@ -407,6 +387,113 @@ static inline void io_write(const s_out_t* bank, uint32_t value){
 	uint32_t new_masked_value = ((value << bank->offset) & bank->mask);
 	bank->regs->DATA = (old_masked_value | new_masked_value);
 }
+
+
+
+
+
+
+
+// ╔════════════════════════════════════════════╗
+// ║  ██████╗ ████████╗██╗  ██╗███████╗██████╗  ║
+// ║ ██╔═══██╗╚══██╔══╝██║  ██║██╔════╝██╔══██╗ ║
+// ║ ██║   ██║   ██║   ███████║█████╗  ██████╔╝ ║
+// ║ ██║   ██║   ██║   ██╔══██║██╔══╝  ██╔══██╗ ║
+// ║ ╚██████╔╝   ██║   ██║  ██║███████╗██║  ██║ ║
+// ║  ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ║
+// ╚════════════════════════════════════════════╝
+
+
+  // ╭──────────────────────────╮
+  // │ INTERRUPT AND EVENT UNIT │
+  // ╰──────────────────────────╯
+ 
+  // ┌                                                  ┐
+  // │ I created these because I thought it was being   │
+  // │ used on the current pulpino configuration, it is │
+  // │ not being used...                                │
+  // │                                                  │
+  // │ I'm leaving here if we need to use in the future │
+  // └                                                  ┘
+
+	// Sleep struct
+	typedef struct{
+		volatile uint32_t CONTROL;
+		volatile uint32_t STATUS;
+	} sleep_controller_t;
+
+
+	// Struct for async controller (both interrupt and event controllers)
+	typedef struct{
+		volatile uint32_t ENABLE;
+		volatile uint32_t PENDING_RW;
+		volatile uint32_t PENDING_SET;
+		volatile uint32_t PENDING_CLEAR;
+	} async_controller_t;
+
+
+	// Struct for the complete Event Unit
+	typedef struct {
+		async_controller_t INTER;
+		async_controller_t EVENT;
+		sleep_controller_t SLEEP;
+	} event_unit_t;
+
+	#define EVENT_UNIT_T(addr)       (*((event_unit_t*) (addr)))
+	#define EVENT_UNIT_P(EVENT_UNIT) ((event_unit_t*) (&(EVENT_UNIT)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ╭─────────╮
+// │ TIMER32 │
+// ╰─────────╯
+
+	typedef struct {
+		volatile uint32_t STATUS;
+		volatile uint32_t CONTROL;
+		volatile uint32_t PERIOD_L;
+		volatile uint32_t PERIOD_H;
+		volatile uint32_t SNAP_L;
+		volatile uint32_t SNAP_H;
+	} timer32_t;
+
+	#define TIMER32_T(addr)    (*((timer32_t*) (addr)))
+	#define TIMER32_P(TIMER32) ((timer32_t*) (&(TIMER32)))
+
+
+
+
+// ╭─────────╮
+// │ TIMER64 │
+// ╰─────────╯
+
+	typedef struct {
+		volatile uint32_t STATUS;
+		volatile uint32_t CONTROL;
+		volatile uint32_t PERIOD_0;
+		volatile uint32_t PERIOD_1;
+		volatile uint32_t PERIOD_2;
+		volatile uint32_t PERIOD_3;
+		volatile uint32_t SNAP_0;
+		volatile uint32_t SNAP_1;
+	} timer64_t;
+
+	#define TIMER64_T(addr)    (*((timer64_t*) (addr)))
+	#define TIMER64_P(TIMER64) ((timer64_t*) (&(TIMER64)))
+
+
+
 
 
 
