@@ -1,10 +1,9 @@
-# ============================================
-#  ----------SOURCE CODE FRAGMENTS-----------
-# ============================================
-#  Make fragment for compiling, linking and 
-#  assemblying all source code files and
-#  generating the necessary memory file 
-# ============================================
+# ================================================
+#  Make fragment for compiling, linking and
+#  assembling all source code files and generating
+#  the necessary memory file
+# ================================================
+
 
 -include $(C_OBJS:.o=.d)
 

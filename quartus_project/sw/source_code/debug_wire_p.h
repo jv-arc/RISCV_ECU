@@ -23,15 +23,16 @@
 // └                                                                     ┘
 
 
-#define ENABLE_DEBUG // just comment this out or pass as arguments
+#include "memory_mappings.h"
+#include "pio_p.h"
 
-#include "mem_map.h"
-#include "io_helper.h"
+#ifndef DEBUG_WIRE_H
+#define DEBUG_WIRE_H
 
 
-// No-reloading guard
-#ifndef DEBUG_GUARD
-	#define DEBUG_GUARD
+
+
+// ── STATE HELPERS ───────────────────────────────────────────────────
 
 	typedef enum {
 		NORMAL  = 0x00,
@@ -48,7 +49,15 @@
 	} SECTION_TYPE_T;
 
 
-	#ifdef ENABLE_DEBUG
+
+
+
+	#ifdef DEBUG_WIRE_ON
+
+	// ╭────╮
+	// │ ON │
+	// ╰────╯
+
 
 		static s_out_t debug_mode_bit = {
 			.regs = (out_t*) PINS_C_0,
@@ -76,11 +85,19 @@
 			write_debug_wire(n) \
 			OFF_VALUE
 
-	
-		#define timer_conversion_factor     (10)
-	
+		
+		//if no other definition so far 10 cycles per ms on DEBUG_WIRE_ON
+		#ifndef TIME_FACTOR_MS_CYCLES
+			#define TIME_FACTOR_MS_CYCLES (10)
+		#endif
+
+
 
 	#else
+
+	// ╭─────╮
+	// │ OFF │
+	// ╰─────╯
 
 		#define ON_STATE  /*   */
 		#define ON_DEBUG  /*   */
@@ -88,13 +105,11 @@
 		#define DEBUG(n)  /* n */
 		#define STATE(n)  /* n */
 
-		#define timer_conversion_factor     (25000)
-
-
 	#endif
 
 
-	#define MS2CYCLES(n)   (((n)*(timer_conversion_factor))-1)
 
-#endif // closing DEBUG_GUARD
+
+
+#endif
 

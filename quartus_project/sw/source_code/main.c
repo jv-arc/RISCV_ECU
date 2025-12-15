@@ -1,9 +1,8 @@
 
 #define  BUFFER_SIZE 64 //needs to be before "#include "custom_structs.h"
 #include <stdint.h>
-#include "io_helper.h"
-#include "debugging.h"
-#include "mem_map.h"
+#include "debug_wire_p.h"
+#include "memory_mappings.h"
 
 
 // ┌                                                         ┐
